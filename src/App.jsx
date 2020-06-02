@@ -1,5 +1,5 @@
 import React from 'react';
-import { HashRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './App.scss';
 import RootContainer from "./views/root/RootContainer";
 
@@ -7,7 +7,7 @@ const loading = () => <div className="animated fadeIn pt-3 text-center">Loading.
 
 const App = () =>{
   return(
-      <HashRouter>
+      <BrowserRouter>
         <React.Suspense fallback={loading()}>
           <Switch>
             {/*<Route exact path="/login" name="Login Page" render={props => <Login {...props}/>} />*/}
@@ -17,7 +17,7 @@ const App = () =>{
             <Route path="/" name="Home" render={props => <RootContainer {...props}/>} />
           </Switch>
         </React.Suspense>
-      </HashRouter>
+      </BrowserRouter>
   )
 }
 

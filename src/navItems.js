@@ -38,7 +38,7 @@ export default {
                             icon: 'fa fa-angle-right',
                         }, {
                             name: '요율 수집ㆍ관리',
-                            url: '/rate_collection',
+                            url: '/design/rate_collection',
                             icon: 'fa fa-angle-right',
                         },
                     ]
@@ -80,12 +80,12 @@ export default {
                         },
                         {
                             name: '손해율 관리',
-                            url: '/loss_rate_management',
+                            url: '/policy_establishment/loss_rate_management',
                             icon: 'fa fa-angle-right',
                         },
                         {
                             name: '인수 지침 등록',
-                            url: '/policy_register',
+                            url: '/policy_establishment/policy_register',
                             icon: 'fa fa-angle-right',
                         },
                     ]
@@ -104,7 +104,7 @@ export default {
                         },
                         {
                             name: 'U/W Factor 관리',
-                            url: '/manage_factor',
+                            url: '/screening/manage_factor',
                             icon: 'fa fa-angle-right'
                         },
                         {
@@ -113,17 +113,17 @@ export default {
                             children: [
                                 {
                                     name: '적부 심사',
-                                    url: '/examination',
+                                    url: '/screening/examination',
                                     icon: 'fa fa-angle-right'
                                 },
                                 {
                                     name: '재보험',
-                                    url: '/reinsurance',
+                                    url: '/screening/examination/reinsurance',
                                     icon: 'fa fa-angle-double-right'
                                 },
                                 {
                                     name: '공동 인수',
-                                    url: '/joint_insurance',
+                                    url: '/screening/examination/joint_insurance',
                                     icon: 'fa fa-angle-double-right'
                                 },
                             ]
@@ -161,17 +161,17 @@ export default {
                             children: [
                                 {
                                     name: '고객 관리',
-                                    url: '/customer_manage',
+                                    url: '/sales_manage/customer_manage',
                                     icon: 'fa fa-angle-right'
                                 },
                                 {
                                     name: '가망 고객 확보',
-                                    url: '/customer_get',
+                                    url: '/sales_manage/customer_manage/customer_get',
                                     icon: 'fa fa-angle-double-right'
                                 },
                                 {
                                     name: '고객 관계 형성',
-                                    url: '/customer_relationship',
+                                    url: '/sales_manage/customer_manage/customer_relationship',
                                     icon: 'fa fa-angle-double-right'
                                 }
                             ]
@@ -182,17 +182,17 @@ export default {
                             children: [
                                 {
                                     name: '상품 관리',
-                                    url: '/product_manage',
+                                    url: '/sales_manage/product_manage',
                                     icon: 'fa fa-angle-right'
                                 },
                                 {
                                     name: '계약 체결',
-                                    url: '/contract_create',
+                                    url: '/sales_manage/product_manage/contract_create',
                                     icon: 'fa fa-angle-double-right'
                                 },
                                 {
                                     name: '계약 후 관리',
-                                    url: '/contract_manage',
+                                    url: '/sales_manage/product_manage/contract_manage',
                                     icon: 'fa fa-angle-double-right'
                                 }
                             ]

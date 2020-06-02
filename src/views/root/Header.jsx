@@ -1,6 +1,8 @@
 import React, {Fragment} from 'react';
 import {DropdownItem, DropdownMenu, DropdownToggle, Nav, UncontrolledDropdown} from 'reactstrap';
 import { AppNavbarBrand, AppSidebarToggler} from "@coreui/react";
+import maxImg from '../../image/hanhwa_max.png'
+import minImg from '../../image/hanhwa_min.png'
 
 const Header = (props) => {
 
@@ -8,8 +10,8 @@ const Header = (props) => {
         <Fragment>
             <AppSidebarToggler className="d-lg-none" display="md" mobile />
             <AppNavbarBrand
-                full={{  width: 89, height: 25, alt: '신동아 화재' }}
-                minimized={{ width: 30, height: 30, alt: '신동아 화재' }}
+                full={{ src: maxImg, width: 89, height: 25, alt: '신동아 화재' }}
+                minimized={{ src: minImg, width: 30, height: 30, alt: '신동아 화재' }}
             />
             <AppSidebarToggler className="d-md-down-none" display="lg" />
 
