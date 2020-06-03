@@ -16,17 +16,28 @@ import {
 import {Link} from 'react-router-dom';
 import axios from 'axios';
 
-const Login = () => {
+const Login = (props) => {
 
-    const loginComplete = (responseData) =>{
+    const loginComplete = (responseData) => {
         console.log(responseData);
+        if (responseData.error === "no") {
+            window.sessionStorage.setItem('id', responseData.id)
+            window.sessionStorage.setItem('name', responseData.name)
+            window.sessionStorage.setItem('authority', responseData.authority)
+            window.sessionStorage.setItem('login', 'true')
+            props.history.push('/home');
+        }
     }
 
-    const loginCertification = () => {
+    const loginCertification = (e) => {
+        e.preventDefault()
         const uid = document.getElementById("uid").value
         const upw = document.getElementById("upw").value
-
-        axios.post("/login", {id: uid, password: upw}, {baseURL: 'http://localhost:8080', withCredentials: true}).then(r=>loginComplete(r.data))
+        console.log('login try')
+        axios.post("/api/login", {id: uid, password: upw}, {
+            baseURL: 'http://localhost:8080',
+            withCredentials: true
+        }).then(r => loginComplete(r.data))
     }
 
     return (
@@ -37,7 +48,7 @@ const Login = () => {
                         <CardGroup>
                             <Card className="p-4">
                                 <CardBody>
-                                    <Form>
+                                    <Form onSubmit={e=>loginCertification(e)}>
                                         <h1>Login</h1>
                                         <p className="text-muted">Sign In to your account</p>
                                         <InputGroup className="mb-3">
@@ -59,8 +70,7 @@ const Login = () => {
                                         </InputGroup>
                                         <Row>
                                             <Col xs="6">
-                                                <Button color="primary" className="px-4"
-                                                        onClick={loginCertification}>Login</Button>
+                                                <Button type='submit' color="primary" className="px-4">Login</Button>
                                             </Col>
                                             <Col xs="6" className="text-right">
                                                 <Button color="link" className="px-0">Forgot password?</Button>

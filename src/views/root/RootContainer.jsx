@@ -11,7 +11,7 @@ import {
     AppSidebarMinimizer,
     AppSidebarNav2 as AppSidebarNav
 } from "@coreui/react";
-import { Container } from 'reactstrap';
+import {Container} from 'reactstrap';
 import * as router from 'react-router-dom';
 import {Route, Switch, Redirect} from 'react-router-dom';
 import navItems from "../../navItems";
@@ -25,6 +25,42 @@ const loading = () => <div className="animated fadeIn pt-1 text-center">Loading.
 const logout = (e) => {
     e.preventDefault();
     console.log("logout")
+}
+
+const OverrideRedirect = () => {
+    return (
+        window.sessionStorage.login === 'true' ?
+            <HomeRedirect /> : <LoginRedirect />
+
+    )
+}
+
+const HomeRedirect = () => {
+    return (
+        <React.Fragment>
+        {
+            routes.map((route, idx) => {
+                return route.component ? (
+                    <Route
+                        key={idx}
+                        path={route.path}
+                        exact={route.exact}
+                        name={route.name}
+                        render={props => (
+                            <route.component {...props} />
+                        )}/>
+                ) : null;
+            })
+        }
+        <Redirect exact from='/' to='/home' />
+        </React.Fragment>
+    )
+}
+
+const LoginRedirect = () => {
+    return (
+        <Redirect push to='/login'/>
+    )
 }
 
 
@@ -49,19 +85,7 @@ const RootContainer = (props) => {
                     <Container fluid>
                         <Suspense fallback={loading()}>
                             <Switch>
-                                {routes.map((route, idx) => {
-                                    return route.component ? (
-                                        <Route
-                                            key={idx}
-                                            path={route.path}
-                                            exact={route.exact}
-                                            name={route.name}
-                                            render={props => (
-                                                <route.component {...props} />
-                                            )} />
-                                    ) : null;
-                                })}
-                                <Redirect from="/" to="/home" />
+                                <OverrideRedirect />
                             </Switch>
                         </Suspense>
                     </Container>
