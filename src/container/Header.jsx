@@ -19,7 +19,7 @@ const Header = (props) => {
             <Nav className="ml-auto" navbar>
                 <UncontrolledDropdown nav direction="down" className="mr-4">
                     <DropdownToggle nav className="d-flex">
-                        <div className='m-auto'>{name}</div>
+                        <div className='m-auto nanum-gothic'>{name}</div>
                         <img src="https://img.icons8.com/android/144/000000/user.png" className="img-avatar"
                              alt="admin"/>
                     </DropdownToggle>
