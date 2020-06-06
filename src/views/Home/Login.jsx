@@ -58,7 +58,10 @@ const Login = (props) => {
         axios.post("/api/login", {id: uid, password: upw}, {
             baseURL: 'http://localhost:8080',
             withCredentials: true
-        }).then(r => loginComplete(r.data))
+        }).then(r => {
+            loginComplete(r.data)
+            console.log(r)
+        })
     }
 
     return (

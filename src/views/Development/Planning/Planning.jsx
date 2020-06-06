@@ -1,4 +1,4 @@
-import React, {Fragment, useState} from "react";
+import React, {Fragment, useState, lazy} from "react";
 import {
     Button,
     Card,
@@ -22,9 +22,9 @@ import {
     UncontrolledTooltip
 } from 'reactstrap'
 import classnames from 'classnames'
-import {asc as ascSort, desc as descSort} from "../../../comparator";
 
-const sort = 'fa-sort', desc = 'fa-sort-desc', asc = 'fa-sort-asc'
+const BasicTable = lazy(() => import('../../global/BasicTable'))
+const sort = 'fa-sort', desc = 'fa-sort-asc', asc = 'fa-sort-desc'
 
 const StrategyForm = () => {
     return (
@@ -47,7 +47,7 @@ const StrategyForm = () => {
             </FormGroup>
             <FormGroup row>
                 <Col md='3'>
-                    <Label htmlFor='targetConsumer' className='nanum-gothic'>니즈</Label>
+                    <Label htmlFor='needs' className='nanum-gothic'>니즈</Label>
                 </Col>
                 <Col xs="12" md="9">
                     <Input type='textarea' id='needs'/>
@@ -57,164 +57,15 @@ const StrategyForm = () => {
     )
 }
 
-const GenerateDocumentModal = ({className}) => {
-
-    const [modalOpen, setModalOpen] = useState(false)
-
-    const modalControl = () => {
-        setModalOpen(!modalOpen)
-    }
-
-    const CustomHeader = () => {
-        return (
-            <div className='modal-header'>
-                <div className='modal-title font-weight-bold nanum-gothic font-2xl'>새로운 글 작성</div>
-            </div>
-        )
-    }
-
-    const generate = () => {
-        console.log('submit')
-    }
-
-    return (
-        <Fragment>
-            <Button color="primary" onClick={modalControl} className="ml-auto" size='sm'><i
-                className='fa fa-upload mr-1'/>보고서 작성하기</Button>
-            <Modal isOpen={modalOpen} toggle={modalControl}
-                   className={'modal-lg ' + className} backdrop={'static'}>
-                <ModalHeader wrapTag={CustomHeader}/>
-                <ModalBody>
-                    <StrategyForm/>
-                </ModalBody>
-                <ModalFooter>
-                    <Button color="primary" onClick={generate}>등록</Button>{' '}
-                    <Button color="secondary" onClick={modalControl}>취소</Button>
-                </ModalFooter>
-            </Modal>
-        </Fragment>
-    )
-}
-
-const InfoTable = (props) => {
-
-    const switching = (current) => {
-        if (current === desc) return asc
-        else return desc
-    }
-
-    const [number, setNumber] = useState(sort)
-    const [title, setTitle] = useState(sort)
-    const [date, setDate] = useState(sort)
-    const [author, setAuthor] = useState(sort)
-
-    const columnAlign = (column) => {
-        switch (column) {
-            case 'number':
-                setNumber(switching(number))
-                setTitle(sort)
-                setDate(sort)
-                setAuthor(sort)
-                break
-            case 'title':
-                setNumber(sort)
-                setTitle(switching(title))
-                setDate(sort)
-                setAuthor(sort)
-                break
-            case 'date':
-                setNumber(sort)
-                setTitle(sort)
-                setDate(switching(date))
-                setAuthor(sort)
-                break
-            case 'author':
-                setNumber(sort)
-                setTitle(sort)
-                setDate(sort)
-                setAuthor(switching(author))
-                break
-            default:
-                break
-
-        }
-    }
-
-    return (
-        <Card className="card-accent-primary">
-            <CardHeader className='d-flex'>
-                <span className='my-auto jua font-xl'>{props.header}</span>
-                <GenerateDocumentModal/>
-            </CardHeader>
-            <CardBody>
-                <Table responsive striped className='font-lg'>
-                    <thead>
-                    <tr>
-                        <th id="market-bulletin-id">글 번호<i className={`fa ${number} ml-2`}
-                                                           onClick={() => columnAlign('number')}/></th>
-                        <th id="market-bulletin-title">제목<i className={`fa ${title} ml-2`}
-                                                            onClick={() => columnAlign('title')}/></th>
-                        <th id="market-bulletin-date">업로드 날짜<i className={`fa ${date} ml-2`}
-                                                               onClick={() => columnAlign('date')}/></th>
-                        <th id="market-bulletin-writer">작성자<i className={`fa ${author} ml-2`}
-                                                              onClick={() => columnAlign('author')}/></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>temp</td>
-                        <td>temp</td>
-                        <td>temp4</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>temp</td>
-                        <td>temp</td>
-                        <td>temp5</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>temp</td>
-                        <td>temp</td>
-                        <td>temp7</td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>temp</td>
-                        <td>temp</td>
-                        <td>temp2</td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>temp</td>
-                        <td>temp1</td>
-                        <td>temp</td>
-                    </tr>
-                    <tr>
-                        <td>6</td>
-                        <td>temp</td>
-                        <td>temp7</td>
-                        <td>temp</td>
-                    </tr>
-                    <tr>
-                        <td>7</td>
-                            <td>temp</td>
-                            <td>temp</td>
-                            <td>temp3</td>
-                        </tr>
-                        </tbody>
-                    </Table>
-                </CardBody>
-        </Card>
-    )
-}
-
 const Planning = () => {
 
     const [active, setActive] = useState(1)
 
     const changeTab = (tabID) => {setActive(tabID)}
+
+    const upload = () => {
+        console.log('upload')
+    }
 
     return (
         <div className='animated fadeIn'>
@@ -243,10 +94,10 @@ const Planning = () => {
             </Nav>
             <TabContent activeTab={active}>
                 <TabPane tabId={1}>
-                    <InfoTable header='시장 조사 정보' target='market'/>
+                    <BasicTable tableHeader='시장 조사 정보' modalHeader='새로운 글 작성' uploadAction={upload} inputForm={StrategyForm}/>
                 </TabPane>
                 <TabPane tabId={2}>
-                    <InfoTable header='전략 정보' target='strategy'/>
+                    <BasicTable tableHeader='전략 정보' modalHeader='새로운 글 작성' inputForm={StrategyForm}/>
                 </TabPane>
             </TabContent>
         </div>

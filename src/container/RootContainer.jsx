@@ -38,7 +38,7 @@ const RootContainer = (props) => {
                     </Suspense>
                     <SidebarMinimizer/>
                 </AppSidebar>
-                <main className="main bg-light">
+                <main className="main bg-gray-200">
                     <AppBreadcrumb appRoutes={routes} router={router}/>
                     <Container fluid>
                         <Suspense fallback={loading()}>

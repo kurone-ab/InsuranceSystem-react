@@ -25,7 +25,8 @@ const Header = (props) => {
                     </DropdownToggle>
                     <DropdownMenu right>
                         <DropdownItem onClick={e => props.onLogout(e)}>
-                            <i className="cui-account-logout"/> Logout</DropdownItem>
+                            <i className="cui-account-logout"/> Logout
+                        </DropdownItem>
                     </DropdownMenu>
                 </UncontrolledDropdown>
             </Nav>

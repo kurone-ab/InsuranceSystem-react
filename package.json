@@ -19,6 +19,7 @@
     "enzyme-adapter-react-16": "^1.15.2",
     "flag-icon-css": "^3.4.6",
     "font-awesome": "^4.7.0",
+    "js-file-download": "^0.4.12",
     "node-sass": "^4.14.1",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
