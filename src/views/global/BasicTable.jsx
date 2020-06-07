@@ -1,14 +1,13 @@
 import React, {lazy, useState} from "react";
 import {Card, CardBody, CardHeader, Table} from 'reactstrap'
-import {asc as ascSort, desc as descSort} from "../../comparator";
 
 const sort = 'fa-sort', desc = 'fa-sort-asc', asc = 'fa-sort-desc'
 
 const GenerateDocumentModal = lazy(() => import('../global/GenerateDocumentModal'))
 
-const BasicTable = ({contentData, tableHeader, modalHeader, className, uploadAction, inputForm}) => {
+const BasicTable = ({contentData, tableHeader, activeModal, modalHeader, className, uploadAction, InputForm}) => {
 
-    const modalProps = {modalHeader, className, uploadAction, inputForm}
+    const modalProps = {modalHeader, className, uploadAction, InputForm}
 
     const [align, setAlign] = useState({
         number: sort,
@@ -23,6 +22,7 @@ const BasicTable = ({contentData, tableHeader, modalHeader, className, uploadAct
         else return asc
     }
 
+    console.log(contentData)
 
     const columnAlign = (column) => {
         switch (column) {
@@ -68,7 +68,7 @@ const BasicTable = ({contentData, tableHeader, modalHeader, className, uploadAct
             <CardHeader className='d-flex'>
                 <span className='my-auto nanum-gothic font-xl font-weight-bold'>
                     <i className='fa fa-align-justify mr-2'/>{tableHeader}</span>
-                <GenerateDocumentModal {...modalProps}/>
+                {activeModal ? <GenerateDocumentModal {...modalProps}/> : null}
             </CardHeader>
             <CardBody>
                 <Table responsive striped className='font-lg'>
@@ -85,17 +85,17 @@ const BasicTable = ({contentData, tableHeader, modalHeader, className, uploadAct
                     </tr>
                     </thead>
                     <tbody>
-                    {content ? content.map((row, idx) => {
-                        const {number, title, date, author} = row
+                    {contentData.map((row, idx) => {
+                        const {id, title, date, authName} = row
                         return(
-                            <tr key={idx}>
-                                <td>{number}</td>
+                            id ? <tr key={idx}>
+                                <td>{id}</td>
                                 <td>{title}</td>
                                 <td>{date}</td>
-                                <td>{author}</td>
-                            </tr>
+                                <td>{authName}</td>
+                            </tr> : null
                         )
-                    }) : null}
+                    })}
                     </tbody>
                 </Table>
             </CardBody>

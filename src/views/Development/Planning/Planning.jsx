@@ -94,10 +94,10 @@ const Planning = () => {
             </Nav>
             <TabContent activeTab={active}>
                 <TabPane tabId={1}>
-                    <BasicTable tableHeader='시장 조사 정보' modalHeader='새로운 글 작성' uploadAction={upload} inputForm={StrategyForm}/>
+                    <BasicTable tableHeader='시장 조사 정보' activeModal={true} modalHeader='새로운 글 작성' uploadAction={upload} InputForm={StrategyForm}/>
                 </TabPane>
                 <TabPane tabId={2}>
-                    <BasicTable tableHeader='전략 정보' modalHeader='새로운 글 작성' inputForm={StrategyForm}/>
+                    <BasicTable tableHeader='전략 정보' activeModal={true} modalHeader='새로운 글 작성' InputForm={StrategyForm}/>
                 </TabPane>
             </TabContent>
         </div>

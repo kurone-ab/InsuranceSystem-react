@@ -1,7 +1,7 @@
 import React, {Fragment, useState} from "react";
 import {Modal, ModalHeader, ModalBody, ModalFooter, Button} from 'reactstrap'
 
-const GenerateDocumentModal = ({header, className, uploadAction, inputForm}) => {
+const GenerateDocumentModal = ({modalHeader, className, uploadAction, InputForm}) => {
     const [modalOpen, setModalOpen] = useState(false)
 
     const modalControl = () => {
@@ -11,7 +11,7 @@ const GenerateDocumentModal = ({header, className, uploadAction, inputForm}) => 
     const CustomHeader = () => {
         return (
             <div className='modal-header'>
-                <div className='modal-title font-weight-bold nanum-gothic font-2xl'>{header}</div>
+                <div className='modal-title font-weight-bold nanum-gothic font-2xl'>{modalHeader}</div>
             </div>
         )
     }
@@ -24,7 +24,7 @@ const GenerateDocumentModal = ({header, className, uploadAction, inputForm}) => 
                    className={'modal-lg ' + className} backdrop={'static'}>
                 <ModalHeader wrapTag={CustomHeader}/>
                 <ModalBody>
-                    {<inputForm/>}
+                    {<InputForm/>}
                 </ModalBody>
                 <ModalFooter>
                     <Button color="primary" onClick={uploadAction}>등록</Button>{' '}

@@ -1,22 +1,23 @@
-import React, {useState, lazy} from "react";
-import {Card, CardHeader, CardBody, Jumbotron, Button, Row, Col, ListGroup, ListGroupItem} from 'reactstrap'
+import React, {lazy, Suspense, useLayoutEffect, useState} from "react";
+import {Button, Card, CardBody, CardHeader, Col, Jumbotron, ListGroup, ListGroupItem, Row} from 'reactstrap'
 import axios from 'axios';
-import FileDownload from 'js-file-download';
-import {asc, desc} from "../../comparator";
 
 const BasicTable = lazy(() => import('../global/BasicTable'))
 
+const Loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>
+
 const ImportantAnnouncement = () => {
-    return(
+    return (
         <Card className='card-accent-primary'>
-            <CardHeader><span className='my-auto nanum-gothic font-weight-bold font-xl'><i className='fa fa-align-justify mr-2'/>중요 공지</span></CardHeader>
+            <CardHeader><span className='my-auto nanum-gothic font-weight-bold font-xl'><i
+                className='fa fa-align-justify mr-2'/>중요 공지</span></CardHeader>
             <CardBody>
                 <Jumbotron>
                     <h1 className="display-3 nanum-gothic">사내 전산망 점검</h1>
                     <p className="lead nanum-gothic">
                         오는 6/19 (목) 21:00 ~ 23:00 사내 전산망 점검 정기 점검이 있습니다. 해당시간에는 이용을 자제해주시기 바랍니다.
                     </p>
-                    <hr className="my-2" />
+                    <hr className="my-2"/>
                     <p className='nanum-gothic'>정보 지원실</p>
                     <p className="lead">
                         <Button color="primary" className='nanum-gothic'>자세히 보기</Button>
@@ -44,36 +45,41 @@ const FormCollection = () => {
     )
 }
 
-const Announcement = () => {
-    return(
-        <Card className='card-accent-primary'>
-            <CardHeader><span className='my-auto nanum-gothic font-weight-bold font-xl'><i className='fa fa-align-justify mr-2'/>공지사항</span></CardHeader>
-            <CardBody>
-
-            </CardBody>
-        </Card>
-    )
-}
-
-const Home = (props) => {
-    const [state, setState] = useState({});
-
+const Home = () => {
     const upload = () => {
         console.log('upload')
     }
 
-    return (
-        <div className='animated fadeIn'>
-            <Row>
-                <Col xs={12} md={6} xl={6}>
-                    <ImportantAnnouncement />
-                </Col>
-                <Col>
-                    <FormCollection/>
-                    <BasicTable tableHeader='시장 조사 정보' modalHeader='새로운 글 작성' uploadAction={upload}/>
-                </Col>
-            </Row>
-        </div>
+    const [announcement, setAnnouncement] = useState([]);
+
+    const loadAnnouncement = () => {
+        axios.get("/announcement/info", {
+            baseURL: 'http://localhost:8080',
+            withCredentials: true
+        }).then(r => {
+            console.log(r.data)
+            setAnnouncement(r.data)
+        })
+    }
+
+    useLayoutEffect(loadAnnouncement, [])
+    console.log(announcement)
+
+    return (announcement.length !== 0 ?
+            <div className='animated fadeIn'>
+                <Row>
+                    <Col xs={12} md={6} xl={6}>
+                        <ImportantAnnouncement/>
+                    </Col>
+                    <Col>
+                        <FormCollection/>
+                        <Suspense fallback={Loading()}>
+                            <BasicTable contentData={announcement} tableHeader='공지 사항' modalHeader='새로운 글 작성'
+                                        uploadAction={upload}/>
+                        </Suspense>
+                    </Col>
+                </Row>
+            </div> : <Loading/>
     )
 }
 

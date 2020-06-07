@@ -39,14 +39,14 @@ const Login = (props) => {
 
     const loginComplete = (responseData) => {
         console.log(responseData);
-        if (responseData.error === "no") {
+        if (responseData) {
             sessionStorage.setItem('id', responseData.id)
             sessionStorage.setItem('name', responseData.name)
             sessionStorage.setItem('authority', responseData.authority)
             sessionStorage.setItem('login', 'true')
             props.history.push('/home');
         }else {
-            warning(responseData.error)
+            warning("해당 유저가 존재하지 않습니다. 아이디와 비밀번호를 다시 한 번 확인해주세요!")
         }
     }
 
@@ -55,12 +55,11 @@ const Login = (props) => {
         const uid = document.getElementById("uid").value
         const upw = document.getElementById("upw").value
         console.log('login try')
-        axios.post("/api/login", {id: uid, password: upw}, {
+        axios.post("/user/login", {id: uid, password: upw}, {
             baseURL: 'http://localhost:8080',
             withCredentials: true
         }).then(r => {
             loginComplete(r.data)
-            console.log(r)
         })
     }
 
