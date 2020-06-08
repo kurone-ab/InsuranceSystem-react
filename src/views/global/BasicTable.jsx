@@ -22,8 +22,6 @@ const BasicTable = ({contentData, tableHeader, activeModal, modalHeader, classNa
         else return asc
     }
 
-    console.log(contentData)
-
     const columnAlign = (column) => {
         switch (column) {
             case 'number':
@@ -86,13 +84,13 @@ const BasicTable = ({contentData, tableHeader, activeModal, modalHeader, classNa
                     </thead>
                     <tbody>
                     {contentData.map((row, idx) => {
-                        const {id, title, date, authName} = row
+                        const {id, title, date, authorName} = row
                         return(
                             id ? <tr key={idx}>
                                 <td>{id}</td>
                                 <td>{title}</td>
                                 <td>{date}</td>
-                                <td>{authName}</td>
+                                <td>{authorName}</td>
                             </tr> : null
                         )
                     })}

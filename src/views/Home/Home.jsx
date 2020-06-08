@@ -1,26 +1,35 @@
-import React, {lazy, Suspense, useLayoutEffect, useState} from "react";
-import {Button, Card, CardBody, CardHeader, Col, Jumbotron, ListGroup, ListGroupItem, Row} from 'reactstrap'
-import axios from 'axios';
+import React, {lazy, Suspense, useState} from "react";
+import {Button, Card, CardBody, CardHeader, Col, Jumbotron, ListGroup, ListGroupItem, Row, Spinner} from 'reactstrap'
+import {useGetAxios} from '../global/useAxios'
 
 const BasicTable = lazy(() => import('../global/BasicTable'))
+const ReadContentModal = lazy(() => import('../global/ReadContentModal'))
 
-const Loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>
+const Loading = () => <div className="animated fadeIn pt-1 d-flex justify-content-center"><Spinner color="primary"/>
+</div>
 
-const ImportantAnnouncement = () => {
+const ImportantAnnouncement = ({data}) => {
+    const {title, content, authorName} = data
+    const [collapse, setCollapse] = useState(false)
+
+    const switching = () => {
+        setCollapse(!collapse)
+    }
+
     return (
         <Card className='card-accent-primary'>
             <CardHeader><span className='my-auto nanum-gothic font-weight-bold font-xl'><i
                 className='fa fa-align-justify mr-2'/>중요 공지</span></CardHeader>
             <CardBody>
                 <Jumbotron>
-                    <h1 className="display-3 nanum-gothic">사내 전산망 점검</h1>
-                    <p className="lead nanum-gothic">
-                        오는 6/19 (목) 21:00 ~ 23:00 사내 전산망 점검 정기 점검이 있습니다. 해당시간에는 이용을 자제해주시기 바랍니다.
-                    </p>
+                    <h1 className="display-3 nanum-gothic">{title}</h1>
+                    <div>{content ? content.length > 50 ?
+                        <div className='nanum-gothic font-lg'>{`${content.split('. ')[0]}...`}</div> : content : null}</div>
+                    <ReadContentModal state={collapse} toggleFunc={switching} title={title} content={content}/>
                     <hr className="my-2"/>
-                    <p className='nanum-gothic'>정보 지원실</p>
+                    <p className='nanum-gothic'>{authorName}</p>
                     <p className="lead">
-                        <Button color="primary" className='nanum-gothic'>자세히 보기</Button>
+                        <Button color="primary" className='nanum-gothic' onClick={switching}>자세히 보기</Button>
                     </p>
                 </Jumbotron>
             </CardBody>
@@ -50,31 +59,19 @@ const Home = () => {
         console.log('upload')
     }
 
-    const [announcement, setAnnouncement] = useState([]);
-
-    const loadAnnouncement = () => {
-        axios.get("/announcement/info", {
-            baseURL: 'http://localhost:8080',
-            withCredentials: true
-        }).then(r => {
-            console.log(r.data)
-            setAnnouncement(r.data)
-        })
-    }
-
-    useLayoutEffect(loadAnnouncement, [])
-    console.log(announcement)
-
-    return (announcement.length !== 0 ?
-            <div className='animated fadeIn'>
+    const {data} = useGetAxios({url: 'announcement/info'});
+    const important = data ? data instanceof Array ? data.filter(({priority}) => priority)[0] : data : null
+    console.log(important)
+    return (data ?
+            <div className='animated fadeIn' onLoadStart={() => console.log('component load')}>
                 <Row>
                     <Col xs={12} md={6} xl={6}>
-                        <ImportantAnnouncement/>
+                        <ImportantAnnouncement data={important}/>
                     </Col>
                     <Col>
                         <FormCollection/>
                         <Suspense fallback={Loading()}>
-                            <BasicTable contentData={announcement} tableHeader='공지 사항' modalHeader='새로운 글 작성'
+                            <BasicTable contentData={data} tableHeader='공지 사항' modalHeader='새로운 글 작성'
                                         uploadAction={upload}/>
                         </Suspense>
                     </Col>

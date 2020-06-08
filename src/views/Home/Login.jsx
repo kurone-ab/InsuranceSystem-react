@@ -17,8 +17,9 @@ import {
     ModalHeader,
     ModalFooter
 } from 'reactstrap';
-import {Link} from 'react-router-dom';
 import axios from 'axios';
+axios.defaults.withCredentials = true
+axios.defaults.baseURL = 'http://localhost:8080'
 
 const Login = (props) => {
 
@@ -55,10 +56,7 @@ const Login = (props) => {
         const uid = document.getElementById("uid").value
         const upw = document.getElementById("upw").value
         console.log('login try')
-        axios.post("/user/login", {id: uid, password: upw}, {
-            baseURL: 'http://localhost:8080',
-            withCredentials: true
-        }).then(r => {
+        axios.post("/user/login", {id: uid, password: upw}).then(r => {
             loginComplete(r.data)
         })
     }
