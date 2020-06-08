@@ -6,10 +6,6 @@ export default {
             icon: 'cui-dashboard'
         },
         {
-            divider: true,
-            class: 'm-2'
-        },
-        {
             title: true,
             name: '주요 업무 메뉴',
         },
@@ -35,7 +31,6 @@ export default {
                         {
                             name: '상품 설계',
                             url: '/design',
-                            icon: 'fa fa-angle-right',
                         }, {
                             name: '요율 수집ㆍ관리',
                             url: '/design/rate_collection',
