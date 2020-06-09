@@ -18,6 +18,9 @@ import {
     ModalFooter
 } from 'reactstrap';
 import axios from 'axios';
+import {connect} from 'react-redux'
+import {login} from "../../globalStore";
+
 axios.defaults.withCredentials = true
 axios.defaults.baseURL = 'http://localhost:8080'
 
@@ -39,14 +42,12 @@ const Login = (props) => {
     }
 
     const loginComplete = (responseData) => {
-        console.log(responseData);
         if (responseData) {
-            sessionStorage.setItem('id', responseData.id)
-            sessionStorage.setItem('name', responseData.name)
-            sessionStorage.setItem('authority', responseData.authority)
-            sessionStorage.setItem('login', 'true')
+            const user = {id: responseData.id, name: responseData.name, auth: responseData.auth}
+            sessionStorage.setItem('user', JSON.stringify(user))
+            props.login(user)
             props.history.push('/home');
-        }else {
+        } else {
             warning("해당 유저가 존재하지 않습니다. 아이디와 비밀번호를 다시 한 번 확인해주세요!")
         }
     }
@@ -118,4 +119,10 @@ const Login = (props) => {
     );
 }
 
-export default Login;
+const mapToDispatchToProps = (dispatch) => {
+    return {
+        login: (user) => dispatch(login(user))
+    }
+}
+
+export default connect(null, mapToDispatchToProps)(Login);

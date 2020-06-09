@@ -1,8 +1,11 @@
 import React, {lazy, Suspense, useState} from "react";
-import {Button, Card, CardBody, CardHeader, Col, Jumbotron, ListGroup, ListGroupItem, Row, Spinner} from 'reactstrap'
-import {useGetAxios} from '../global/useAxios'
+import {Button, Card, CardBody, CardHeader, Col, Jumbotron, ListGroup, ListGroupItem, Row, Spinner, Input} from 'reactstrap'
+import {useGetAxios, usePostAxios} from '../global/useAxios'
 import {connect} from 'react-redux'
 import {loadAnnouncement} from "../../globalStore";
+import axios from 'axios'
+axios.defaults.baseURL = 'http://localhost:8080'
+axios.defaults.withCredentials = true
 
 const BasicTable = lazy(() => import('../global/BasicTable'))
 const ReadContentModal = lazy(() => import('../global/ReadContentModal'))
@@ -26,7 +29,7 @@ const ImportantAnnouncement = ({data}) => {
                 <Jumbotron>
                     <h1 className="display-3 nanum-gothic">{title}</h1>
                     <div className='nanum-gothic font-lg'>{content ? content.length > 50 ?
-                        `${content.split('. ')[0]} ...` : content : null}</div>
+                        `${content.split('. ')[0]}.` : content : null}</div>
                     <ReadContentModal state={collapse} toggleFunc={switching} title={title} content={content}/>
                     <hr className="my-2"/>
                     <p className='nanum-gothic'>{authorName}</p>
@@ -41,7 +44,7 @@ const ImportantAnnouncement = ({data}) => {
 
 const FormCollection = () => {
     return(
-        <Card className='card-accent-primary mt-1'>
+        <Card className='card-accent-primary'>
             <CardHeader><span className='my-auto nanum-gothic font-weight-bold font-xl'><i className='fa fa-align-justify mr-2'/>서식 모음</span></CardHeader>
             <CardBody>
                 <ListGroup>
@@ -56,13 +59,20 @@ const FormCollection = () => {
     )
 }
 
-const Home = ({loadAnnouncement, list}) => {
+const Home = ({load, list}) => {
     const upload = () => {
         console.log('upload')
     }
 
-    useGetAxios({url: 'announcement/info', callback: loadAnnouncement});
+    useGetAxios({url: 'announcement/info', callback: load});
     const important = list ? list instanceof Array ? list.find(({priority}) => priority) : list : null
+
+    const fileupload = () => {
+        const file = document.getElementById('file').files[0]
+        const formData = new FormData();
+        formData.append('file', file)
+        axios.post('/file/upload', formData).then(r=>console.log(r.data))
+    }
 
     return (list ?
             <div className='animated fadeIn' onLoadStart={() => console.log('component load')}>
@@ -83,12 +93,12 @@ const Home = ({loadAnnouncement, list}) => {
 }
 
 const mapStateToProps = (state) => {
-    return {list: state.announcementList}
+    return {list: state.announcement ? state.announcement.list : null}
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        loadAnnouncement: (announcement) => dispatch(loadAnnouncement(announcement))
+        load: (announcement) => dispatch(loadAnnouncement(announcement))
     }
 }
 

@@ -138,8 +138,6 @@ const Planning = () => {
                         onClick={() => {changeTab(1);}}>
                         <div className='nanum-gothic'>
                             시장 조사 정보
-                            <Button close className='ml-3' id='tab1close'/>
-                            <UncontrolledTooltip target='tab1close'>탭 닫기</UncontrolledTooltip>
                         </div>
                     </NavLink>
                 </NavItem>
@@ -148,8 +146,6 @@ const Planning = () => {
                              onClick={() => {changeTab(2);}}>
                         <div className='nanum-gothic'>
                             전략 정보
-                            <Button close className='ml-3' id='tab2close'/>
-                            <UncontrolledTooltip target='tab2close'>탭 닫기</UncontrolledTooltip>
                         </div>
                     </NavLink>
                 </NavItem>
