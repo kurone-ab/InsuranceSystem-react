@@ -83,7 +83,7 @@ const BasicTable = ({contentData, tableHeader, activeModal, modalHeader, classNa
                     </tr>
                     </thead>
                     <tbody>
-                    {contentData.map((row, idx) => {
+                    {contentData ? contentData.map((row, idx) => {
                         const {id, title, date, authorName} = row
                         return(
                             id ? <tr key={idx}>
@@ -93,7 +93,7 @@ const BasicTable = ({contentData, tableHeader, activeModal, modalHeader, classNa
                                 <td>{authorName}</td>
                             </tr> : null
                         )
-                    })}
+                    }) : null}
                     </tbody>
                 </Table>
             </CardBody>

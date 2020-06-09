@@ -1,6 +1,8 @@
 import React, {lazy, Suspense, useState} from "react";
 import {Button, Card, CardBody, CardHeader, Col, Jumbotron, ListGroup, ListGroupItem, Row, Spinner} from 'reactstrap'
 import {useGetAxios} from '../global/useAxios'
+import {connect} from 'react-redux'
+import {loadAnnouncement} from "../../globalStore";
 
 const BasicTable = lazy(() => import('../global/BasicTable'))
 const ReadContentModal = lazy(() => import('../global/ReadContentModal'))
@@ -23,8 +25,8 @@ const ImportantAnnouncement = ({data}) => {
             <CardBody>
                 <Jumbotron>
                     <h1 className="display-3 nanum-gothic">{title}</h1>
-                    <div>{content ? content.length > 50 ?
-                        <div className='nanum-gothic font-lg'>{`${content.split('. ')[0]}...`}</div> : content : null}</div>
+                    <div className='nanum-gothic font-lg'>{content ? content.length > 50 ?
+                        `${content.split('. ')[0]} ...` : content : null}</div>
                     <ReadContentModal state={collapse} toggleFunc={switching} title={title} content={content}/>
                     <hr className="my-2"/>
                     <p className='nanum-gothic'>{authorName}</p>
@@ -54,15 +56,15 @@ const FormCollection = () => {
     )
 }
 
-const Home = () => {
+const Home = ({loadAnnouncement, list}) => {
     const upload = () => {
         console.log('upload')
     }
 
-    const {data} = useGetAxios({url: 'announcement/info'});
-    const important = data ? data instanceof Array ? data.filter(({priority}) => priority)[0] : data : null
-    console.log(important)
-    return (data ?
+    useGetAxios({url: 'announcement/info', callback: loadAnnouncement});
+    const important = list ? list instanceof Array ? list.find(({priority}) => priority) : list : null
+
+    return (list ?
             <div className='animated fadeIn' onLoadStart={() => console.log('component load')}>
                 <Row>
                     <Col xs={12} md={6} xl={6}>
@@ -71,7 +73,7 @@ const Home = () => {
                     <Col>
                         <FormCollection/>
                         <Suspense fallback={Loading()}>
-                            <BasicTable contentData={data} tableHeader='공지 사항' modalHeader='새로운 글 작성'
+                            <BasicTable contentData={list} tableHeader='공지 사항' modalHeader='새로운 글 작성'
                                         uploadAction={upload}/>
                         </Suspense>
                     </Col>
@@ -80,4 +82,14 @@ const Home = () => {
     )
 }
 
-export default Home
+const mapStateToProps = (state) => {
+    return {list: state.announcementList}
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        loadAnnouncement: (announcement) => dispatch(loadAnnouncement(announcement))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home)

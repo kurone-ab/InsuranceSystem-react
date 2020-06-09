@@ -31,7 +31,7 @@ export const usePostAxios = ({instance = axios, url, data}) => {
     return res
 }
 
-export const useGetAxios = ({instance = axios, url}) => {
+export const useGetAxios = ({instance = axios, url, callback}) => {
     const [res, setRes] = useState({
         load: false,
         error: null,
@@ -39,6 +39,7 @@ export const useGetAxios = ({instance = axios, url}) => {
     })
     useEffect(() => {
         instance.get(url).then(({data}) => {
+            callback ? callback(data) :
             setRes({
                 load: true,
                 error: null,
