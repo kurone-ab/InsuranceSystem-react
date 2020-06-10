@@ -9,7 +9,7 @@ const ReadContentModal = ({state, toggleFunc, title, content}) => {
 
 
     return (
-        <Modal isOpen={state} toggle={toggleFunc}>
+        <Modal isOpen={state} toggle={toggleFunc} size='lg'>
             <ModalHeader wrapTag={CustomHeader}/>
             <ModalBody className='nanum-gothic font-lg'>
                 {content}

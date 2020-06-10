@@ -22,9 +22,7 @@ const loading = () => <div className="animated fadeIn pt-1 d-flex justify-conten
 
 const RootContainer = ({user, deleteUser, ...rest}) => {
     const logout = (e) => {
-        e.preventDefault();
         deleteUser()
-        sessionStorage.removeItem('user')
         rest.history.push('/login')
     }
 

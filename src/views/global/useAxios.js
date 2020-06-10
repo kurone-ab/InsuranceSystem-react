@@ -31,27 +31,29 @@ export const usePostAxios = ({instance = axios, url, data}) => {
     return res
 }
 
-export const useGetAxios = ({instance = axios, url, callback}) => {
+export const useGetAxios = ({instance = axios, url, callback, necessary}) => {
     const [res, setRes] = useState({
         load: false,
         error: null,
         data: null
     })
     useEffect(() => {
-        instance.get(url).then(({data}) => {
-            callback ? callback(data) :
-            setRes({
-                load: true,
-                error: null,
-                data: data
+        if (necessary) {
+            instance.get(url).then(({data}) => {
+                callback ? callback(data) :
+                    setRes({
+                        load: true,
+                        error: null,
+                        data: data
+                    })
+            }).catch(({error})=>{
+                setRes({
+                    load: false,
+                    error: error,
+                    data: null
+                })
             })
-        }).catch(({error})=>{
-            setRes({
-                load: false,
-                error: error,
-                data: null
-            })
-        })
+        }
         // eslint-disable-next-line
     }, [])
 

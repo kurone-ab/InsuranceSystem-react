@@ -5,6 +5,9 @@ const {actions, reducer} = createSlice({
     initialState: {user: JSON.parse(sessionStorage.getItem('user'))},
     reducers: {
         login: (state, action) => {
+            const {payload} = action
+            const {id, name, auth} = payload
+            sessionStorage.setItem('user', JSON.stringify(payload))
             return {
                 user: {
                     id: action.payload.id,
@@ -14,23 +17,38 @@ const {actions, reducer} = createSlice({
             }
         },
         logout: () => {
+            sessionStorage.removeItem('user')
             return {
                 user: null
             }
         },
         loadAnnouncement: ((state, action) => {
-            const announcement = action.payload ? action.payload : []
-            return {
-                user: state.user,
+            const {payload} = action
+            return payload ? {
+                ...state,
                 announcement: {
-                    list: announcement,
-                    important: announcement instanceof Array ? announcement.find(({priority}) => priority) : announcement
+                    list: payload,
+                    important: payload instanceof Array ? payload.find(({priority}) => priority) : payload
                 }
+            } : {
+                ...state
             }
-        })
+        }),
+        loadInsurance: (state, action) => {
+            const {payload} = action
+            return payload ? {
+                ...state,
+                insurance: {
+                    companyList: payload.companyList,
+                    productList: payload.productList
+                }
+            } : {
+                ...state
+            }
+        }
     }
 })
 
-export const {login, logout, loadAnnouncement} = actions
+export const {login, logout, loadAnnouncement, loadInsurance} = actions
 
 export default configureStore({reducer})

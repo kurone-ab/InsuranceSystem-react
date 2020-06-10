@@ -27,16 +27,7 @@ export default {
                 },
                 {
                     name: '상품 설계',
-                    children: [
-                        {
-                            name: '상품 설계',
-                            url: '/design',
-                        }, {
-                            name: '요율 수집ㆍ관리',
-                            url: '/design/rate_collection',
-                            icon: 'fa fa-angle-right',
-                        },
-                    ]
+                    url: '/design'
                 },
                 {
                     title: true,

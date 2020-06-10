@@ -44,7 +44,6 @@ const Login = (props) => {
     const loginComplete = (responseData) => {
         if (responseData) {
             const user = {id: responseData.id, name: responseData.name, auth: responseData.auth}
-            sessionStorage.setItem('user', JSON.stringify(user))
             props.login(user)
             props.history.push('/home');
         } else {
