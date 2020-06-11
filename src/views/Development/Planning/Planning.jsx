@@ -2,7 +2,7 @@ import React, {lazy, useState} from "react";
 import {Nav, NavItem, NavLink, TabContent, TabPane,} from 'reactstrap'
 import classnames from 'classnames'
 import {connect} from 'react-redux'
-import {loadInsurance} from "../../../globalStore";
+import {loadInsuranceInfoList} from "../../../globalStore";
 import {useGetAxios} from "../../global/useAxios";
 
 const BasicTable = lazy(() => import('../../global/CustomizableTable'))
@@ -57,7 +57,7 @@ const Planning = ({companyList, load}) => {
 }
 
 const mapStateToProps = (state) => {
-    const {insurance: {companyList} = {}} = state
+    const {insuranceInfo: {companyList} = {}} = state
     return companyList ? {
         companyList,
     } : {}
@@ -66,7 +66,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         load: (insurance) => {
-            dispatch(loadInsurance(insurance))
+            dispatch(loadInsuranceInfoList(insurance))
         }
     }
 }

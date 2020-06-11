@@ -129,7 +129,7 @@ const DesignForm = ({typeList}) => {
 }
 
 const mapStateToProps = (state) => {
-    const {insurance: {typeList} = {}} = state
+    const {insuranceInfoList: {typeList} = {}} = state
     return typeList ? {
         typeList,
     } : {}

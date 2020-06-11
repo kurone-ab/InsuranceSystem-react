@@ -2,7 +2,7 @@ import React, { useState} from "react";
 import {Form, FormGroup, Col, Label, Input, DropdownMenu, DropdownItem, Dropdown, DropdownToggle} from 'reactstrap'
 import {connect} from 'react-redux'
 
-const StrategyForm = ({companyList, productList}) => {
+const StrategyForm = ({companyList, productNameList}) => {
     const [open, setOpen] = useState({company: false, product: false})
     const [company, setCompany] = useState('own')
     const [product, setProduct] = useState('')
@@ -46,15 +46,15 @@ const StrategyForm = ({companyList, productList}) => {
                 </Col>
                 <Col xs="12" md="8">
                     <Dropdown isOpen={open.product} toggle={() => setOpen({company: false, product: !open.product})}>
-                        <DropdownToggle caret className='nanum-gothic'>{productList[product]}</DropdownToggle>
+                        <DropdownToggle caret className='nanum-gothic'>{productNameList[product]}</DropdownToggle>
                         <DropdownMenu>
-                            {Object.keys(productList).map((product, idx) => {
+                            {Object.keys(productNameList).map((product, idx) => {
                                 return (
                                     <DropdownItem key={idx}
                                                   className='border-0 nanum-gothic'
                                                   value={product}
                                                   onClick={() => setProduct(String(product))}
-                                    >{productList[product]}</DropdownItem>
+                                    >{productNameList[product]}</DropdownItem>
                                 )
                             })}
                         </DropdownMenu>
@@ -66,10 +66,10 @@ const StrategyForm = ({companyList, productList}) => {
 }
 
 const mapStateToProps = (state) => {
-    const {insurance: {companyList, productList} = {}} = state
+    const {insuranceInfoList: {companyList, productNameList} = {}} = state
     return companyList ? {
         companyList,
-        productList
+        productNameList
     } : {}
 }
 
