@@ -18,6 +18,7 @@ const Planning = ({companyList, load}) => {
     const upload = () => {
         console.log('upload')
     }
+
     useGetAxios({url: '/insurance/info', callback: load, necessary: !companyList})
 
     return (
@@ -55,6 +56,13 @@ const Planning = ({companyList, load}) => {
     )
 }
 
+const mapStateToProps = (state) => {
+    const {insurance: {companyList} = {}} = state
+    return companyList ? {
+        companyList,
+    } : {}
+}
+
 const mapDispatchToProps = (dispatch) => {
     return {
         load: (insurance) => {
@@ -63,4 +71,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(null, mapDispatchToProps)(Planning)
+export default connect(mapStateToProps, mapDispatchToProps)(Planning)

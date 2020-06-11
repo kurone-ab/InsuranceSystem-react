@@ -1,4 +1,4 @@
-import React, {lazy, useState} from "react";
+import React, { useState} from "react";
 import {Form, FormGroup, Col, Label, Input, DropdownMenu, DropdownItem, Dropdown, DropdownToggle} from 'reactstrap'
 import {connect} from 'react-redux'
 
@@ -66,10 +66,10 @@ const StrategyForm = ({companyList, productList}) => {
 }
 
 const mapStateToProps = (state) => {
-    const {insurance} = state
-    return insurance ? {
-        companyList: insurance.companyList,
-        productList: insurance.productList
+    const {insurance: {companyList, productList} = {}} = state
+    return companyList ? {
+        companyList,
+        productList
     } : {}
 }
 

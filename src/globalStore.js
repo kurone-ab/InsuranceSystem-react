@@ -10,9 +10,9 @@ const {actions, reducer} = createSlice({
             sessionStorage.setItem('user', JSON.stringify(payload))
             return {
                 user: {
-                    id: action.payload.id,
-                    name: action.payload.name,
-                    auth: action.payload.auth,
+                    id,
+                    name,
+                    auth,
                 }
             }
         },
@@ -35,12 +35,13 @@ const {actions, reducer} = createSlice({
             }
         }),
         loadInsurance: (state, action) => {
-            const {payload} = action
-            return payload ? {
+            const {payload:{companyList, productList, typeList} = {}} = action
+            return companyList ? {
                 ...state,
                 insurance: {
-                    companyList: payload.companyList,
-                    productList: payload.productList
+                    companyList,
+                    productList,
+                    typeList
                 }
             } : {
                 ...state

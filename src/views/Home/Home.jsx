@@ -1,17 +1,15 @@
 /*global kakao*/
 
 import React, {lazy, Suspense, useState} from "react";
-import {Button, Card, CardBody, CardHeader, Col, Jumbotron, ListGroup, ListGroupItem, Row, Spinner} from 'reactstrap'
+import {Button, Card, CardBody, CardHeader, Col, Jumbotron, ListGroup, ListGroupItem, Row} from 'reactstrap'
 import {useGetAxios} from '../global/useAxios'
 import {connect} from 'react-redux'
 import {loadAnnouncement} from "../../globalStore";
+import Loading from "../global/Loading";
 
 const CustomizableTable = lazy(() => import('../global/CustomizableTable'))
 
 const ReadContentModal = lazy(() => import('../global/ReadContentModal'))
-
-const Loading = () => <div className="animated fadeIn pt-1 d-flex justify-content-center"><Spinner color="primary"/>
-</div>
 
 const ImportantAnnouncement = ({data}) => {
     const {title, content, authorName} = data
@@ -30,7 +28,7 @@ const ImportantAnnouncement = ({data}) => {
                     <h1 className="display-3 nanum-gothic">{title}</h1>
                     <div className='nanum-gothic font-lg'>{content ? content.length > 50 ?
                         `${content.split('. ')[0]}.` : content : null}</div>
-                    <ReadContentModal state={collapse} toggleFunc={switching} title={title} content={content}/>
+                    <ReadContentModal open={collapse} toggleFunc={switching} title={title} content={content}/>
                     <hr className="my-2"/>
                     <p className='nanum-gothic'>{authorName}</p>
                     <p className="lead">

@@ -1,7 +1,7 @@
 import React from 'react'
 import {Button, Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap'
 
-const ReadContentModal = ({state, toggleFunc, title, content}) => {
+const ReadContentModal = ({open, toggleFunc, title, content}) => {
     const CustomHeader = () =>
         <div className='modal-header'>
             <div className='modal-title font-weight-bold nanum-gothic font-2xl'>{title}</div>
@@ -9,7 +9,7 @@ const ReadContentModal = ({state, toggleFunc, title, content}) => {
 
 
     return (
-        <Modal isOpen={state} toggle={toggleFunc} size='lg'>
+        <Modal isOpen={open} toggle={toggleFunc} size='lg'>
             <ModalHeader wrapTag={CustomHeader}/>
             <ModalBody className='nanum-gothic font-lg'>
                 {content}
