@@ -3,10 +3,9 @@ import {DropdownItem, DropdownMenu, DropdownToggle, Nav, UncontrolledDropdown} f
 import {AppNavbarBrand, AppSidebarToggler} from "@coreui/react";
 import maxImg from '../image/hanhwa_max.png'
 import minImg from '../image/hanhwa_min.png'
+import {connect} from 'react-redux'
 
-const Header = (props) => {
-    const name = sessionStorage.getItem('name')
-
+const Header = ({user, onLogout}) => {
     return(
         <Fragment>
             <AppSidebarToggler className="d-lg-none" display="md" mobile />
@@ -19,12 +18,12 @@ const Header = (props) => {
             <Nav className="ml-auto" navbar>
                 <UncontrolledDropdown nav direction="down" className="mr-4">
                     <DropdownToggle nav className="d-flex">
-                        <div className='m-auto nanum-gothic'>{name}</div>
+                        <div className='m-auto nanum-gothic'>{user.name}</div>
                         <img src="https://img.icons8.com/android/144/000000/user.png" className="img-avatar"
                              alt="admin"/>
                     </DropdownToggle>
                     <DropdownMenu right>
-                        <DropdownItem onClick={e => props.onLogout(e)}>
+                        <DropdownItem onClick={e => onLogout(e)}>
                             <i className="cui-account-logout"/> Logout
                         </DropdownItem>
                     </DropdownMenu>
@@ -34,4 +33,11 @@ const Header = (props) => {
     )
 }
 
-export default Header
+const mapStateToProps = (state) => {
+    const {user} = state
+    return {
+        user
+    }
+}
+
+export default connect(mapStateToProps)(Header)

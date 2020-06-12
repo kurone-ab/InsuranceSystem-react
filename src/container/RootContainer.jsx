@@ -7,21 +7,23 @@ import {
     AppSidebarMinimizer as SidebarMinimizer,
     AppSidebarNav as SidebarNav,
 } from "@coreui/react";
-import {Container} from 'reactstrap';
+import {Container, Spinner} from 'reactstrap';
 import * as router from 'react-router-dom';
 import {Redirect, Route, Switch} from 'react-router-dom';
+import {connect} from 'react-redux'
+import {logout} from '../globalStore'
 import navItems from "../navItems";
 import routes from "../routes";
+
 const Header = lazy(() => import('./Header'))
 
-const loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>
+const loading = () => <div className="animated fadeIn pt-1 d-flex justify-content-center"><Spinner color="primary"/>
+</div>
 
-const RootContainer = (props) => {
-
+const RootContainer = ({user, deleteUser, ...rest}) => {
     const logout = (e) => {
-        e.preventDefault();
-        sessionStorage.clear()
-        props.history.push('/login')
+        deleteUser()
+        rest.history.push('/login')
     }
 
     return (
@@ -34,16 +36,16 @@ const RootContainer = (props) => {
             <div className="app-body">
                 <AppSidebar fixed display="lg">
                     <Suspense fallback={loading()}>
-                        <SidebarNav navConfig={navItems} {...props} router={routes}/>
+                        <SidebarNav navConfig={navItems} {...rest} router={routes}/>
                     </Suspense>
                     <SidebarMinimizer/>
                 </AppSidebar>
-                <main className="main bg-gray-200">
+                <main className="main bg-light">
                     <AppBreadcrumb appRoutes={routes} router={router}/>
                     <Container fluid>
                         <Suspense fallback={loading()}>
                             <Switch>
-                                {sessionStorage.getItem('login') ? null: <Redirect to='/login'/>}
+                                {user ? null : <Redirect to='/login'/>}
                                 {
                                     routes.map((route, idx) => {
                                         return route.component ? (
@@ -69,7 +71,20 @@ const RootContainer = (props) => {
             </AppFooter>
         </div>
     )
-
 }
 
-export default RootContainer;
+const mapStateToProps = ({user}) => {
+    return {
+        user
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        deleteUser: () => {
+            dispatch(logout())
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(RootContainer);
