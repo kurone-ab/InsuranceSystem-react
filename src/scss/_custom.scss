@@ -2,10 +2,18 @@
 @import url('https://fonts.googleapis.com/css?family=Nanum+Gothic:400,700,800');
 @import url('https://fonts.googleapis.com/css?family=Jua:400');
 
-.jua{
+.jua {
   font-family: 'Jua', serif;
 }
 
-.nanum-gothic{
+.nanum-gothic {
   font-family: 'Nanum Gothic', serif;
+}
+
+.transition-all {
+  transition: {
+    duration: 1s;
+    property: all;
+    timing-function: ease-in-out;
+  };
 }

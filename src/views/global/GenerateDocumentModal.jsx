@@ -1,7 +1,8 @@
-import React, {Fragment, useState} from "react";
-import {Modal, ModalHeader, ModalBody, ModalFooter, Button} from 'reactstrap'
+import React, {Fragment, Suspense, useState} from "react";
+import {Button, Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap'
+import Loading from "./Loading";
 
-const GenerateDocumentModal = ({modalHeader, className, uploadAction, InputForm}) => {
+const GenerateDocumentModal = ({modalTitle, className, uploadAction, InputForm}) => {
     const [modalOpen, setModalOpen] = useState(false)
 
     const modalControl = () => {
@@ -11,7 +12,7 @@ const GenerateDocumentModal = ({modalHeader, className, uploadAction, InputForm}
     const CustomHeader = () => {
         return (
             <div className='modal-header'>
-                <div className='modal-title font-weight-bold nanum-gothic font-2xl'>{modalHeader}</div>
+                <div className='modal-title font-weight-bold nanum-gothic font-2xl'>{modalTitle}</div>
             </div>
         )
     }
@@ -24,7 +25,9 @@ const GenerateDocumentModal = ({modalHeader, className, uploadAction, InputForm}
                    className={'modal-lg ' + className} backdrop={'static'}>
                 <ModalHeader wrapTag={CustomHeader}/>
                 <ModalBody>
-                    {<InputForm/>}
+                    <Suspense fallback={Loading()}>
+                        {<InputForm/>}
+                    </Suspense>
                 </ModalBody>
                 <ModalFooter>
                     <Button color="primary" onClick={uploadAction}>등록</Button>{' '}
