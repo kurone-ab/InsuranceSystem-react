@@ -19,6 +19,7 @@ const header = {
 const Design = ({load, typeList, loadList, developingInsuranceList}) => {
     useGetAxios({url: '/insurance/info', callback: load, necessary: !typeList})
     useGetAxios({url: '/insurance/product/developing', callback: loadList, necessary: !developingInsuranceList})
+    console.log(useGetAxios({url: `/insurance/product?id=1`, necessary: true}))
     console.log('design render')
 
     return (
