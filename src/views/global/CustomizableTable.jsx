@@ -67,8 +67,14 @@ const CustomizableTable = ({
                             return (
                                 <tr key={idx}>
                                     {Object.keys(row).map((key, idx) => {
+                                        const {title, aTag} = row[key];
                                         return (
-                                            <td key={idx} className='nanum-gothic'>{row[key]}</td>
+                                            <td key={idx}>
+                                                {
+                                                    aTag ? <a href='#' onClick={() => console.log('click')}>{title}</a>:
+                                                        <div className='nanum-gothic'>{row[key]}</div>
+                                                }
+                                            </td>
                                         )
                                     })}
                                 </tr>

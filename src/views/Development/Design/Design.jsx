@@ -2,6 +2,7 @@ import React, {lazy} from "react";
 import {useGetAxios} from "../../global/useAxios";
 import {loadDevelopingInsuranceList, loadInsuranceInfoList} from "../../../globalStore";
 import {connect} from 'react-redux'
+import {instanceOf} from "prop-types";
 
 const CustomizableTable = lazy(() => import('../../global/CustomizableTable'))
 const DesignForm = lazy(() => import('./DesignForm'))
@@ -19,15 +20,26 @@ const header = {
 const Design = ({load, typeList, loadList, developingInsuranceList}) => {
     useGetAxios({url: '/insurance/info', callback: load, necessary: !typeList})
     useGetAxios({url: '/insurance/product/developing', callback: loadList, necessary: !developingInsuranceList})
-    console.log(useGetAxios({url: `/insurance/product?id=1`, necessary: true}))
-    console.log('design render')
+
+    let renderData = developingInsuranceList ? developingInsuranceList.map((insurance) => {
+        const {id, name, author, date} = insurance
+        return {
+            id,
+            name: {
+                title: name,
+                aTag: true
+            },
+            author,
+            date
+        }
+    }) : null
 
     return (
         <div className='animated fadeIn'>
             {
-                developingInsuranceList ?
+                renderData ?
                     <CustomizableTable tableTitle='설계 중인 보험 상품' tableHeader={header}
-                                       contentData={developingInsuranceList} activeModal
+                                       contentData={renderData} activeModal
                                        modalProps={{
                                            modalTitle: '설계하기',
                                            uploadAction: () => console.log(document.getElementsByClassName('assuranceAmount')),

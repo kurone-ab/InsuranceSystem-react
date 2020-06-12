@@ -69,7 +69,7 @@ const Home = ({load, list}) => {
     if (list)
         list.forEach((item) => {
             const {id, title, date, authorName} = item
-            renderData.push({id, title, date, authorName})
+            renderData.push({id, title:{title, aTag:true}, date, authorName})
         })
 
     // const fileupload = () => {
