@@ -24,18 +24,22 @@ const {actions, reducer} = createSlice({
         },
         loadAnnouncement: ((state, action) => {
             const {payload} = action
+            const important = payload instanceof Array ? payload.find(({priority}) => priority) : payload
             return payload ? {
                 ...state,
                 announcement: {
                     list: payload,
-                    important: payload instanceof Array ? payload.find(({priority}) => priority) : payload
+                    important,
+                    contentList: {
+                        [important.id]: important.content
+                    }
                 }
             } : {
                 ...state
             }
         }),
         loadInsuranceInfoList: (state, action) => {
-            const {payload:{companyList, productNameList, typeList} = {}} = action
+            const {payload: {companyList, productNameList, typeList} = {}} = action
             return companyList ? {
                 ...state,
                 insuranceInfoList: {
@@ -48,7 +52,7 @@ const {actions, reducer} = createSlice({
             }
         },
         loadInsuranceList: (state, action) => {
-            const {payload:insuranceList} = action
+            const {payload: insuranceList} = action
             return insuranceList ? {
                 ...state,
                 insuranceList
@@ -57,10 +61,26 @@ const {actions, reducer} = createSlice({
             }
         },
         loadDevelopingInsuranceList: (state, action) => {
-            const {payload:developingInsuranceList} = action
+            const {payload: developingInsuranceList} = action
             return developingInsuranceList ? {
                 ...state,
                 developingInsuranceList
+            } : {
+                ...state
+            }
+        },
+        loadAnnouncementContent: (state, action) => {
+            const {payload: {id, content}} = action
+            const {announcement, announcement: {contentList, ...aRest}, ...rest} = state
+            return content ? {
+                ...rest,
+                announcement: {
+                    ...aRest,
+                    contentList: {
+                        ...contentList,
+                        [id]: content
+                    }
+                }
             } : {
                 ...state
             }
@@ -68,6 +88,6 @@ const {actions, reducer} = createSlice({
     }
 })
 
-export const {login, logout, loadAnnouncement, loadInsuranceInfoList, loadInsuranceList, loadDevelopingInsuranceList} = actions
+export const {login, logout, loadAnnouncement, loadInsuranceInfoList, loadInsuranceList, loadDevelopingInsuranceList, loadAnnouncementContent} = actions
 
 export default configureStore({reducer})

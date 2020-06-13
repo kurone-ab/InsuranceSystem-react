@@ -4,7 +4,7 @@ import React, {lazy, Suspense, useState} from "react";
 import {Button, Card, CardBody, CardHeader, Col, Jumbotron, ListGroup, ListGroupItem, Row} from 'reactstrap'
 import {useGetAxios} from '../global/useAxios'
 import {connect} from 'react-redux'
-import {loadAnnouncement} from "../../globalStore";
+import {loadAnnouncement, loadAnnouncementContent} from "../../globalStore";
 import Loading from "../global/Loading";
 
 const CustomizableTable = lazy(() => import('../global/CustomizableTable'))
@@ -57,19 +57,18 @@ const FormCollection = () => {
     )
 }
 
-const Home = ({load, list}) => {
+const renderData = []
+const Home = ({load, list, contentList, contentDispatcher}) => {
     const upload = () => {
         console.log('upload')
     }
-
     let isMapLoad = false;
     useGetAxios({url: 'announcement/info', callback: load, necessary: !list});
     let important = list ? list instanceof Array ? list.find(({priority}) => priority) : list : null
-    const renderData = []
-    if (list)
+    if (list && renderData.length === 0)
         list.forEach((item) => {
             const {id, title, date, authorName} = item
-            renderData.push({id, title:{title, aTag:true}, date, authorName})
+            renderData.push({id, title:{title, baseUrl: '/announcement/content', id, contentDispatcher}, date, authorName})
         })
 
     // const fileupload = () => {
@@ -111,8 +110,8 @@ const Home = ({load, list}) => {
                     <Col>
                         <FormCollection/>
                         <Suspense fallback={Loading()}>
-                            <CustomizableTable contentData={renderData} tableTitle='공지 사항' modalTitle='새로운 글 작성'
-                                               uploadAction={upload}/>
+                            <CustomizableTable tableRowData={renderData} tableTitle='공지 사항' modalTitle='새로운 글 작성'
+                                               uploadAction={upload} retrieveDataList={contentList}/>
                         </Suspense>
                     </Col>
                 </Row>
@@ -121,15 +120,17 @@ const Home = ({load, list}) => {
 }
 
 const mapStateToProps = (state) => {
-    const {announcement: {list} = {}} = state
+    const {announcement: {list, contentList} = {}} = state
     return list ? {
-        list
+        list,
+        contentList
     } : {}
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        load: (announcement) => dispatch(loadAnnouncement(announcement))
+        load: (announcement) => dispatch(loadAnnouncement(announcement)),
+        contentDispatcher: (content) => dispatch(loadAnnouncementContent(content))
     }
 }
 

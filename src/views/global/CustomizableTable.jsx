@@ -1,10 +1,16 @@
 import React, {lazy, useState} from "react";
 import {Card, CardBody, CardHeader, Table} from 'reactstrap'
 import propTypes from 'prop-types'
+import ReadContentModal from "./ReadContentModal";
+import axios from 'axios';
+
+axios.defaults.withCredentials = true
+axios.defaults.baseURL = 'http://localhost:8080'
 
 const sort = 'fa-sort', desc = 'fa-sort-asc', asc = 'fa-sort-desc'
 
 const GenerateDocumentModal = lazy(() => import('../global/GenerateDocumentModal'))
+const readContentModal = lazy(() => import('../global/ReadContentModal'))
 
 const defaultHeader = {
     number: '글 번호',
@@ -16,27 +22,37 @@ const defaultHeader = {
     author: '작성자'
 }
 
+const KEYS = (target) => Object.keys(target)
 const CustomizableTable = ({
-                               contentData, tableTitle, tableHeader = defaultHeader, activeModal, modalProps
+                               tableRowData, tableTitle, tableHeader = defaultHeader, retrieveDataList, activeModal, modalProps
                            }) => {
     //set default
     const temp = {}
-    Object.keys(tableHeader).forEach((header) => {
+    const contentOpenState = {}
+
+    KEYS(tableHeader).forEach((header) => {
         temp[header] = sort
     })
-
+    KEYS(retrieveDataList).forEach((data) => {
+        contentOpenState[data] = false
+    })
     const [align, setAlign] = useState(temp)
-    const [content, setContent] = useState(contentData)
+    const [content, setContent] = useState(tableRowData)
+    const [open, setOpen] = useState(contentOpenState)
 
     const switching = (current) => current === asc ? desc : asc
 
-
     const columnAlign = (column) => {
         const newAlign = {}
-        Object.keys(align).forEach((header) => {
+        KEYS(align).forEach((header) => {
             newAlign[header] = header === column ? switching(align[column]) : sort
         })
         setAlign(newAlign);
+    }
+
+    const specificOpenState = (id) => {
+        contentOpenState[id] = true
+        setOpen({...contentOpenState});
     }
 
     return (
@@ -51,7 +67,7 @@ const CustomizableTable = ({
                     <thead>
                     <tr>
                         {
-                            Object.keys(tableHeader).map((header, idx) => {
+                            KEYS(tableHeader).map((header, idx) => {
                                 const {title = tableHeader[header], className = ''} = tableHeader[header]
                                 return <th key={idx} className={`${className} nanum-gothic`}>
                                     {title}
@@ -66,14 +82,27 @@ const CustomizableTable = ({
                         content ? content.map((row, idx) => {
                             return (
                                 <tr key={idx}>
-                                    {Object.keys(row).map((key, idx) => {
-                                        const {title, aTag} = row[key];
+                                    {KEYS(row).map((key, idx) => {
+                                        const {title, baseUrl, id, contentDispatcher} = row[key];
                                         return (
                                             <td key={idx}>
                                                 {
-                                                    aTag ? <a href='#' onClick={() => console.log('click')}>{title}</a>:
+                                                    //eslint-disable-next-line
+                                                    title ?
+                                                        <a href='#' onClick={(e) => {
+                                                            e.preventDefault()
+                                                            specificOpenState(id)
+                                                            axios.get(`${baseUrl}?id=${id}`).then(r => contentDispatcher(r.data))
+                                                        }}>{title}</a> :
                                                         <div className='nanum-gothic'>{row[key]}</div>
                                                 }
+                                                {title ? <ReadContentModal open={open[id] ? open[id] : false}
+                                                                           toggleFunc={() => {
+                                                                               specificOpenState(-1)
+                                                                           }} title={title}
+                                                                           content={retrieveDataList[id]}
+                                                                           url={`${baseUrl}?id=${id}`}
+                                                                           contentDispatcher={contentDispatcher}/> : null}
                                             </td>
                                         )
                                     })}

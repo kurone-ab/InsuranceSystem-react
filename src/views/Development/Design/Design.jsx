@@ -39,7 +39,7 @@ const Design = ({load, typeList, loadList, developingInsuranceList}) => {
             {
                 renderData ?
                     <CustomizableTable tableTitle='설계 중인 보험 상품' tableHeader={header}
-                                       contentData={renderData} activeModal
+                                       tableRowData={renderData} activeModal
                                        modalProps={{
                                            modalTitle: '설계하기',
                                            uploadAction: () => console.log(document.getElementsByClassName('assuranceAmount')),
