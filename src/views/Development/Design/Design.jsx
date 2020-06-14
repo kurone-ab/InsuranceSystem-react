@@ -17,6 +17,7 @@ const header = {
     author: '작성자',
     date: '수정 시각'
 }
+
 const Design = ({load, typeList, loadList, developingList}) => {
     useGetAxios({url: '/insurance/info', callback: load, necessary: !typeList})
     useGetAxios({url: '/insurance/product/developing', callback: loadList, necessary: !developingList})
@@ -44,7 +45,8 @@ const Design = ({load, typeList, loadList, developingList}) => {
                                        modalProps={{
                                            modalTitle: '설계하기',
                                            uploadAction: () => console.log(document.getElementsByClassName('assuranceAmount')),
-                                           InputForm: <DesignForm/>
+                                           inputForm: <DesignForm/>,
+                                           fileUpload: true
                                        }}/> : <Loading/>
             }
         </div>

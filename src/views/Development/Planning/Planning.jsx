@@ -47,7 +47,7 @@ const Planning = ({companyList, load}) => {
                                        modalProps={{
                                            modalTitle: '새로운 글 작성',
                                            uploadAction: marketUpload,
-                                           InputForm: <MarketForm/>
+                                           inputForm: <MarketForm/>
                                        }}/>
                 </TabPane>
                 <TabPane tabId={2}>
@@ -55,7 +55,7 @@ const Planning = ({companyList, load}) => {
                                        modalProps={{
                                            modalTitle: '새로운 글 작성',
                                            uploadAction: strategyUpload,
-                                           InputForm: <StrategyForm/>
+                                           inputForm: <StrategyForm/>
                                        }}/>
                                        <FileUploadButton color='primary' fileElementId='testFile' multiple/>
                 </TabPane>
