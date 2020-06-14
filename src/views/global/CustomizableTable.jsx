@@ -22,10 +22,7 @@ const defaultHeader = {
     author: '작성자'
 }
 
-const KEYS = (target) => Object.keys(target)
-const CustomizableTable = ({
-                               tableRowData, tableTitle, tableHeader = defaultHeader, retrieveForm: RetrieveForm, activeModal, modalProps
-                           }) => {
+const BaseTable = ({tableHeader, tableRowData, RetrieveForm}) => {
     //set default
     const temp = {}
     const contentOpenState = {}
@@ -58,64 +55,74 @@ const CustomizableTable = ({
         contentOpenState[id] = true
         setOpen({...contentOpenState});
     }
+    return(
+        <Table responsive striped className='font-lg'>
+            <thead>
+            <tr>
+                {
+                    KEYS(tableHeader).map((header, idx) => {
+                        const {title = tableHeader[header], className = ''} = tableHeader[header]
+                        return <th key={idx} className={`${className} nanum-gothic`}>
+                            {title}
+                            <i className={`fa ${align[header]} ml-2`} onClick={() => columnAlign(header)}/>
+                        </th>
+                    })
+                }
+            </tr>
+            </thead>
+            <tbody>
+            {
+                content ? content.map((row, idx) => {
+                    return (
+                        <tr key={idx}>
+                            {KEYS(row).map((key, idx) => {
+                                const {title, id} = row[key];
+                                contentOpenState[id] = false
+                                return (
+                                    <td key={idx}>
+                                        {
+                                            title ?
+                                                //eslint-disable-next-line
+                                                <a href='#' onClick={(e) => {
+                                                    e.preventDefault()
+                                                    specificOpenState(id)
+                                                }}>{title}</a> :
+                                                <div className='nanum-gothic'>{row[key]}</div>
+                                        }
+                                        {title ? <ReadContentModal open={open[id] ? open[id] : false}
+                                                                   toggleFunc={() => {
+                                                                       specificOpenState(-1)
+                                                                   }} title={title}
+                                                                   content={<RetrieveForm id={id}/>}/> : null}
+                                    </td>
+                                )
+                            })}
+                        </tr>
+                    )
+                }) : null
+            }
+            </tbody>
+        </Table>
+    )
+}
 
-    return (
-        <Card className="card-accent-primary">
-            <CardHeader className='d-flex'>
+const KEYS = (target) => Object.keys(target)
+const CustomizableTable = ({
+                               tableRowData, tableTitle, tableHeader = defaultHeader, retrieveForm: RetrieveForm, activeModal, modalProps, noCard
+                           }) => {
+
+
+    return (noCard ? <BaseTable tableHeader={tableHeader} tableRowData={tableRowData} retrieveForm={RetrieveForm}/> :
+            <Card className="card-accent-primary">
+                <CardHeader className='d-flex'>
                 <span className='my-auto nanum-gothic font-xl font-weight-bold'>
                     <i className='fa fa-align-justify mr-2'/>{tableTitle}</span>
-                {activeModal ? <GenerateDocumentModal {...modalProps}/> : null}
-            </CardHeader>
-            <CardBody>
-                <Table responsive striped className='font-lg'>
-                    <thead>
-                    <tr>
-                        {
-                            KEYS(tableHeader).map((header, idx) => {
-                                const {title = tableHeader[header], className = ''} = tableHeader[header]
-                                return <th key={idx} className={`${className} nanum-gothic`}>
-                                    {title}
-                                    <i className={`fa ${align[header]} ml-2`} onClick={() => columnAlign(header)}/>
-                                </th>
-                            })
-                        }
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {
-                        content ? content.map((row, idx) => {
-                            return (
-                                <tr key={idx}>
-                                    {KEYS(row).map((key, idx) => {
-                                        const {title, id} = row[key];
-                                        contentOpenState[id] = false
-                                        return (
-                                            <td key={idx}>
-                                                {
-                                                    title ?
-                                                        //eslint-disable-next-line
-                                                        <a href='#' onClick={(e) => {
-                                                            e.preventDefault()
-                                                            specificOpenState(id)
-                                                        }}>{title}</a> :
-                                                        <div className='nanum-gothic'>{row[key]}</div>
-                                                }
-                                                {title ? <ReadContentModal open={open[id] ? open[id] : false}
-                                                                           toggleFunc={() => {
-                                                                               specificOpenState(-1)
-                                                                           }} title={title}
-                                                                           content={<RetrieveForm id={id}/>}/> : null}
-                                            </td>
-                                        )
-                                    })}
-                                </tr>
-                            )
-                        }) : null
-                    }
-                    </tbody>
-                </Table>
-            </CardBody>
-        </Card>
+                    {activeModal ? <GenerateDocumentModal {...modalProps}/> : null}
+                </CardHeader>
+                <CardBody>
+                    <BaseTable tableHeader={tableHeader} tableRowData={tableRowData} retrieveForm={RetrieveForm}/>
+                </CardBody>
+            </Card>
     )
 }
 
