@@ -92,16 +92,28 @@ const {actions, reducer} = createSlice({
                 ...rest,
                 insurance: {
                     ...iRest,
-                    detail :{
+                    detail: {
                         ...detail,
                         [id]: {...pRest}
                     }
+                }
+            }
+        },
+        loadSalesInstructionList: (state, action) => {
+            const {payload: instructionList} = action
+            console.log(instructionList)
+            const {sales, ...rest} = state
+            return {
+                ...state,
+                sales: {
+                    ...rest,
+                    instructionList
                 }
             }
         }
     }
 })
 
-export const {login, logout, loadAnnouncement, loadInsuranceInfoList, loadDevelopingInsuranceList, loadAnnouncementContent, loadInsuranceDetail} = actions
+export const {login, logout, loadAnnouncement, loadInsuranceInfoList, loadDevelopingInsuranceList, loadAnnouncementContent, loadInsuranceDetail, loadSalesInstructionList} = actions;
 
 export default configureStore({reducer})
