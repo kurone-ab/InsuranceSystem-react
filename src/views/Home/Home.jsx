@@ -6,18 +6,16 @@ import {useGetAxios} from '../global/useAxios'
 import {connect} from 'react-redux'
 import {loadAnnouncement} from "../../globalStore";
 import Loading from "../global/Loading";
+import AnnouncementReadForm from "./AnnouncementReadForm";
 
 const CustomizableTable = lazy(() => import('../global/CustomizableTable'))
-
 const ReadContentModal = lazy(() => import('../global/ReadContentModal'))
 
 const ImportantAnnouncement = ({data}) => {
     const {title, content, authorName} = data
     const [collapse, setCollapse] = useState(false)
 
-    const switching = () => {
-        setCollapse(!collapse)
-    }
+    const switching = () => {setCollapse(!collapse)}
 
     return (
         <Card className='card-accent-primary'>
@@ -26,8 +24,9 @@ const ImportantAnnouncement = ({data}) => {
             <CardBody>
                 <Jumbotron>
                     <h1 className="display-3 nanum-gothic">{title}</h1>
-                    <div className='nanum-gothic font-lg'>{content ? content.length > 50 ?
-                        `${content.split('. ')[0]}.` : content : null}</div>
+                    <div className='nanum-gothic font-lg'>
+                        {content ? content.length > 50 ? `${content.split('. ')[0]}.` : content : null}
+                    </div>
                     <ReadContentModal open={collapse} toggleFunc={switching} title={title} content={content}/>
                     <hr className="my-2"/>
                     <p className='nanum-gothic'>{authorName}</p>
@@ -57,19 +56,18 @@ const FormCollection = () => {
     )
 }
 
+const renderData = []
 const Home = ({load, list}) => {
     const upload = () => {
         console.log('upload')
     }
-
     let isMapLoad = false;
     useGetAxios({url: 'announcement/info', callback: load, necessary: !list});
     let important = list ? list instanceof Array ? list.find(({priority}) => priority) : list : null
-    const renderData = []
-    if (list)
+    if (list && renderData.length === 0)
         list.forEach((item) => {
-            const {id, title, date, authorName} = item
-            renderData.push({id, title, date, authorName})
+            const {id, title, date, authorName: author} = item
+            renderData.push({id, title: {title, aTag: true, id}, date, author})
         })
 
     // const fileupload = () => {
@@ -103,7 +101,7 @@ const Home = ({load, list}) => {
     // useLayoutEffect(loadMap)
 
     return (list ?
-            <div className='animated fadeIn' onLoadStart={() => console.log('component load')}>
+            <div className='animated fadeIn'>
                 <Row>
                     <Col xs={12} md={6} xl={6}>
                         <ImportantAnnouncement data={important}/>
@@ -111,9 +109,7 @@ const Home = ({load, list}) => {
                     <Col>
                         <FormCollection/>
                         <Suspense fallback={Loading()}>
-                            <CustomizableTable contentData={renderData} tableTitle='공지 사항' modalTitle='새로운 글 작성'
-                                               uploadAction={upload}/>
-                        </Suspense>
+                            <CustomizableTable tableRowData={renderData} tableTitle='공지 사항' retrieveForm={AnnouncementReadForm}/></Suspense>
                     </Col>
                 </Row>
             </div> : <Loading/>
@@ -123,13 +119,13 @@ const Home = ({load, list}) => {
 const mapStateToProps = (state) => {
     const {announcement: {list} = {}} = state
     return list ? {
-        list
+        list,
     } : {}
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        load: (announcement) => dispatch(loadAnnouncement(announcement))
+        load: (announcement) => dispatch(loadAnnouncement(announcement)),
     }
 }
 

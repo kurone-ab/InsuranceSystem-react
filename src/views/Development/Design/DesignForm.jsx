@@ -6,7 +6,6 @@ import {
     DropdownItem,
     DropdownMenu,
     DropdownToggle,
-    Form,
     FormGroup,
     Input,
     InputGroup,
@@ -33,7 +32,7 @@ const DesignForm = ({typeList}) => {
 
 
     return (
-        <Form>
+        <>
             <FormGroup row>
                 <Col md={3} lg={2}>
                     <Label className='nanum-gothic'>상품 종류</Label>
@@ -124,12 +123,12 @@ const DesignForm = ({typeList}) => {
                     )
                 })
             }
-        </Form>
+        </>
     )
 }
 
 const mapStateToProps = (state) => {
-    const {insuranceInfoList: {typeList} = {}} = state
+    const {insurance: {infoList:{typeList} = {}} = {}} = state
     return typeList ? {
         typeList,
     } : {}
