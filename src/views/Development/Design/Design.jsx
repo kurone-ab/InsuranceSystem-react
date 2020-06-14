@@ -2,31 +2,33 @@ import React, {lazy} from "react";
 import {useGetAxios} from "../../global/useAxios";
 import {loadDevelopingInsuranceList, loadInsuranceInfoList} from "../../../globalStore";
 import {connect} from 'react-redux'
+import DesignReadForm from "./DesignReadForm";
 
 const CustomizableTable = lazy(() => import('../../global/CustomizableTable'))
 const DesignForm = lazy(() => import('./DesignForm'))
 const Loading = lazy(() => import('../../global/Loading'))
 
 const header = {
-    number: '상품 번호',
-    productName: {
+    id: '상품 번호',
+    name: {
         title: '상품명',
         className: 'w-50'
     },
     author: '작성자',
-    update: '수정 시각'
+    date: '수정 시각'
 }
-const Design = ({load, typeList, loadList, developingInsuranceList}) => {
+const Design = ({load, typeList, loadList, developingList}) => {
     useGetAxios({url: '/insurance/info', callback: load, necessary: !typeList})
-    useGetAxios({url: '/insurance/product/developing', callback: loadList, necessary: !developingInsuranceList})
+    useGetAxios({url: '/insurance/product/developing', callback: loadList, necessary: !developingList})
 
-    let renderData = developingInsuranceList ? developingInsuranceList.map((insurance) => {
+    const renderData = developingList ? developingList.map((insurance) => {
         const {id, name, author, date} = insurance
         return {
             id,
             name: {
                 title: name,
-                aTag: true
+                aTag: true,
+                id
             },
             author,
             date
@@ -38,11 +40,11 @@ const Design = ({load, typeList, loadList, developingInsuranceList}) => {
             {
                 renderData ?
                     <CustomizableTable tableTitle='설계 중인 보험 상품' tableHeader={header}
-                                       tableRowData={renderData} activeModal
+                                       tableRowData={renderData} activeModal retrieveForm={DesignReadForm}
                                        modalProps={{
                                            modalTitle: '설계하기',
                                            uploadAction: () => console.log(document.getElementsByClassName('assuranceAmount')),
-                                           InputForm: DesignForm
+                                           InputForm: <DesignForm/>
                                        }}/> : <Loading/>
             }
         </div>
@@ -50,10 +52,10 @@ const Design = ({load, typeList, loadList, developingInsuranceList}) => {
 }
 
 const mapStateToProps = (state) => {
-    const {insuranceInfo: {typeList} = {}, developingInsuranceList} = state
-    return !typeList || !developingInsuranceList ? {
+    const {insurance:{infoList:{typeList} = {}, developingList} = {}} = state
+    return !!typeList && !!developingList ? {
         typeList,
-        developingInsuranceList
+        developingList
     } : {}
 }
 

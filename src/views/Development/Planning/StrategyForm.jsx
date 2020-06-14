@@ -88,7 +88,7 @@ const StrategyForm = ({companyList, productList}) => {
 }
 
 const mapStateToProps = (state) => {
-    const {insuranceInfoList: {companyList, productList} = {}} = state
+    const {insurance: {infoList: {companyList, productList} = {}} = {}} = state
     return companyList ? {
         companyList,
         productList

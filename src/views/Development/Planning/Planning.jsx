@@ -6,6 +6,7 @@ import {loadInsuranceInfoList} from "../../../globalStore";
 import {useGetAxios} from "../../global/useAxios";
 import {uploadAction as marketUpload} from "./MarketForm";
 import {uploadAction as strategyUpload} from "./StrategyForm";
+import FileUploadButton from "../../global/FileUploadButton";
 
 const CustomizableTable = lazy(() => import('../../global/CustomizableTable'))
 const StrategyForm = lazy(() => import('./StrategyForm'))
@@ -56,6 +57,7 @@ const Planning = ({companyList, load}) => {
                                            uploadAction: strategyUpload,
                                            InputForm: <StrategyForm/>
                                        }}/>
+                                       <FileUploadButton color='primary' fileElementId='testFile' multiple/>
                 </TabPane>
             </TabContent>
         </div>
@@ -63,7 +65,7 @@ const Planning = ({companyList, load}) => {
 }
 
 const mapStateToProps = (state) => {
-    const {insuranceInfo: {companyList} = {}} = state
+    const {insurance: {infoList:{companyList} = {}} = {}} = state
     return companyList ? {
         companyList,
     } : {}

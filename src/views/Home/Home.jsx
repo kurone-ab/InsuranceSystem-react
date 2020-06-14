@@ -15,9 +15,7 @@ const ImportantAnnouncement = ({data}) => {
     const {title, content, authorName} = data
     const [collapse, setCollapse] = useState(false)
 
-    const switching = () => {
-        setCollapse(!collapse)
-    }
+    const switching = () => {setCollapse(!collapse)}
 
     return (
         <Card className='card-accent-primary'>
@@ -26,8 +24,9 @@ const ImportantAnnouncement = ({data}) => {
             <CardBody>
                 <Jumbotron>
                     <h1 className="display-3 nanum-gothic">{title}</h1>
-                    <div className='nanum-gothic font-lg'>{content ? content.length > 50 ?
-                        `${content.split('. ')[0]}.` : content : null}</div>
+                    <div className='nanum-gothic font-lg'>
+                        {content ? content.length > 50 ? `${content.split('. ')[0]}.` : content : null}
+                    </div>
                     <ReadContentModal open={collapse} toggleFunc={switching} title={title} content={content}/>
                     <hr className="my-2"/>
                     <p className='nanum-gothic'>{authorName}</p>
@@ -110,9 +109,7 @@ const Home = ({load, list}) => {
                     <Col>
                         <FormCollection/>
                         <Suspense fallback={Loading()}>
-                            <CustomizableTable tableRowData={renderData} tableTitle='공지 사항' modalTitle='새로운 글 작성'
-                                               uploadAction={upload} retrieveForm={AnnouncementReadForm}/>
-                        </Suspense>
+                            <CustomizableTable tableRowData={renderData} tableTitle='공지 사항' retrieveForm={AnnouncementReadForm}/></Suspense>
                     </Col>
                 </Row>
             </div> : <Loading/>
