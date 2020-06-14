@@ -4,11 +4,11 @@ import React, {lazy, Suspense, useState} from "react";
 import {Button, Card, CardBody, CardHeader, Col, Jumbotron, ListGroup, ListGroupItem, Row} from 'reactstrap'
 import {useGetAxios} from '../global/useAxios'
 import {connect} from 'react-redux'
-import {loadAnnouncement, loadAnnouncementContent} from "../../globalStore";
+import {loadAnnouncement} from "../../globalStore";
 import Loading from "../global/Loading";
+import AnnouncementReadForm from "./AnnouncementReadForm";
 
 const CustomizableTable = lazy(() => import('../global/CustomizableTable'))
-
 const ReadContentModal = lazy(() => import('../global/ReadContentModal'))
 
 const ImportantAnnouncement = ({data}) => {
@@ -58,7 +58,7 @@ const FormCollection = () => {
 }
 
 const renderData = []
-const Home = ({load, list, contentList, contentDispatcher}) => {
+const Home = ({load, list}) => {
     const upload = () => {
         console.log('upload')
     }
@@ -67,8 +67,8 @@ const Home = ({load, list, contentList, contentDispatcher}) => {
     let important = list ? list instanceof Array ? list.find(({priority}) => priority) : list : null
     if (list && renderData.length === 0)
         list.forEach((item) => {
-            const {id, title, date, authorName} = item
-            renderData.push({id, title:{title, baseUrl: '/announcement/content', id, contentDispatcher}, date, authorName})
+            const {id, title, date, authorName: author} = item
+            renderData.push({id, title: {title, aTag: true, id}, date, author})
         })
 
     // const fileupload = () => {
@@ -102,7 +102,7 @@ const Home = ({load, list, contentList, contentDispatcher}) => {
     // useLayoutEffect(loadMap)
 
     return (list ?
-            <div className='animated fadeIn' onLoadStart={() => console.log('component load')}>
+            <div className='animated fadeIn'>
                 <Row>
                     <Col xs={12} md={6} xl={6}>
                         <ImportantAnnouncement data={important}/>
@@ -111,7 +111,7 @@ const Home = ({load, list, contentList, contentDispatcher}) => {
                         <FormCollection/>
                         <Suspense fallback={Loading()}>
                             <CustomizableTable tableRowData={renderData} tableTitle='공지 사항' modalTitle='새로운 글 작성'
-                                               uploadAction={upload} retrieveDataList={contentList}/>
+                                               uploadAction={upload} retrieveForm={AnnouncementReadForm}/>
                         </Suspense>
                     </Col>
                 </Row>
@@ -120,17 +120,15 @@ const Home = ({load, list, contentList, contentDispatcher}) => {
 }
 
 const mapStateToProps = (state) => {
-    const {announcement: {list, contentList} = {}} = state
+    const {announcement: {list} = {}} = state
     return list ? {
         list,
-        contentList
     } : {}
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
         load: (announcement) => dispatch(loadAnnouncement(announcement)),
-        contentDispatcher: (content) => dispatch(loadAnnouncementContent(content))
     }
 }
 

@@ -4,8 +4,10 @@ import classnames from 'classnames'
 import {connect} from 'react-redux'
 import {loadInsuranceInfoList} from "../../../globalStore";
 import {useGetAxios} from "../../global/useAxios";
+import {uploadAction as marketUpload} from "./MarketForm";
+import {uploadAction as strategyUpload} from "./StrategyForm";
 
-const BasicTable = lazy(() => import('../../global/CustomizableTable'))
+const CustomizableTable = lazy(() => import('../../global/CustomizableTable'))
 const StrategyForm = lazy(() => import('./StrategyForm'))
 const MarketForm = lazy(() => import('./MarketForm'))
 
@@ -13,10 +15,6 @@ const Planning = ({companyList, load}) => {
     const [active, setActive] = useState(1)
     const changeTab = (tabID) => {
         setActive(tabID)
-    }
-
-    const upload = () => {
-        console.log('upload')
     }
 
     useGetAxios({url: '/insurance/info', callback: load, necessary: !companyList})
@@ -44,12 +42,20 @@ const Planning = ({companyList, load}) => {
             </Nav>
             <TabContent activeTab={active}>
                 <TabPane tabId={1}>
-                    <BasicTable tableTitle='시장 조사 정보' activeModal
-                                modalProps={{modalTitle: '새로운 글 작성', uploadAction: upload, InputForm: MarketForm}}/>
+                    <CustomizableTable tableTitle='시장 조사 정보' activeModal
+                                       modalProps={{
+                                           modalTitle: '새로운 글 작성',
+                                           uploadAction: marketUpload,
+                                           InputForm: <MarketForm/>
+                                       }}/>
                 </TabPane>
                 <TabPane tabId={2}>
-                    <BasicTable tableTitle='전략 정보' activeModal
-                                modalProps={{modalTitle: '새로운 글 작성', uploadAction: upload, InputForm: StrategyForm}}/>
+                    <CustomizableTable tableTitle='전략 정보' activeModal
+                                       modalProps={{
+                                           modalTitle: '새로운 글 작성',
+                                           uploadAction: strategyUpload,
+                                           InputForm: <StrategyForm/>
+                                       }}/>
                 </TabPane>
             </TabContent>
         </div>

@@ -2,7 +2,6 @@ import React, {lazy} from "react";
 import {useGetAxios} from "../../global/useAxios";
 import {loadDevelopingInsuranceList, loadInsuranceInfoList} from "../../../globalStore";
 import {connect} from 'react-redux'
-import {instanceOf} from "prop-types";
 
 const CustomizableTable = lazy(() => import('../../global/CustomizableTable'))
 const DesignForm = lazy(() => import('./DesignForm'))

@@ -39,12 +39,12 @@ const {actions, reducer} = createSlice({
             }
         }),
         loadInsuranceInfoList: (state, action) => {
-            const {payload: {companyList, productNameList, typeList} = {}} = action
+            const {payload: {companyList, productList, typeList} = {}} = action
             return companyList ? {
                 ...state,
                 insuranceInfoList: {
                     companyList,
-                    productNameList,
+                    productList,
                     typeList
                 }
             } : {
