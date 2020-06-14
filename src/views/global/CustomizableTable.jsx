@@ -22,7 +22,7 @@ const defaultHeader = {
     author: '작성자'
 }
 
-const BaseTable = ({tableHeader, tableRowData, RetrieveForm}) => {
+const BaseTable = ({tableHeader, tableRowData, retrieveForm: RetrieveForm}) => {
     //set default
     const temp = {}
     const contentOpenState = {}
@@ -48,12 +48,12 @@ const BaseTable = ({tableHeader, tableRowData, RetrieveForm}) => {
             return sortSwitching(newAlign[column])(aTitle ? aTitle : a[column], bTitle ? bTitle : b[column])
         })
         setContent(newContent)
-        setAlign(newAlign);
+        setAlign(newAlign)
     }
 
     const specificOpenState = (id) => {
         contentOpenState[id] = true
-        setOpen({...contentOpenState});
+        setOpen({...contentOpenState})
     }
     return(
         <Table responsive striped className='font-lg'>
@@ -110,7 +110,6 @@ const KEYS = (target) => Object.keys(target)
 const CustomizableTable = ({
                                tableRowData, tableTitle, tableHeader = defaultHeader, retrieveForm: RetrieveForm, activeModal, modalProps, noCard
                            }) => {
-
 
     return (noCard ? <BaseTable tableHeader={tableHeader} tableRowData={tableRowData} retrieveForm={RetrieveForm}/> :
             <Card className="card-accent-primary">

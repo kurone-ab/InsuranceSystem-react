@@ -68,7 +68,7 @@ const DesignForm = ({typeList}) => {
                     return (
                         <FormGroup row key={idx}>
                             <Col md={3} lg={2}>
-                                <Label className='nanum-gothic'>{`보장 ${idx + 1}`}</Label>
+                                <Label className='nanum-gothic mt-1'>{`보장 ${idx + 1}`}</Label>
                             </Col>
                             <Col md={12} lg={5}>
                                 <InputGroup>
@@ -80,7 +80,7 @@ const DesignForm = ({typeList}) => {
                                             </UncontrolledTooltip>
                                         </InputGroupText>
                                     </InputGroupAddon>
-                                    <Input type='text' className='nanum-gothic assuranceDescription'/>
+                                    <Input type='text' className='nanum-gothic assuranceDescription mt-1'/>
                                 </InputGroup>
                             </Col>
                             <Col md={10} lg={3} className='mt-1'>
