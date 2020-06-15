@@ -76,7 +76,6 @@ const BaseTable = ({tableHeader, tableRowData, retrieveForm: RetrieveForm}) => {
                     return (
                         <tr key={idx}>
                             {KEYS(row).map((key, idx) => {
-                                console.log(row)
                                 const {title, id} = row[key];
                                 contentOpenState[id] = false
                                 return (

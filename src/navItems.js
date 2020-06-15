@@ -147,7 +147,7 @@ export default {
                             children: [
                                 {
                                     name: '고객 관리',
-                                    url: '/sales_manage/customer_manage',
+                                    url: '/sales_manage/customer_manage',//missing component
                                     icon: 'fa fa-angle-right'
                                 },
                                 {
@@ -213,7 +213,7 @@ export default {
                 },
                 {
                     name: '사고 현장 처리',
-                    url: '/handle_accident/accident_information'
+                    url: '/handle_accident'
                 },
                 {
                     title: true,
