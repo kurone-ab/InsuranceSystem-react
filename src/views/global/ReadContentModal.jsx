@@ -23,8 +23,7 @@ ReadContentModal.propTypes = {
     open: propTypes.bool.isRequired,
     toggleFunc: propTypes.func.isRequired,
     title: propTypes.string.isRequired,
-    content: propTypes.string,
-    url: propTypes.string
+    content: propTypes.any,
 }
 
 export default ReadContentModal
