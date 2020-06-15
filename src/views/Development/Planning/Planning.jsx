@@ -6,7 +6,6 @@ import {loadInsuranceInfoList} from "../../../globalStore";
 import {useGetAxios} from "../../global/useAxios";
 import {uploadAction as marketUpload} from "./MarketForm";
 import {uploadAction as strategyUpload} from "./StrategyForm";
-import FileUploadButton from "../../global/FileUploadButton";
 
 const CustomizableTable = lazy(() => import('../../global/CustomizableTable'))
 const StrategyForm = lazy(() => import('./StrategyForm'))
@@ -43,7 +42,7 @@ const Planning = ({companyList, load}) => {
             </Nav>
             <TabContent activeTab={active}>
                 <TabPane tabId={1}>
-                    <CustomizableTable tableTitle='시장 조사 정보' activeModal
+                    <CustomizableTable noCard tableTitle='시장 조사 정보' activeModal
                                        modalProps={{
                                            modalTitle: '새로운 글 작성',
                                            uploadAction: marketUpload,
@@ -57,7 +56,6 @@ const Planning = ({companyList, load}) => {
                                            uploadAction: strategyUpload,
                                            inputForm: <StrategyForm/>
                                        }}/>
-                                       <FileUploadButton color='primary' fileElementId='testFile' multiple/>
                 </TabPane>
             </TabContent>
         </div>

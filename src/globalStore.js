@@ -23,12 +23,12 @@ const {actions, reducer} = createSlice({
             }
         },
         loadAnnouncement: ((state, action) => {
-            const {payload} = action
-            const important = payload instanceof Array ? payload.find(({priority}) => priority) : payload
-            return payload ? {
+            const {payload:list} = action
+            const important = list instanceof Array ? list.find(({priority}) => priority) : list
+            return list ? {
                 ...state,
                 announcement: {
-                    list: payload,
+                    list,
                     important,
                     contentList: {
                         [important.id]: important.content

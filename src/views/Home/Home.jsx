@@ -19,7 +19,7 @@ const ImportantAnnouncement = ({data}) => {
 
     return (
         <Card className='card-accent-primary'>
-            <CardHeader><span className='my-auto nanum-gothic font-weight-bold font-xl'><i
+            <CardHeader><span className='my-auto nanum-gothic font-lg'><i
                 className='fa fa-align-justify mr-2'/>중요 공지</span></CardHeader>
             <CardBody>
                 <Jumbotron>
@@ -42,7 +42,7 @@ const ImportantAnnouncement = ({data}) => {
 const FormCollection = () => {
     return(
         <Card className='card-accent-primary'>
-            <CardHeader><span className='my-auto nanum-gothic font-weight-bold font-xl'><i className='fa fa-align-justify mr-2'/>서식 모음</span></CardHeader>
+            <CardHeader><span className='my-auto nanum-gothic font-lg'><i className='fa fa-align-justify mr-2'/>서식 모음</span></CardHeader>
             <CardBody>
                 <ListGroup>
                     <ListGroupItem tag="a" href="#" action><h5 className='my-auto nanum-gothic'>출장 보고서</h5></ListGroupItem>
