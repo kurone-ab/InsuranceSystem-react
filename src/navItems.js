@@ -197,15 +197,15 @@ export default {
                 },
                 {
                     name: '사고 접수 상담',
-                    url: '/accident_counseling'
+                    url: '/new_accident/accident_counseling'
                 },
                 {
                     name: '보험 가입 확인',
-                    url: '/insurance_subscription_check'
+                    url: '/new_accident/insurance_subscription_check'
                 },
                 {
                     name: '사고 접수 진행',
-                    url: '/accident_register'
+                    url: '/new_accident/accident_register'
                 },
                 {
                     title: true,
@@ -213,7 +213,7 @@ export default {
                 },
                 {
                     name: '사고 현장 처리',
-                    url: '/accident_information'
+                    url: '/handle_accident/accident_information'
                 },
                 {
                     title: true,
@@ -221,7 +221,7 @@ export default {
                 },
                 {
                     name: '면/부책 판단',
-                    url: '/immunity_judgement'
+                    url: '/manage_immunity/immunity_judgement'
                 },
                 {
                     title: true,
@@ -229,7 +229,7 @@ export default {
                 },
                 {
                     name: '손해 사정',
-                    url: '/damage_assessment'
+                    url: '/manage_damage/damage_assessment'
                 }
             ]
         },
