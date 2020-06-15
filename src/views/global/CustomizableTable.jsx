@@ -76,6 +76,7 @@ const BaseTable = ({tableHeader, tableRowData, retrieveForm: RetrieveForm}) => {
                     return (
                         <tr key={idx}>
                             {KEYS(row).map((key, idx) => {
+                                console.log(row)
                                 const {title, id} = row[key];
                                 contentOpenState[id] = false
                                 return (
@@ -89,11 +90,13 @@ const BaseTable = ({tableHeader, tableRowData, retrieveForm: RetrieveForm}) => {
                                                 }}>{title}</a> :
                                                 <div className='nanum-gothic'>{row[key]}</div>
                                         }
-                                        {title ? <ReadContentModal open={open[id] ? open[id] : false}
-                                                                   toggleFunc={() => {
-                                                                       specificOpenState(-1)
-                                                                   }} title={title}
-                                                                   content={<RetrieveForm id={id}/>}/> : null}
+                                        {
+                                            title ? <ReadContentModal open={open[id] ? open[id] : false}
+                                                                      toggleFunc={() => {
+                                                                          specificOpenState(-1)
+                                                                      }} title={title}
+                                                                      content={<RetrieveForm id={id}/>}/> : null
+                                        }
                                     </td>
                                 )
                             })}
