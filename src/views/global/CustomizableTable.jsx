@@ -56,7 +56,7 @@ const BaseTable = ({tableHeader, tableRowData, retrieveForm: RetrieveForm}) => {
         setOpen({...contentOpenState})
     }
     return(
-        <Table responsive striped className='font-lg'>
+        <Table responsive borderless striped className='font-lg'>
             <thead>
             <tr>
                 {
@@ -76,7 +76,6 @@ const BaseTable = ({tableHeader, tableRowData, retrieveForm: RetrieveForm}) => {
                     return (
                         <tr key={idx}>
                             {KEYS(row).map((key, idx) => {
-                                console.log(row)
                                 const {title, id} = row[key];
                                 contentOpenState[id] = false
                                 return (
@@ -114,10 +113,14 @@ const CustomizableTable = ({
                                tableRowData, tableTitle, tableHeader = defaultHeader, retrieveForm: RetrieveForm, activeModal, modalProps, noCard
                            }) => {
 
-    return (noCard ? <BaseTable tableHeader={tableHeader} tableRowData={tableRowData} retrieveForm={RetrieveForm}/> :
+    return (noCard ?
+            <>
+                <div className='d-flex align-content-end'>{activeModal ? <GenerateDocumentModal {...modalProps}/> : null}</div>
+                <BaseTable tableHeader={tableHeader} tableRowData={tableRowData} retrieveForm={RetrieveForm}/>
+            </> :
             <Card className="card-accent-primary">
                 <CardHeader className='d-flex'>
-                <span className='my-auto nanum-gothic font-xl font-weight-bold'>
+                <span className='my-auto nanum-gothic font-lg'>
                     <i className='fa fa-align-justify mr-2'/>{tableTitle}</span>
                     {activeModal ? <GenerateDocumentModal {...modalProps}/> : null}
                 </CardHeader>

@@ -213,7 +213,7 @@ export default {
                 },
                 {
                     name: '사고 현장 처리',
-                    url: '/handle_accident/accident_information'
+                    url: '/handle_accident'
                 },
                 {
                     title: true,

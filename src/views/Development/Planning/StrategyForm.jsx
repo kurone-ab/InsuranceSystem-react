@@ -15,13 +15,9 @@ const StrategyForm = ({companyList, productList}) => {
     const [open, setOpen] = useState({company: false, product: false})
     const [company, setCompany] = useState('HANHWA')
     const [product, setProduct] = useState(0)
-    const selectedCompanyProductList = []
-    if (productList)
-        Object.keys(productList).forEach((product) => {
-            if (productList[product].company === company) selectedCompanyProductList.push(productList[product])
-        })
+    const selectedCompanyProductList = productList.filter((product)=>product.company === company)
     selectedCompanyProductList.push({id: 'addProduct', name: '보험 상품 추가하기'})
-    selectedProduct = selectedCompanyProductList[product].id
+    selectedProduct = selectedCompanyProductList[product] ? selectedCompanyProductList[product].id : null
 
     return (companyList ?
             <>

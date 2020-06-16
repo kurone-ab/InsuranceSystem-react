@@ -10,7 +10,7 @@ export const uploadAction = (e, closeModal) => {
     const title = document.getElementById('salesInstructionFormTitle').value
     const instruction = document.getElementById('salesInstruction').value
     console.log(title, instruction)
-    axios.post('sales/instruction/register', {title, instruction}).then(r=>{
+    axios.post('instruction/sales/register', {title, instruction}).then(r=>{
         if (r.data)
             closeModal()
     })
