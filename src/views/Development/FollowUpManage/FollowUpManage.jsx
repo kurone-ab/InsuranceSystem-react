@@ -58,9 +58,6 @@ const FollowUpManage = ({productList, typeList, load}) => {
                         })
                     }
 
-                    <TabPane tabId={2}>
-
-                    </TabPane>
                 </TabContent>
             </div> : <Loading/>
     )

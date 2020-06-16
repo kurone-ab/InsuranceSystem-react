@@ -8,7 +8,7 @@ const BASE_URL = '/insurance/product'
 const DesignReadForm = ({id, detail, detailDispatcher}) => {
     const insuranceDetail = detail[id]
     useGetAxios({url: `${BASE_URL}?id=${id}`, necessary: !insuranceDetail, callback: detailDispatcher})
-    const {guaranteeInfoList, salesTargetList, type, name} = insuranceDetail
+    // const {guaranteeInfoList, salesTargetList, type, name} = insuranceDetail
 
     return(
         <>

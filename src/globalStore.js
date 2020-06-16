@@ -101,7 +101,6 @@ const {actions, reducer} = createSlice({
         },
         loadSalesInstructionList: (state, action) => {
             const {payload: instructionList} = action
-            console.log(instructionList)
             const {sales, ...rest} = state
             return {
                 ...state,

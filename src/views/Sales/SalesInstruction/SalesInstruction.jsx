@@ -20,7 +20,7 @@ const header = {
 
 
 const SalesInstruction = ({instructionList, load}) => {
-    useGetAxios({url: '/sales/instruction/list', callback: load, necessary: !instructionList})
+    useGetAxios({url: 'instruction/sales/list', callback: load, necessary: !instructionList})
 
     const renderData = []
     if (instructionList)
