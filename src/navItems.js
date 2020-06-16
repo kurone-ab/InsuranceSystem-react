@@ -147,7 +147,7 @@ export default {
                             children: [
                                 {
                                     name: '고객 관리',
-                                    url: '/sales_manage/customer_manage',//missing component
+                                    url: '/sales_manage/customer_manage',
                                     icon: 'fa fa-angle-right'
                                 },
                                 {

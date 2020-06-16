@@ -16,6 +16,7 @@ const Reinsurance = lazy(() => import('./views/UnderWriting/Screening/Examinatio
 const JointInsurance = lazy(() => import('./views/UnderWriting/Screening/Examination/JointInsurance'))
 const SalesInstruction = lazy(() => import('./views/Sales/SalesInstruction/SalesInstruction'))
 const SalesManage = lazy(() => import('./views/Sales/SalesManage/SalesManage'))
+const CustomerManage = lazy(() => import('./views/Sales/SalesManage/CustomerManage/CustomerManage'))
 const CustomerGet = lazy(() => import('./views/Sales/SalesManage/CustomerManage/CustomerGet'))
 const CustomerRelationship = lazy(() => import('./views/Sales/SalesManage/CustomerManage/CustomerRelationship'))
 const ProductManage = lazy(() => import('./views/Sales/SalesManage/ProductManage/ProductManage'))
@@ -45,7 +46,7 @@ const routes = [
     { path: '/screening/examination/joint_insurance', name: '공동 인수', component: JointInsurance },
     { path: '/sales_instruction', name: '영업 지침 관리', component: SalesInstruction },
     { path: '/sales_manage', exact: true, name: '영업 관리', component: SalesManage },
-    // { path: '/sales_manage/customer_manage', exact: true, name: '고객 관리', component: Customer },
+    { path: '/sales_manage/customer_manage', exact: true, name: '고객 관리', component: CustomerManage },
     { path: '/sales_manage/customer_manage/customer_get', name: '가망 고객 확보', component: CustomerGet },
     { path: '/sales_manage/customer_manage/customer_relationship', name: '고객 관계 형성', component: CustomerRelationship },
     { path: '/sales_manage/product_manage', exact: true, name: '상품 관리', component: ProductManage },
