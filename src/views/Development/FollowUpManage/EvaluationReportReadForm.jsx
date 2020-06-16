@@ -1,21 +1,12 @@
 import React from "react";
 import {ListGroup, ListGroupItem} from 'reactstrap'
-import {connect} from 'react-redux'
-import {loadInsuranceDetail} from "../../../globalStore";
-import {useGetAxios} from "../../global/useAxios";
 import Loading from "../../global/Loading";
-import axios from "axios";
 import {fileDownload} from "../../../utils";
-
-axios.defaults.withCredentials = true
-axios.defaults.baseURL = 'http://localhost:8080'
 
 const BASE_URL = 'insurance/product/detail'
 
-const EvaluationReportReadForm = ({id, detail, load}) => {
-    const insuranceDetail = detail[id]
-    useGetAxios({url: `${BASE_URL}?id=${id}`, callback: load, necessary: !insuranceDetail})
-    const {evaluationReportList: evalList} = insuranceDetail ? insuranceDetail : {}
+const EvaluationReportReadForm = ({evalList}) => {
+
     return (evalList ?
             <ListGroup flush>
                 {
@@ -37,18 +28,4 @@ const EvaluationReportReadForm = ({id, detail, load}) => {
             </ListGroup> : <Loading/>
     )
 }
-
-const mapStateToProps = (state) => {
-    const {insurance: {detail} = {}} = state
-    return detail ? {
-        detail
-    } : {}
-}
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        load: (detail) => dispatch(loadInsuranceDetail(detail))
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(EvaluationReportReadForm)
+export default EvaluationReportReadForm

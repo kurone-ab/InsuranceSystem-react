@@ -12,6 +12,8 @@ const FollowUpManage = ({productList, typeList, load}) => {
     const [product, setProduct] = useState(0)
     const typeListKeys = typeList ? Object.keys(typeList) :  null
 
+    const filteredList = Object.values(productList).filter(value => value.company === 'HANHWA')
+
     return (typeList ?
             <div className='animated fadeIn'>
                 <Nav tabs>
@@ -41,7 +43,7 @@ const FollowUpManage = ({productList, typeList, load}) => {
                                 <TabPane tabId={type} key={idx}>
                                     <ListGroup flush>
                                         {
-                                            productList.filter((product) => product.type === type).map((product, idx) => {
+                                            filteredList.filter((product) => product.type === type).map((product, idx) => {
                                                 return (
                                                     <ListGroupItem tag="a" href="#" action key={idx} onClick={(e)=> {
                                                         e.preventDefault()

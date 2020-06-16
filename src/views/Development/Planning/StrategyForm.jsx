@@ -15,7 +15,7 @@ const StrategyForm = ({companyList, productList}) => {
     const [open, setOpen] = useState({company: false, product: false})
     const [company, setCompany] = useState('HANHWA')
     const [product, setProduct] = useState(0)
-    const selectedCompanyProductList = productList.filter((product)=>product.company === company)
+    const selectedCompanyProductList = Object.values(productList).filter((product)=>product.company === company)
     selectedCompanyProductList.push({id: 'addProduct', name: '보험 상품 추가하기'})
     selectedProduct = selectedCompanyProductList[product] ? selectedCompanyProductList[product].id : null
 
