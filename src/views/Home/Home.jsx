@@ -7,6 +7,7 @@ import {connect} from 'react-redux'
 import {loadAnnouncement} from "../../globalStore";
 import Loading from "../global/Loading";
 import AnnouncementReadForm from "./AnnouncementReadForm";
+import FileUploadButton from "../global/FileUploadButton";
 
 const CustomizableTable = lazy(() => import('../global/CustomizableTable'))
 const ReadContentModal = lazy(() => import('../global/ReadContentModal'))
@@ -112,6 +113,7 @@ const Home = ({load, list}) => {
                             <CustomizableTable tableRowData={renderData} tableTitle='공지 사항' retrieveForm={AnnouncementReadForm}/></Suspense>
                     </Col>
                 </Row>
+                <FileUploadButton fileElementId={'test2'} multiple/>
             </div> : <Loading/>
     )
 }

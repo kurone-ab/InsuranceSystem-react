@@ -109,10 +109,35 @@ const {actions, reducer} = createSlice({
                     instructionList
                 }
             }
+        },
+        loadContractList: (state, action) => {
+            const {contract ={}, ...rest} = state
+            const {list} = contract
+            const {user: {id}} = state
+            const {payload} = action
+            return {
+                ...rest,
+                contract: {
+                    list: {
+                        ...list,
+                        [id]: payload
+                    },
+                    ...contract
+                }
+            }
+
         }
     }
 })
 
-export const {login, logout, loadAnnouncement, loadInsuranceInfoList, loadDevelopingInsuranceList, loadAnnouncementContent, loadInsuranceDetail, loadSalesInstructionList} = actions;
+export const {login,
+    logout,
+    loadAnnouncement,
+    loadInsuranceInfoList,
+    loadDevelopingInsuranceList,
+    loadAnnouncementContent,
+    loadInsuranceDetail,
+    loadSalesInstructionList,
+    loadContractList} = actions;
 
 export default configureStore({reducer})

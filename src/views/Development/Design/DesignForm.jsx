@@ -73,7 +73,7 @@ const DesignForm = ({typeList}) => {
                             <Col md={12} lg={5}>
                                 <InputGroup>
                                     <InputGroupAddon addonType="prepend">
-                                        <InputGroupText>
+                                        <InputGroupText className='mt-1'>
                                             <Input addon type="checkbox" id={`special${idx}`}/>
                                             <UncontrolledTooltip target={`#special${idx}`} className='nanum-gothic'>
                                                 특약인 경우 선택하세요
