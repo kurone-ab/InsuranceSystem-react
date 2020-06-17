@@ -20,9 +20,7 @@ const ProductManage = ({loadSalesInstructionList}) => {
     
 
     return(
-        <CustomizableTable tableRowData={renderData} tableTitle = '계약 후 관리' tableHeader = {header}>
-
-        </CustomizableTable>
+        <CustomizableTable tableRowData={renderData} tableTitle = '상품 관리' tableHeader = {header}/>
     )
 }
 
