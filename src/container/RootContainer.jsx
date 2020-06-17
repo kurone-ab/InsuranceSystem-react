@@ -14,11 +14,9 @@ import {connect} from 'react-redux'
 import {logout} from '../globalStore'
 import navItems from "../navItems";
 import routes from "../routes";
+import Loading from "../views/global/Loading";
 
 const Header = lazy(() => import('./Header'))
-
-const loading = () => <div className="animated fadeIn pt-1 d-flex justify-content-center"><Spinner color="primary"/>
-</div>
 
 const RootContainer = ({user, deleteUser, ...rest}) => {
     const logout = (e) => {
@@ -29,13 +27,13 @@ const RootContainer = ({user, deleteUser, ...rest}) => {
     return (
         <div className="app">
             <AppHeader fixed>
-                <Suspense fallback={loading()}>
+                <Suspense fallback={Loading()}>
                     <Header onLogout={e => logout(e)}/>
                 </Suspense>
             </AppHeader>
             <div className="app-body">
                 <AppSidebar fixed display="lg">
-                    <Suspense fallback={loading()}>
+                    <Suspense fallback={Loading()}>
                         <SidebarNav navConfig={navItems} {...rest} router={routes}/>
                     </Suspense>
                     <SidebarMinimizer/>
@@ -43,7 +41,7 @@ const RootContainer = ({user, deleteUser, ...rest}) => {
                 <main className="main bg-light">
                     <AppBreadcrumb appRoutes={routes} router={router}/>
                     <Container fluid>
-                        <Suspense fallback={loading()}>
+                        <Suspense fallback={Loading()}>
                             <Switch>
                                 {user ? null : <Redirect to='/login'/>}
                                 {

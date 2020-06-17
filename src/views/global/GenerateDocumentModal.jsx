@@ -2,20 +2,13 @@ import React, {Suspense, useState} from "react";
 import {Button, Form, Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap'
 import Loading from "./Loading";
 import FileUploadButton from "./FileUploadButton";
+import CustomizableModalHeader from "./CustomiableModalHeader";
 
 const GenerateDocumentModal = ({modalTitle, buttonTitle = '보고서 작성하기', className, uploadAction, inputForm: InputForm, fileUpload, fileElementId}) => {
     const [modalOpen, setModalOpen] = useState(false)
 
     const modalControl = () => {
         setModalOpen(!modalOpen)
-    }
-
-    const CustomHeader = () => {
-        return (
-            <div className='modal-header'>
-                <div className='modal-title font-weight-bold nanum-gothic font-2xl'>{modalTitle}</div>
-            </div>
-        )
     }
 
     return (
@@ -25,7 +18,7 @@ const GenerateDocumentModal = ({modalTitle, buttonTitle = '보고서 작성하�
             <Modal isOpen={modalOpen} toggle={modalControl}
                    className={'modal-lg ' + className} backdrop={'static'}>
                 <Form onSubmit={(e) => uploadAction(e, modalControl)}>
-                    <ModalHeader wrapTag={CustomHeader}/>
+                    <CustomizableModalHeader title={modalTitle}/>
                     <ModalBody>
                         <Suspense fallback={Loading()}>
                             {InputForm}

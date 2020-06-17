@@ -1,6 +1,6 @@
 import React, {lazy} from "react";
 import CustomizableTable from "../../global/CustomizableTable";
-import {connect} from 'react-redux'
+import {connect} from 'react-redux';
 import {useGetAxios} from "../../global/useAxios";
 import {loadSalesInstructionList} from "../../../globalStore";
 import Loading from "../../global/Loading";
