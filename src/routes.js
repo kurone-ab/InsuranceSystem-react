@@ -11,9 +11,7 @@ const LossRateManagement = lazy(() => import('./views/UnderWriting/PolicyEstabli
 const PolicyRegister = lazy(() => import('./views/UnderWriting/PolicyEstablishment/PolicyRegister'))
 const Screening = lazy(() => import('./views/UnderWriting/Screening/Screening'))
 const ManageFactor = lazy(() => import('./views/UnderWriting/Screening/ManageFactor'))
-const Examination = lazy(() => import('./views/UnderWriting/Screening/Examination/Examination'))
-const Reinsurance = lazy(() => import('./views/UnderWriting/Screening/Examination/Reinsurance'))
-const JointInsurance = lazy(() => import('./views/UnderWriting/Screening/Examination/JointInsurance'))
+const Examination = lazy(() => import('./views/UnderWriting/Screening/Examination'))
 const SalesInstruction = lazy(() => import('./views/Sales/SalesInstruction/SalesInstruction'))
 const SalesManage = lazy(() => import('./views/Sales/SalesManage/SalesManage'))
 const CustomerManage = lazy(() => import('./views/Sales/SalesManage/CustomerManage/CustomerManage'))
@@ -42,8 +40,6 @@ const routes = [
     { path: '/screening', exact: true, name: '인수 심사', component: Screening },
     { path: '/screening/manage_factor', name: 'U/W Factor 관리', component: ManageFactor },
     { path: '/screening/examination', exact: true, name: '적부 심사', component: Examination },
-    { path: '/screening/examination/reinsurance', name: '재보험', component: Reinsurance },
-    { path: '/screening/examination/joint_insurance', name: '공동 인수', component: JointInsurance },
     { path: '/sales_instruction', name: '영업 지침 관리', component: SalesInstruction },
     { path: '/sales_manage', exact: true, name: '영업 관리', component: SalesManage },
     { path: '/sales_manage/customer_manage', exact: true, name: '고객 관리', component: CustomerManage },

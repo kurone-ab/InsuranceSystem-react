@@ -124,9 +124,9 @@ const FollowUpManage = ({productList, typeList, load}) => {
                                             }
                                         </ListGroup>
                                     </ModalBody>
-                                    <ModalFooter key={Math.random()}>
-                                        <Button color='primary' onClick={fileUpload} key={Math.random()}>확인</Button>
-                                        <Button color='secondary' onClick={modalClose} key={Math.random()}>취소</Button>
+                                    <ModalFooter>
+                                        <Button color='primary' onClick={fileUpload}>확인</Button>
+                                        <Button color='secondary' onClick={modalClose}>취소</Button>
                                     </ModalFooter>
                                 </Modal>
                                 <ListGroup flush>

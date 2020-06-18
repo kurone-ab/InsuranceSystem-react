@@ -95,24 +95,8 @@ export default {
                         },
                         {
                             name: '적부 심사',
-                            icon: 'fa fa-angle-right',
-                            children: [
-                                {
-                                    name: '적부 심사',
-                                    url: '/screening/examination',
-                                    icon: 'fa fa-angle-right'
-                                },
-                                {
-                                    name: '재보험',
-                                    url: '/screening/examination/reinsurance',
-                                    icon: 'fa fa-angle-double-right'
-                                },
-                                {
-                                    name: '공동 인수',
-                                    url: '/screening/examination/joint_insurance',
-                                    icon: 'fa fa-angle-double-right'
-                                },
-                            ]
+                            url: '/screening/examination',
+                            icon: 'fa fa-angle-right'
                         },
                     ]
                 }
