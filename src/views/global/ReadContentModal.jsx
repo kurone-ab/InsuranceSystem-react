@@ -6,7 +6,7 @@ import CustomizableModalHeader from "./CustomiableModalHeader";
 const ReadContentModal = ({open, toggleFunc, title, content, addCancel, confirmAction = toggleFunc, size = 'lg'}) =>
         <Modal isOpen={open} toggle={toggleFunc} size={size}>
             <CustomizableModalHeader title={title}/>
-            <ModalBody className='nanum-gothic font-lg d-flex justify-content-center'>
+            <ModalBody className='nanum-gothic font-lg d-flex justify-content-center flex-wrap'>
                 {content ? content : <Spinner color='primary'/>}
             </ModalBody>
             <ModalFooter>
