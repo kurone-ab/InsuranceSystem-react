@@ -61,7 +61,7 @@ const Planning = ({companyList, load, mList, sList, loadStrategyInvestigationLis
             </Nav>
             <TabContent activeTab={active}>
                 <TabPane tabId={1}>
-                    <CustomizableTable noCard tableRowData={renderMarket} tableTitle='시장 조사 정보' activeModal
+                    <CustomizableTable noCard tableRowData={[]} tableTitle='시장 조사 정보' activeModal
                                        modalProps={{
                                            modalTitle: '새로운 글 작성',
                                            uploadAction: marketUpload,
@@ -69,7 +69,7 @@ const Planning = ({companyList, load, mList, sList, loadStrategyInvestigationLis
                                        }}/>
                 </TabPane>
                 <TabPane tabId={2}>
-                    <CustomizableTable noCard tableRowData={renderStrategy} tableTitle='전략 정보' activeModal
+                    <CustomizableTable noCard tableRowData={[]} tableTitle='전략 정보' activeModal
                                        modalProps={{
                                            modalTitle: '새로운 글 작성',
                                            uploadAction: strategyUpload,
