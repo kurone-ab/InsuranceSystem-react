@@ -1,13 +1,12 @@
 /*global kakao*/
 
-import React, {lazy, Suspense, useState, useLayoutEffect} from "react";
+import React, {lazy, Suspense, useEffect, useState} from "react";
 import {Button, Card, CardBody, CardHeader, Col, Jumbotron, ListGroup, ListGroupItem, Row} from 'reactstrap'
 import {useGetAxios} from '../global/useAxios'
 import {connect} from 'react-redux'
 import {loadAnnouncement} from "../../globalStore";
 import Loading from "../global/Loading";
 import AnnouncementReadForm from "./AnnouncementReadForm";
-import FileUploadButton from "../global/FileUploadButton";
 
 const CustomizableTable = lazy(() => import('../global/CustomizableTable'))
 const ReadContentModal = lazy(() => import('../global/ReadContentModal'))
@@ -81,30 +80,63 @@ const Home = ({load, list}) => {
     // eslint-disable-next-line no-unused-vars
     const loadMap = () => {
         let container = document.getElementById("map");
-        const script = document.createElement("script");
-        script.async = true;
-        script.src =
-            "//dapi.kakao.com/v2/maps/sdk.js?appkey=54eb777b5ef458ad5bd6b46c650f0b13&autoload=false";
-        const library = document.createElement("script")
-        library.async = true;
-        library.src =
-            "//dapi.kakao.com/v2/maps/sdk.js?appkey=54eb777b5ef458ad5bd6b46c650f0b13&libraries=services,clusterer,drawing";
-        document.head.appendChild(script);
-        document.head.appendChild(library);
-        if (!container || isMapLoad) return
+        // const script = document.createElement("script");
+        // script.async = true;
+        // script.src =
+        //     "//dapi.kakao.com/v2/maps/sdk.js?appkey=54eb777b5ef458ad5bd6b46c650f0b13&autoload=false";
+        // const library = document.createElement("script")
+        // library.async = true;
+        // library.src =
+        //     "//dapi.kakao.com/v2/maps/sdk.js?appkey=54eb777b5ef458ad5bd6b46c650f0b13&libraries=services,clusterer,drawing";
+        // document.head.appendChild(script);
+        // document.head.appendChild(library);
+        if (!container) return
+        console.log(container.style)
         console.log("load map")
-        kakao.maps.load(() => {
-            let options = {
-                center: new kakao.maps.LatLng(37.506502, 127.053617),
-                level: 7
-            };
-            // eslint-disable-next-line no-unused-vars
-            const map = new window.kakao.maps.Map(container, options);
-        });
-        isMapLoad = true
+        let map
+        setTimeout(() => {
+            kakao.maps.load(() => {
+                console.log("load map 2")
+                let options = {
+                    center: new kakao.maps.LatLng(37.5803130, 126.9227),
+                    level: 2
+                };
+                // eslint-disable-next-line no-unused-vars
+                map = new window.kakao.maps.Map(container, options);
+            });
+            isMapLoad = true
+            // 주소-좌표 변환 객체를 생성합니다
+            const geocoder = new kakao.maps.services.Geocoder();
+
+// 주소로 좌표를 검색합니다
+            geocoder.addressSearch('명지대학교 인문캠퍼스', function (result, status) {
+
+                // 정상적으로 검색이 완료됐으면
+                if (status === kakao.maps.services.Status.OK) {
+
+                    const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+                    // 결과값으로 받은 위치를 마커로 표시합니다
+                    const marker = new kakao.maps.Marker({
+                        map: map,
+                        position: coords
+                    });
+
+                    // 인포윈도우로 장소에 대한 설명을 표시합니다
+                    const infowindow = new kakao.maps.InfoWindow({
+                        content: '<div style="width:150px;text-align:center;padding:6px 0;">우리회사</div>'
+                    });
+                    infowindow.open(map, marker);
+
+                    // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+                    map.setCenter(coords);
+                }
+            });
+        }, 10)
+
     }
 
-    useLayoutEffect(loadMap)
+    useEffect(loadMap)
 
     return (list ?
             <div className='animated fadeIn'>
@@ -115,10 +147,11 @@ const Home = ({load, list}) => {
                     <Col>
                         <FormCollection/>
                         <Suspense fallback={Loading()}>
-                            <CustomizableTable tableRowData={renderData} tableTitle='공지 사항' retrieveForm={AnnouncementReadForm}/></Suspense>
+                            <CustomizableTable tableRowData={renderData} tableTitle='공지 사항'
+                                               retrieveForm={AnnouncementReadForm}/></Suspense>
                     </Col>
                 </Row>
-                <div id='map' style={{width: 500, height: 400}}/>
+                <div className='map-container' id='map'/>
             </div> : <Loading/>
     )
 }
