@@ -125,8 +125,41 @@ const {actions, reducer} = createSlice({
                     ...contract
                 }
             }
-
-        }
+        },
+        loadRegisteringClientList: (state, action) => {
+            const {payload: list} = action
+            const {client, client: {registering, detail = {}, ...rRest} = {}, ...rest} = state
+            return list ? {
+                ...rest,
+                client: {
+                    registering: {
+                        ...rRest,
+                        list,
+                        detail
+                    }
+                }
+            } : {
+                ...state
+            }
+        },
+        loadRegisteringClientDetail: (state, action) => {
+            const {payload: {id, ...payloadRest}} = action
+            const {client, client: {registering, registering: {detail, ...dRest} = {}, ...rRest} = {}, ...rest} = state
+            return id ? {
+                ...rest,
+                client: {
+                    registering: {
+                        ...rRest,
+                        detail: {
+                            ...dRest,
+                            [id]: {...payloadRest}
+                        }
+                    }
+                }
+            } : {
+                ...state
+            }
+        },
     }
 })
 
@@ -138,6 +171,9 @@ export const {login,
     loadAnnouncementContent,
     loadInsuranceDetail,
     loadSalesInstructionList,
-    loadContractList} = actions;
+    loadContractList,
+    loadRegisteringClientList,
+    loadRegisteringClientDetail
+} = actions;
 
 export default configureStore({reducer})

@@ -1,8 +1,11 @@
 import React from "react";
+import {Form, FormGroup, InputGroup, Label, Input} from 'reactstrap'
 
 const AccidentRegister = () => {
     return(
-        <div>AccidentRegister</div>
+        <Form>
+
+        </Form>
     )
 }
 

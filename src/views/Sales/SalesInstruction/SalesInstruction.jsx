@@ -30,9 +30,9 @@ const SalesInstruction = ({instructionList, load}) => {
         })
 
     return (instructionList ?
-            <CustomizableTable tableRowData={renderData} tableTitle='인수 정책' tableHeader={header} activeModal modalProps={{
-                modalTitle: '인수 정책 등록하기',
-                buttonTitle: '인수 정책 등록하기',
+            <CustomizableTable tableRowData={renderData} tableTitle='영업 지침' tableHeader={header} activeModal modalProps={{
+                modalTitle: '영업 지침 등록하기',
+                buttonTitle: '영업 지침 등록하기',
                 uploadAction,
                 inputForm: <SalesInstructionForm/>
             }}/> : <Loading/>

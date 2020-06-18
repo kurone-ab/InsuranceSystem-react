@@ -38,6 +38,7 @@ const BaseTable = ({tableHeader, tableRowData, retrieveForm: RetrieveForm}) => {
     const sortSwitching = (current) => current === asc ? ascSort : descSort
 
     const columnAlign = (column) => {
+        if (!content) return
         const newAlign = {}
         KEYS(align).forEach((header) => {
             newAlign[header] = header === column ? switching(align[column]) : sort
@@ -72,6 +73,13 @@ const BaseTable = ({tableHeader, tableRowData, retrieveForm: RetrieveForm}) => {
             </thead>
             <tbody>
             {
+                content ? null : <tr>
+                    <td className={'nanum-gothic font-lg font-weight-bold text-center'} colSpan={KEYS(tableHeader).length}>No
+                        Data!
+                    </td>
+                </tr>
+            }
+            {
                 content ? content.map((row, idx) => {
                     return (
                         <tr key={idx}>
@@ -79,7 +87,7 @@ const BaseTable = ({tableHeader, tableRowData, retrieveForm: RetrieveForm}) => {
                                 const {title, id} = row[key];
                                 contentOpenState[id] = false
                                 return (
-                                    <td key={idx}>
+                                    <td key={idx} className={'nanum-gothic font-lg font-weight-bold'}>
                                         {
                                             title ?
                                                 //eslint-disable-next-line
