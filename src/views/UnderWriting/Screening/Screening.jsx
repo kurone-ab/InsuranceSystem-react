@@ -1,7 +1,7 @@
 import React from "react";
 
 const Screening = () => {
-    return(
+    return (
         <div>Screening</div>
     )
 }

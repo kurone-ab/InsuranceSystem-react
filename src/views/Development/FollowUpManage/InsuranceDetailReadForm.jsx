@@ -10,7 +10,7 @@ const BASE_URL = 'insurance/product/detail'
 
 const KEYS = (ob) => Object.keys(ob)
 
-const InsuranceDetailReadForm = ({id, detail, productList, load}) => {
+const InsuranceDetailReadForm = ({id, detail, productList, load, showEvaluation}) => {
     const insuranceDetail = detail[id]
     useGetAxios({url: `${BASE_URL}?id=${id}`, callback: load, necessary: !insuranceDetail})
     if (!insuranceDetail)
@@ -60,7 +60,7 @@ const InsuranceDetailReadForm = ({id, detail, productList, load}) => {
                         </tbody>
                     </Table>
                 </Card>
-                <EvaluationReportReadForm evalList={evalList}/>
+                {showEvaluation ? <EvaluationReportReadForm evalList={evalList}/>:null}
             </>
             : <Loading/>
 

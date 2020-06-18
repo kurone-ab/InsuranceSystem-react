@@ -5,6 +5,7 @@ import {connect} from 'react-redux'
 import {useGetAxios} from "../../global/useAxios";
 import {loadSalesInstructionList} from "../../../globalStore";
 import Loading from "../../global/Loading";
+import {useStore} from "react-redux";
 
 const SalesInstructionForm = lazy(() => import('./SalesInstructionForm'))
 
@@ -29,13 +30,17 @@ const SalesInstruction = ({instructionList, load}) => {
             renderData.push({id, title: {title, aTag: true, id}, author, date})
         })
 
+    console.log(instructionList)
+    const {user:{id}} = useStore().getState()
+
     return (instructionList ?
-            <CustomizableTable tableRowData={renderData} tableTitle='영업 지침' tableHeader={header} activeModal modalProps={{
-                modalTitle: '영업 지침 등록하기',
-                buttonTitle: '영업 지침 등록하기',
-                uploadAction,
-                inputForm: <SalesInstructionForm/>
-            }}/> : <Loading/>
+            <CustomizableTable tableRowData={renderData} tableTitle='영업 지침' tableHeader={header} activeModal
+                               modalProps={{
+                                   modalTitle: '영업 지침 등록하기',
+                                   buttonTitle: '영업 지침 등록하기',
+                                   uploadAction: (e, closeModal) => uploadAction(e, closeModal, id),
+                                   inputForm: <SalesInstructionForm/>
+                               }}/> : <Loading/>
     )
 }
 

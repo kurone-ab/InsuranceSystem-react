@@ -24,8 +24,8 @@ const ProductManage = ({productList}) => {
         <div className='animated fadeIn'>
             <ListGroup flush>
                 {
-                    productList.map((product, idx) => {
-                        const {id, name} = product
+                    Object.keys(productList).map((product, idx) => {
+                        const {id, name} = productList[product]
                         return (
                             <Fragment key={idx}>
                                 <ListGroupItem tag="a" href='#' action

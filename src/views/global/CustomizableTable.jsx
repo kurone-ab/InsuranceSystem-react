@@ -87,7 +87,7 @@ const BaseTable = ({tableHeader, tableRowData, retrieveForm: RetrieveForm}) => {
                                 const {title, id} = row[key];
                                 contentOpenState[id] = false
                                 return (
-                                    <td key={idx} className={'nanum-gothic font-lg font-weight-bold'}>
+                                    <td key={idx} className={'nanum-gothic font-lg'}>
                                         {
                                             title ?
                                                 //eslint-disable-next-line

@@ -1,16 +1,16 @@
 import React from "react";
 import {FormGroup, Col, Input, Label} from 'reactstrap'
 import axios from 'axios'
-import {useGetAxios} from "../../global/useAxios";
+import {useStore} from "react-redux";
+
 axios.defaults.withCredentials = true
 axios.defaults.baseURL = 'http://localhost:8080'
 
-export const uploadAction = (e, closeModal) => {
+export const uploadAction = (e, closeModal, id) => {
     e.preventDefault()
     const title = document.getElementById('salesInstructionFormTitle').value
     const instruction = document.getElementById('salesInstruction').value
-    console.log(title, instruction)
-    axios.post('instruction/sales/register', {title, instruction}).then(r=>{
+    axios.post('instruction/sales/register', {title, instruction, id}).then(r=>{
         if (r.data)
             closeModal()
     })

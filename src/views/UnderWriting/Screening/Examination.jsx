@@ -17,6 +17,7 @@ const Examination = ({list, loadList}) => {
         })
         setOpen({...openTarget})
     }
+
     return (
         <ListGroup flush>
             {

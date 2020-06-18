@@ -160,6 +160,66 @@ const {actions, reducer} = createSlice({
                 ...state
             }
         },
+        loadStrategyInvestigationList: (state, action) => {
+            const {payload: list} = action
+            console.log(list)
+            const {strategy, ...rest} = state
+            return list ? {
+                ...rest,
+                strategy: {
+                    list,
+                    detail: {}
+                }
+            } : {
+                ...state
+            }
+        },
+        loadStrategyInvestigationDetail: (state, action) => {
+            const {payload: {id, ...rest}} = action
+            const {strategy: {detail, ...dRest}, ...sRest} = state
+            return id ? {
+                ...rest,
+                strategy: {
+                    ...sRest,
+                    detail: {
+                        ...dRest,
+                        [id]: {...rest}
+                    }
+                }
+            } : {
+                ...state
+            }
+        },
+        loadMarketInvestigationList: (state, action) => {
+            const {payload: list} = action
+            const {market, ...rest} = state
+            console.log(list)
+            return list ? {
+                ...rest,
+                market: {
+                    list,
+                    detail: {}
+                }
+            } : {
+                ...state
+            }
+        },
+        loadMarketInvestigationDetail: (state, action) => {
+            const {payload: {id, ...rest}} = action
+            const {market: {detail, ...dRest}, ...mRest} = state
+            return id ? {
+                ...rest,
+                market: {
+                    ...mRest,
+                    detail: {
+                        ...dRest,
+                        [id]: {...rest}
+                    }
+                }
+            } : {
+                ...state
+            }
+        },
     }
 })
 
@@ -173,7 +233,11 @@ export const {login,
     loadSalesInstructionList,
     loadContractList,
     loadRegisteringClientList,
-    loadRegisteringClientDetail
+    loadRegisteringClientDetail,
+    loadMarketInvestigationDetail,
+    loadMarketInvestigationList,
+    loadStrategyInvestigationDetail,
+    loadStrategyInvestigationList
 } = actions;
 
 export default configureStore({reducer})
