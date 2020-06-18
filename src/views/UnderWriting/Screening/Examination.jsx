@@ -1,9 +1,9 @@
 import React, {Fragment, useState} from "react";
 import {connect} from 'react-redux'
 import {Collapse, ListGroup, ListGroupItem} from 'reactstrap'
-import {loadRegisteringClientList} from "../../../../globalStore";
-import {useGetAxios} from "../../../global/useAxios";
-import Loading from "../../../global/Loading";
+import {loadRegisteringClientList} from "../../../globalStore";
+import {useGetAxios} from "../../global/useAxios";
+import Loading from "../../global/Loading";
 const openTarget = []
 
 const Examination = ({list, loadList}) => {
