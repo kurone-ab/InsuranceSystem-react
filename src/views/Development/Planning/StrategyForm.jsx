@@ -2,13 +2,20 @@ import React, {useState} from "react";
 import {Col, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, FormGroup, Input, Label} from 'reactstrap'
 import {connect} from 'react-redux'
 import Loading from "../../global/Loading";
+import {usePostAxios} from "../../global/useAxios";
+import axios from "axios";
+axios.defaults.withCredentials = true
+axios.defaults.baseURL = 'http://localhost:8080'
 
 let selectedProduct
-export const uploadAction = (e, modalClose) => {
+export const uploadAction = (e, modalClose, eid) => {
     e.preventDefault()
     const title = document.getElementById('strategyFormTitle').value
-    console.log(title, selectedProduct)
-    modalClose()
+    const data = new FormData()
+    data.append('eid', eid)
+    data.append('title', title)
+    data.append('iid', selectedProduct)
+    axios.post('investigation/strategy/save', data).then(()=>modalClose())
 }
 
 const StrategyForm = ({companyList, productList}) => {
