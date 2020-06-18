@@ -29,7 +29,7 @@ const CustomerRegister = () => {
                         <Form>
                             <Row>
                                 <Col lg={12}>
-                                    <div className='mx-5 px-5 mb-3 font-2xl font-weight-bold'>기본 정보</div>
+                                    <div className='mx-5 px-5 mb-3 font-2xl font-weight-bold'>신체 정보</div>
                                 </Col>
                             </Row>
                             <FormGroup row className='mx-5 px-5 my-3'>

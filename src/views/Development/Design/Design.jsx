@@ -46,7 +46,8 @@ const Design = ({load, typeList, loadList, developingList}) => {
                                            modalTitle: '설계하기',
                                            uploadAction: () => console.log(document.getElementsByClassName('assuranceAmount')),
                                            inputForm: <DesignForm/>,
-                                           fileUpload: true
+                                           fileUpload: true,
+                                           fileElementId: 'designFormFile'
                                        }}/> : <Loading/>
             }
         </div>
