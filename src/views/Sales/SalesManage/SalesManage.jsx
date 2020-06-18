@@ -19,9 +19,8 @@ const SalesManage = ({loadSalesInstructionList}) => {
     
 
     return(
-        <CustomizableTable tableRowData={renderData} tableTitle = '영업 관리' tableHeader = {header}>
+        <CustomizableTable tableRowData={renderData} tableTitle = '영업 관리' tableHeader = {header}/>
 
-        </CustomizableTable>
     )
 }
 
