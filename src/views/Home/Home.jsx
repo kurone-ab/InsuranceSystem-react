@@ -80,16 +80,6 @@ const Home = ({load, list}) => {
     // eslint-disable-next-line no-unused-vars
     const loadMap = () => {
         let container = document.getElementById("map");
-        // const script = document.createElement("script");
-        // script.async = true;
-        // script.src =
-        //     "//dapi.kakao.com/v2/maps/sdk.js?appkey=54eb777b5ef458ad5bd6b46c650f0b13&autoload=false";
-        // const library = document.createElement("script")
-        // library.async = true;
-        // library.src =
-        //     "//dapi.kakao.com/v2/maps/sdk.js?appkey=54eb777b5ef458ad5bd6b46c650f0b13&libraries=services,clusterer,drawing";
-        // document.head.appendChild(script);
-        // document.head.appendChild(library);
         if (!container) return
         console.log(container.style)
         console.log("load map")
@@ -109,7 +99,7 @@ const Home = ({load, list}) => {
             const geocoder = new kakao.maps.services.Geocoder();
 
 // 주소로 좌표를 검색합니다
-            geocoder.addressSearch('명지대학교 인문캠퍼스', function (result, status) {
+            geocoder.addressSearch('서울특별시 서대문구 거북골로 34', function (result, status) {
 
                 // 정상적으로 검색이 완료됐으면
                 if (status === kakao.maps.services.Status.OK) {
