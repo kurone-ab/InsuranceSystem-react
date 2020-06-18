@@ -1,17 +1,14 @@
 import React, {useState} from 'react'
-import {connect} from 'react-redux'
 import {
-    Form,
-    FormGroup,
-    InputGroup,
-    Label,
-    Input,
     Button,
     Col,
     Dropdown,
-    DropdownMenu,
     DropdownItem,
-    DropdownToggle
+    DropdownMenu,
+    DropdownToggle,
+    FormGroup,
+    Input,
+    InputGroup
 } from 'reactstrap'
 
 
@@ -19,13 +16,14 @@ const AccidentRegistrationForm = () => {
     const [open, setOpen] = useState(false)
     const [searchType, setSearchType] = useState('이름')
 
+    const searchTypeList = ['이름', '주민 번호', '연락처']
     const search = () => {
         switch (searchType) {
-            case "이름":
+            case searchTypeList[0]:
                 break
-            case '주민 번호':
+            case searchTypeList[1]:
                 break
-            case '연락처':
+            case searchTypeList[2]:
                 break
             default:
                 break
@@ -41,16 +39,13 @@ const AccidentRegistrationForm = () => {
                         <Dropdown isOpen={open} toggle={() => setOpen(!open)} id='searchType' required>
                             <DropdownToggle caret className='nanum-gothic my-auto'>{searchType}</DropdownToggle>
                             <DropdownMenu>
-                                <DropdownItem className={'nanum-gothic border-0'} onClick={() => setSearchType('이름')}>
-                                    이름
-                                </DropdownItem>
-                                <DropdownItem className={'nanum-gothic border-0'}
-                                              onClick={() => setSearchType('주민 번호')}>
-                                    주민 번호
-                                </DropdownItem>
-                                <DropdownItem className={'nanum-gothic border-0'} onClick={() => setSearchType('연락처')}>
-                                    연락처
-                                </DropdownItem>
+                                {
+                                    searchTypeList.map(type =>
+                                        <DropdownItem className={'nanum-gothic border-0'}
+                                                      onClick={() => setSearchType(type)}>
+                                            {type}
+                                        </DropdownItem>)
+                                }
                             </DropdownMenu>
                         </Dropdown>
                     </InputGroup>

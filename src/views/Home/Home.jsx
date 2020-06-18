@@ -1,6 +1,6 @@
 /*global kakao*/
 
-import React, {lazy, Suspense, useState} from "react";
+import React, {lazy, Suspense, useState, useLayoutEffect} from "react";
 import {Button, Card, CardBody, CardHeader, Col, Jumbotron, ListGroup, ListGroupItem, Row} from 'reactstrap'
 import {useGetAxios} from '../global/useAxios'
 import {connect} from 'react-redux'
@@ -85,7 +85,12 @@ const Home = ({load, list}) => {
         script.async = true;
         script.src =
             "//dapi.kakao.com/v2/maps/sdk.js?appkey=54eb777b5ef458ad5bd6b46c650f0b13&autoload=false";
+        const library = document.createElement("script")
+        library.async = true;
+        library.src =
+            "//dapi.kakao.com/v2/maps/sdk.js?appkey=54eb777b5ef458ad5bd6b46c650f0b13&libraries=services,clusterer,drawing";
         document.head.appendChild(script);
+        document.head.appendChild(library);
         if (!container || isMapLoad) return
         console.log("load map")
         kakao.maps.load(() => {
@@ -99,7 +104,7 @@ const Home = ({load, list}) => {
         isMapLoad = true
     }
 
-    // useLayoutEffect(loadMap)
+    useLayoutEffect(loadMap)
 
     return (list ?
             <div className='animated fadeIn'>
@@ -113,7 +118,7 @@ const Home = ({load, list}) => {
                             <CustomizableTable tableRowData={renderData} tableTitle='공지 사항' retrieveForm={AnnouncementReadForm}/></Suspense>
                     </Col>
                 </Row>
-                <FileUploadButton fileElementId={'test2'} multiple/>
+                <div id='map' style={{width: 500, height: 400}}/>
             </div> : <Loading/>
     )
 }
