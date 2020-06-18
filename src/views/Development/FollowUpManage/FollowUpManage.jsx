@@ -150,7 +150,7 @@ const FollowUpManage = ({productList, typeList, load}) => {
                                                                           className='my-2'
                                                                           selectedAction={() => setConfirmOpen(true)}
                                                                           size='md' />
-                                                        <InsuranceDetailReadForm id={id}/>
+                                                        <InsuranceDetailReadForm id={id} showEvaluation/>
                                                     </Collapse>
                                                 </Fragment>
                                             )

@@ -2,7 +2,7 @@ import React, {lazy, useState} from "react";
 import {Nav, NavItem, NavLink, TabContent, TabPane,} from 'reactstrap'
 import classnames from 'classnames'
 import {connect, useStore} from 'react-redux'
-import {loadInsuranceInfoList, loadMarketInvestigationList, loadMarketInvestigationDetail, loadStrategyInvestigationList, loadStrategyInvestigationDetail} from "../../../globalStore";
+import {loadInsuranceInfoList, loadMarketInvestigationList, loadStrategyInvestigationList} from "../../../globalStore";
 import {useGetAxios} from "../../global/useAxios";
 import {uploadAction as marketUpload} from "./MarketForm";
 import {uploadAction as strategyUpload} from "./StrategyForm";
@@ -21,22 +21,23 @@ const Planning = ({companyList, load, mList, sList, loadStrategyInvestigationLis
     useGetAxios({url: '/insurance/info', callback: load, necessary: !companyList})
     useGetAxios({url: '/investigation/market/list', callback: loadMarketInvestigationList, necessary: !mList})
     useGetAxios({url: '/investigation/strategy/list', callback: loadStrategyInvestigationList, necessary: !sList})
-    const {user:{id:eid}} = useStore().getState()
-    // if (!mList || !sList) return <Loading/>
-    // const renderMarket = []
-    // const renderStrategy = []
-    //
-    // const mListKeys = Object.keys(mList)
-    // const sListKeys = Object.keys(sList)
-    //
-    // mListKeys.forEach(market=>{
-    //     const {title, date, author} = mList[market]
-    //     renderMarket.push({market, title, date, author})
-    // })
-    // sListKeys.forEach(strategy=>{
-    //     const {title, date, author} = sList[strategy]
-    //     renderStrategy.push({strategy, title, date, author})
-    // })
+    const {user: {id: eid}} = useStore().getState()
+    console.log(mList, sList)
+    if (!mList || !sList) return <Loading/>
+    const renderMarket = []
+    const renderStrategy = []
+
+    const mListKeys = Object.keys(mList)
+    const sListKeys = Object.keys(sList)
+
+    mListKeys.forEach(market => {
+        const {title, date, author} = mList[market]
+        renderMarket.push({market, title, date, author})
+    })
+    sListKeys.forEach(strategy => {
+        const {title, date, author} = sList[strategy]
+        renderStrategy.push({strategy, title, date, author})
+    })
 
 
     return (
@@ -45,7 +46,9 @@ const Planning = ({companyList, load, mList, sList, loadStrategyInvestigationLis
                 <NavItem>
                     <NavLink
                         className={classnames({active: active === 1})}
-                        onClick={() => {changeTab(1);}}>
+                        onClick={() => {
+                            changeTab(1);
+                        }}>
                         <div className='nanum-gothic'>
                             시장 조사 정보
                         </div>
@@ -62,7 +65,7 @@ const Planning = ({companyList, load, mList, sList, loadStrategyInvestigationLis
             </Nav>
             <TabContent activeTab={active}>
                 <TabPane tabId={1}>
-                    <CustomizableTable noCard tableRowData={[]} tableTitle='시장 조사 정보' activeModal
+                    <CustomizableTable noCard tableRowData={renderMarket} tableTitle='시장 조사 정보' activeModal
                                        modalProps={{
                                            modalTitle: '새로운 글 작성',
                                            uploadAction: (e, modalClose) => marketUpload(e, modalClose, eid),
@@ -70,7 +73,7 @@ const Planning = ({companyList, load, mList, sList, loadStrategyInvestigationLis
                                        }}/>
                 </TabPane>
                 <TabPane tabId={2}>
-                    <CustomizableTable noCard tableRowData={[]} tableTitle='전략 정보' activeModal
+                    <CustomizableTable noCard tableRowData={renderStrategy} tableTitle='전략 정보' activeModal
                                        modalProps={{
                                            modalTitle: '새로운 글 작성',
                                            uploadAction: (e, modalClose) => strategyUpload(e, modalClose, eid),
@@ -83,7 +86,8 @@ const Planning = ({companyList, load, mList, sList, loadStrategyInvestigationLis
 }
 
 const mapStateToProps = (state) => {
-    const {insurance: {infoList:{companyList} = {}, market:{mList} = {}, strategy: {sList} = {}} = {}} = state
+    const {insurance: {infoList: {companyList} = {}} = {}, market: {list: mList} = {}, strategy: {list: sList} = {}} = state
+    console.log(state)
     return companyList ? {
         companyList,
         mList,

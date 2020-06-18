@@ -15,25 +15,58 @@ import {
     UncontrolledTooltip
 } from 'reactstrap'
 import {connect} from 'react-redux'
+import axios from "axios";
 
-const tempArray = [''];
-const tempArray2 = [''];
+axios.defaults.withCredentials = true
+axios.defaults.baseURL = 'http://localhost:8080'
+
+const guaranteeCondition = [''];
+const targetClient = [''];
+
+export const uploadAction = (eid, e, closeModal) => {
+    e.preventDefault()
+    const type = document.getElementById('productType').value
+    const designProductName = document.getElementById('designProductName').value
+    const guaranteeConditionList = document.getElementsByClassName('guaranteeCondition')
+    const guaranteeLimitList = document.getElementsByClassName('guaranteeLimit')
+    const targetClientList = document.getElementsByClassName('guaranteeLimit')
+    const data = new FormData()
+    data.append('type', type)
+    data.append('eid', eid)
+    data.append('name', designProductName)
+    console.log(eid)
+    for (let i = 0; i < targetClientList.length; i++) {
+        const targetClientListElement = targetClientList[i]
+        data.append('targetClient', targetClientListElement.value)
+    }
+
+    for (let i = 0; i < guaranteeConditionList.length; i++) {
+        const condition = guaranteeConditionList[i]
+        const checked = document.getElementById(`special${i}`).checked
+        data.append('condition', condition.value)
+        data.append('special', checked)
+        const limit = guaranteeLimitList[i]
+        data.append('limit', `${limit.value}0000`)
+    }
+    axios.post('insurance/product/design', data).then(()=>closeModal())
+}
+
 const DesignForm = ({typeList}) => {
     const [open, setOpen] = useState(false)
     const [type, setType] = useState('CAR')
     const [assuranceCount, setAssuranceCount] = useState(1)
     const [targetCount, setTargetCount] = useState(1)
 
-    if (tempArray.length > assuranceCount) tempArray.splice(0, 1)
-    else if (tempArray.length < assuranceCount) tempArray.push('')
+    if (guaranteeCondition.length > assuranceCount) guaranteeCondition.splice(0, 1)
+    else if (guaranteeCondition.length < assuranceCount) guaranteeCondition.push('')
 
-    if (tempArray2.length > targetCount) tempArray2.splice(0, 1)
-    else if (tempArray2.length < targetCount) tempArray2.push('')
-
+    if (targetClient.length > targetCount) targetClient.splice(0, 1)
+    else if (targetClient.length < targetCount) targetClient.push('')
 
     return (
         <>
             <FormGroup row>
+                <input type='hidden' id='productType' value={type}/>
                 <Col md={3} lg={2}>
                     <Label className='nanum-gothic'>상품 종류</Label>
                 </Col>
@@ -42,15 +75,13 @@ const DesignForm = ({typeList}) => {
                               required={true}>
                         <DropdownToggle caret className='nanum-gothic'>{typeList[type]}</DropdownToggle>
                         <DropdownMenu>
-                            {Object.keys(typeList).map((type, idx) => {
-                                return (
+                            {Object.keys(typeList).map((type, idx) =>
                                     <DropdownItem key={idx}
                                                   className='border-0 nanum-gothic'
                                                   value={type}
                                                   onClick={() => setType(String(type))}
                                     >{typeList[type]}</DropdownItem>
-                                )
-                            })}
+                            )}
                         </DropdownMenu>
                     </Dropdown>
                 </Col>
@@ -60,12 +91,11 @@ const DesignForm = ({typeList}) => {
                     <Label className='nanum-gothic'>상품명</Label>
                 </Col>
                 <Col md={9} sm={12} lg={10}>
-                    <Input type='text' className='nanum-gothic'/>
+                    <Input type='text' className='nanum-gothic' id='designProductName'/>
                 </Col>
             </FormGroup>
             {
-                tempArray.map((item, idx) => {
-                    return (
+                guaranteeCondition.map((item, idx) =>
                         <FormGroup row key={idx}>
                             <Col md={3} lg={2}>
                                 <Label className='nanum-gothic mt-1'>{`보장 ${idx + 1}`}</Label>
@@ -80,12 +110,12 @@ const DesignForm = ({typeList}) => {
                                             </UncontrolledTooltip>
                                         </InputGroupText>
                                     </InputGroupAddon>
-                                    <Input type='text' className='nanum-gothic assuranceDescription mt-1'/>
+                                    <Input type='text' className='nanum-gothic guaranteeCondition mt-1'/>
                                 </InputGroup>
                             </Col>
                             <Col md={10} lg={3} className='mt-1'>
                                 <InputGroup>
-                                    <Input type='number' className='nanum-gothic assuranceAmount'/>
+                                    <Input type='number' className='nanum-gothic guaranteeLimit'/>
                                     <InputGroupAddon addonType='append'>
                                         <InputGroupText>0,000</InputGroupText>
                                     </InputGroupAddon>
@@ -98,13 +128,10 @@ const DesignForm = ({typeList}) => {
                                 <Col md={1} lg={1} className='mt-1'>
                                     <Button onClick={() => setAssuranceCount(assuranceCount - 1)}>-</Button>
                                 </Col> : null}
-                        </FormGroup>
-                    )
-                })
+                        </FormGroup>)
             }
             {
-                tempArray2.map((item, idx) => {
-                    return (
+                targetClient.map((item, idx) =>
                         <FormGroup row key={idx}>
                             <Col md={3} lg={2}>
                                 <Label className='nanum-gothic'>{`판매 대상 ${idx + 1}`}</Label>
@@ -120,8 +147,7 @@ const DesignForm = ({typeList}) => {
                                     <Button onClick={() => setTargetCount(targetCount - 1)}>-</Button>
                                 </Col> : null}
                         </FormGroup>
-                    )
-                })
+                )
             }
         </>
     )
