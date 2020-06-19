@@ -10,4 +10,12 @@ const fileDownload = ({url, id, filename}) => {
     }).then(r=>FileDownload(new Blob([r.data]), filename))
 }
 
-export {asc, desc, fileDownload}
+const fileDownloadByFileName = ({url, filename}) => {
+    axios.get(`${url}?fileName=${filename}`, {
+        baseURL: 'http://localhost:8080',
+        withCredentials: true,
+        responseType: "blob"
+    }).then(r=>FileDownload(new Blob([r.data]), filename))
+}
+
+export {asc, desc, fileDownload, fileDownloadByFileName}

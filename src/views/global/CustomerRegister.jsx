@@ -1,5 +1,5 @@
 /*global kakao*/
-import React, {useEffect, useLayoutEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {
     Button,
     Card,
@@ -16,11 +16,11 @@ import {
     Row
 } from 'reactstrap'
 import {AppSwitch} from "@coreui/react";
+
 let isLoadMap = false
 let map
 const CustomerRegister = () => {
     const [dh, setDH] = useState(false)
-    const [da, setDA] = useState(false)
     const [searchPlace, setSearchPlace] = useState('명지대학교 인문캠퍼스')
 
 
@@ -54,16 +54,9 @@ const CustomerRegister = () => {
 
     const placesSearchCB = (data, status, pagination) => {
         if (status === kakao.maps.services.Status.OK) {
-
-            // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
-            // LatLngBounds 객체에 좌표를 추가합니다
             const bounds = new kakao.maps.LatLngBounds();
-
-            // for (var i = 0; i < data.length; i++) {
-                displayMarker(data[0]);
-                bounds.extend(new kakao.maps.LatLng(data[0].y, data[0].x));
-            // }
-            // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+            displayMarker(data[0]);
+            bounds.extend(new kakao.maps.LatLng(data[0].y, data[0].x));
             map.setBounds(bounds);
         }
     }
@@ -72,17 +65,14 @@ const CustomerRegister = () => {
         let container = document.getElementById("map");
         if (!container || map) return
         setTimeout(() => {
-            // 마커를 클릭하면 장소명을 표출할 인포윈도우 입니다
 
             const mapOption = {
-                    center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
-                    level: 3 // 지도의 확대 레벨
-                };
+                center: new kakao.maps.LatLng(37.566826, 126.9786567),
+                level: 3
+            };
 
-// 지도를 생성합니다
             map = new kakao.maps.Map(container, mapOption);
             isLoadMap = true
-// 장소 검색 객체를 생성합니다
         }, 20)
 
     }
@@ -110,6 +100,15 @@ const CustomerRegister = () => {
                                 </Col>
                                 <Col md={12} lg={8}>
                                     <Input id='custName' type='text' className='nanum-gothic font-lg'/>
+                                </Col>
+                            </FormGroup>
+                            <FormGroup row className='mx-5 px-5 my-3'>
+                                <Col lg={4}>
+                                    <Label htmlFor='custRRN'
+                                           className='nanum-gothic font-xl font-weight-bold'>주민등록번호</Label>
+                                </Col>
+                                <Col md={12} lg={8}>
+                                    <Input id='custRRN' type='text' className='nanum-gothic font-lg'/>
                                 </Col>
                             </FormGroup>
                             <FormGroup row className='mx-5 px-5 my-3'>
