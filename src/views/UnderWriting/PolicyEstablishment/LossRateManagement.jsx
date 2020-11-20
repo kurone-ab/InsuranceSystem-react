@@ -1,6 +1,7 @@
 import React, {lazy} from "react";
 import CustomizableTable from "../../global/CustomizableTable";
 import {connect, useStore} from 'react-redux';
+import {Button} from 'reactstrap'
 import {useGetAxios, useGetAxiosWithParams} from "../../global/useAxios";
 import Loading from "../../global/Loading";
 import {loadLossRateData} from "../../../globalStore";
@@ -38,9 +39,9 @@ const LossRateManagement= ({lossRateList, load}) => {
             }
             <hr/>
             <form>
-                <button color='primary'>손해율 데이터 수집</button>
-                <button color='primary'>손해율 분석</button>
-                <button color='primary'>예상 손해율 시뮬레이션</button>
+                <Button color='primary'>손해율 데이터 수집</Button>&nbsp;&nbsp;
+                <Button color='primary'>손해율 분석</Button>&nbsp;&nbsp;
+                <Button color='primary'>예상 손해율 시뮬레이션</Button>
             </form>
         </div>
     )
