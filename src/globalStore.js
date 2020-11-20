@@ -56,6 +56,7 @@ const {actions, reducer} = createSlice({
                 ...state
             }
         },
+
         loadDevelopingInsuranceList: (state, action) => {
             const {payload: developingList} = action
             const {insurance, ...rest} = state
@@ -220,6 +221,35 @@ const {actions, reducer} = createSlice({
                 ...state
             }
         },
+
+        loadAuthorizeDoc: (state, action) => {
+            const {payload: authorizeDocList} = action
+            const {authorizeDoc, ...rest} = state
+            return authorizeDocList ? {
+                ...rest,
+                authorizeDoc: {
+                    ...authorizeDoc,
+                    authorizeDocList
+                }
+            } : {
+                ...state
+            }
+        },
+
+        loadPolicyEstablishmentDoc: (state, action) => {
+            const {payload: policyEstablishmentDocList} = action
+            const {policyEstablichmentDoc, ...rest} = state
+            return policyEstablishmentDocList ? {
+                ...rest,
+                authorizeDoc: {
+                    ...policyEstablichmentDoc,
+                    policyEstablishmentDocList
+                }
+            } : {
+                ...state
+            }
+
+        },
     }
 })
 
@@ -237,7 +267,9 @@ export const {login,
     loadMarketInvestigationDetail,
     loadMarketInvestigationList,
     loadStrategyInvestigationDetail,
-    loadStrategyInvestigationList
+    loadStrategyInvestigationList,
+    loadAuthorizeDoc,
+    loadPolicyEstablishmentDoc
 } = actions;
 
 export default configureStore({reducer})
