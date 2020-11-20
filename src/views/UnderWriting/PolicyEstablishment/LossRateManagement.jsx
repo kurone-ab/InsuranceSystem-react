@@ -1,27 +1,65 @@
 import React, {lazy} from "react";
 import CustomizableTable from "../../global/CustomizableTable";
-import {connect} from 'react-redux';
-import {useGetAxios} from "../../global/useAxios";
+import {connect, useStore} from 'react-redux';
+import {useGetAxios, useGetAxiosWithParams} from "../../global/useAxios";
 import Loading from "../../global/Loading";
+import {loadLossRateData} from "../../../globalStore";
 
 const header = {
-    id: '번호',
-    title: '이름',
-    employeeNum: '사원번호',
-    workingDistrict: '관할 구역',
+    companyName: '회사명',
+    insuranceName: '보험명',
+    lossRate: '손해율',
 }
 
-const LossRateManagement = () => {
-    useGetAxios({url: 'instruction/employee/Employee'})
+const LossRateManagement= ({lossRateList, load}) => {
+    useGetAxiosWithParams({
+        url: '/contract/loss_rate',
+        callback: load,
+        necessary: !lossRateList,
+        params: {term: 0}
+    })
 
-    const renderData = []
+    const renderData = lossRateList ? lossRateList.map((lossRateData) => {
+        const {companyName, insuranceName, lossRate} = lossRateData
+        return {
+            companyName,
+            insuranceName,
+            lossRate
+        }
+    }) : null
 
 
-    return(
-        <CustomizableTable tableRowData={renderData} tableTitle = '손해율 관리' tableHeader = {header}>
+    return (
+        <div className='animated fadeIn'>
 
-        </CustomizableTable>
+            {renderData ?
+                <CustomizableTable tableRowData={renderData} tableTitle='최근 3개월 손해율' tableHeader={header}/>
+                : <Loading/>
+            }
+            <hr/>
+            <form>
+                <button color='primary'>손해율 데이터 수집</button>
+                <button color='primary'>손해율 분석</button>
+                <button color='primary'>예상 손해율 시뮬레이션</button>
+            </form>
+        </div>
     )
+
 }
 
-export default LossRateManagement
+const mapStateToProps = (state) => {
+    const {authorizeDoc: {lossRateList} = {}} = state
+    return lossRateList ? {
+        lossRateList
+    } : {}
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        load: (lossRateData) => dispatch(loadLossRateData(lossRateData))
+    }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(LossRateManagement)
+// export default LossRateManagement

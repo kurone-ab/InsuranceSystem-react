@@ -238,12 +238,27 @@ const {actions, reducer} = createSlice({
 
         loadPolicyEstablishmentDoc: (state, action) => {
             const {payload: policyEstablishmentDocList} = action
-            const {policyEstablichmentDoc, ...rest} = state
+            const {policyEstablishmentDoc, ...rest} = state
             return policyEstablishmentDocList ? {
                 ...rest,
                 authorizeDoc: {
-                    ...policyEstablichmentDoc,
+                    ...policyEstablishmentDoc,
                     policyEstablishmentDocList
+                }
+            } : {
+                ...state
+            }
+
+        },
+
+        loadLossRateData: (state, action) => {
+            const {payload: lossRateList} = action
+            const {lossRateData, ...rest} = state
+            return lossRateList ? {
+                ...rest,
+                authorizeDoc: {
+                    ...lossRateData,
+                    lossRateList
                 }
             } : {
                 ...state
@@ -269,7 +284,8 @@ export const {login,
     loadStrategyInvestigationDetail,
     loadStrategyInvestigationList,
     loadAuthorizeDoc,
-    loadPolicyEstablishmentDoc
+    loadPolicyEstablishmentDoc,
+    loadLossRateData,
 } = actions;
 
 export default configureStore({reducer})
