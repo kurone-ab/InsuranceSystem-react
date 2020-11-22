@@ -222,6 +222,21 @@ const {actions, reducer} = createSlice({
             }
         },
 
+        loadUWPolicyData: (state, action) => {
+            const {payload: uwPolicyList} = action
+            const {uwPolicy, ...rest} = state
+            return uwPolicyList ? {
+                ...rest,
+                authorizeDoc: {
+                    ...uwPolicy,
+                    uwPolicyList
+                }
+            } : {
+                ...state
+            }
+
+        },
+
         loadAuthorizeDoc: (state, action) => {
             const {payload: authorizeDocList} = action
             const {authorizeDoc, ...rest} = state
@@ -265,10 +280,13 @@ const {actions, reducer} = createSlice({
             }
 
         },
+
+
     }
 })
 
-export const {login,
+export const {
+    login,
     logout,
     loadAnnouncement,
     loadInsuranceInfoList,
@@ -286,6 +304,7 @@ export const {login,
     loadAuthorizeDoc,
     loadPolicyEstablishmentDoc,
     loadLossRateData,
+    loadUWPolicyData,
 } = actions;
 
 export default configureStore({reducer})

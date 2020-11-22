@@ -13,6 +13,7 @@ const header = {
 }
 
 const LossRateManagement= ({lossRateList, load}) => {
+    console.log("LossRateManagement")
     useGetAxiosWithParams({
         url: '/contract/loss_rate',
         callback: load,
@@ -21,6 +22,8 @@ const LossRateManagement= ({lossRateList, load}) => {
     })
 
     const renderData = lossRateList ? lossRateList.map((lossRateData) => {
+        console.log("renderData")
+
         const {companyName, insuranceName, lossRate} = lossRateData
         return {
             companyName,
@@ -34,7 +37,7 @@ const LossRateManagement= ({lossRateList, load}) => {
         <div className='animated fadeIn'>
 
             {renderData ?
-                <CustomizableTable tableRowData={renderData} tableTitle='최근 3개월 손해율' tableHeader={header}/>
+                <CustomizableTable tableTitle='최근 3개월 손해율' tableHeader={header} tableRowData={renderData} />
                 : <Loading/>
             }
             <hr/>
@@ -49,14 +52,19 @@ const LossRateManagement= ({lossRateList, load}) => {
 }
 
 const mapStateToProps = (state) => {
+    console.log("mapStateToProps")
+
+
     const {authorizeDoc: {lossRateList} = {}} = state
-    return lossRateList ? {
-        lossRateList
-    } : {}
+    return lossRateList ? {lossRateList} : {}
 }
 
 const mapDispatchToProps = (dispatch) => {
+    console.log("mapDispatchToProps")
+
+
     return {
+
         load: (lossRateData) => dispatch(loadLossRateData(lossRateData))
     }
 }

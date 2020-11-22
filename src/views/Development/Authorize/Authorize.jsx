@@ -72,7 +72,6 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-    console.log("로그로그")
     return {
         load: (authorizeDoc) => dispatch(loadAuthorizeDoc(authorizeDoc))
     }
