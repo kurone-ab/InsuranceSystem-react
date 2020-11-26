@@ -5,7 +5,6 @@ import {useGetAxiosWithParams} from "../../global/useAxios";
 import CustomizableTable from "../../global/CustomizableTable";
 import Loading from "../../global/Loading";
 import ManageFactorForm from "./ManageFactorForm"
-import DesignForm from "./ManageFactorForm"
 
 
 const header = {
@@ -54,11 +53,8 @@ const ManageFactor = ({policyEstablishmentDocList, load}) => {
             {
                 renderData ?
                     <CustomizableTable tableTitle='인수 지침 관리' tableRowData={renderData} tableHeader={header}
-                                       activeModal retrieveForm={ManageFactorForm} modalProps={{
-                        modalTitle: '인수 지침 관리하기',
-                        inputForm: <DesignForm/>
-                    }}>
-                    </CustomizableTable> : <Loading/>
+                                       retrieveForm={ManageFactorForm}              />
+                    : <Loading/>
             }
         </div>
     )

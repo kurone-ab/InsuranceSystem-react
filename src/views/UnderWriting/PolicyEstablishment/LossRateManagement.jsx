@@ -64,9 +64,6 @@ const LossRateManagement= ({lossRateList, load}) => {
 }
 
 const mapStateToProps = (state) => {
-    // console.log("mapStateToProps")
-
-
     const {authorizeDoc: {lossRateList} = {}} = state
     return lossRateList ? {lossRateList} : {}
 }
@@ -77,7 +74,7 @@ const mapDispatchToProps = (dispatch) => {
 
     return {
 
-        load: (lossRateData) => dispatch(loadLossRateData(lossRateData))
+        load: (content) => dispatch(loadLossRateData(content))
     }
 }
 

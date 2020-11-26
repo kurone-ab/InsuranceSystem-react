@@ -23,7 +23,7 @@ const {actions, reducer} = createSlice({
             }
         },
         loadAnnouncement: ((state, action) => {
-            const {payload:list} = action
+            const {payload: list} = action
             const important = list instanceof Array ? list.find(({priority}) => priority) : list
             return list ? {
                 ...state,
@@ -88,7 +88,7 @@ const {actions, reducer} = createSlice({
         },
         loadInsuranceDetail: (state, action) => {
             const {payload: {id, ...pRest}} = action
-            const {insurance:{detail, ...iRest}, ...rest} = state
+            const {insurance: {detail, ...iRest}, ...rest} = state
             return {
                 ...rest,
                 insurance: {
@@ -112,7 +112,7 @@ const {actions, reducer} = createSlice({
             }
         },
         loadContractList: (state, action) => {
-            const {contract ={}, ...rest} = state
+            const {contract = {}, ...rest} = state
             const {list} = contract
             const {user: {id}} = state
             const {payload} = action
@@ -282,15 +282,15 @@ const {actions, reducer} = createSlice({
         },
 
         loadFactorDetail: (state, action) => {
-            const {payload: detailList} = action
-            const {insurance:{detail, ...iRest}, ...rest} = state
-            return detailList? {
+            const {payload: uwPolicyList} = action
+            const {detail, ...rest} = state
+            return uwPolicyList ? {
                 ...rest,
-                insurance: {
+                uwPolicy: {
                     ...detail,
-                        detailList
+                    uwPolicyList
                 }
-            }: {
+            } : {
                 ...state
             }
         },
