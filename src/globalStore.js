@@ -281,6 +281,20 @@ const {actions, reducer} = createSlice({
 
         },
 
+        loadFactorDetail: (state, action) => {
+            const {payload: detailList} = action
+            const {insurance:{detail, ...iRest}, ...rest} = state
+            return detailList? {
+                ...rest,
+                insurance: {
+                    ...detail,
+                        detailList
+                }
+            }: {
+                ...state
+            }
+        },
+
 
     }
 })
@@ -305,6 +319,7 @@ export const {
     loadPolicyEstablishmentDoc,
     loadLossRateData,
     loadUWPolicyData,
+    loadFactorDetail,
 } = actions;
 
 export default configureStore({reducer})

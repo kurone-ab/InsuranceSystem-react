@@ -12,6 +12,7 @@ const header = {
     clientName:'고객명',
     insuranceType: '보험 종류',
     compensationProvision: '적/부 판단율',
+    pass: '적/부 판단 완료여부',
     count: 'U/W 요청 건수',
 }
 
@@ -26,14 +27,16 @@ const PolicyEstablishment = ({ policyEstablishmentDocList,load}) => {
 
 
     const renderData = policyEstablishmentDocList ? policyEstablishmentDocList.map((policyEstablishmentDoc) => {
-            const {id, insuranceType, compensationProvision, count, clientName} = policyEstablishmentDoc
+            const {id, insuranceType, compensationProvision, count, clientName, underWritingPassed} = policyEstablishmentDoc
             const comp= compensationProvision+""
+        const pass=underWritingPassed+""
 
             return {
                 id,
                 clientName,
                 insuranceType,
                 comp,
+                pass,
                 count
             }
         }) :

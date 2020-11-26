@@ -1,28 +1,30 @@
-import React, {lazy} from "react";
+import React, {lazy, useState} from "react";
 import CustomizableTable from "../../global/CustomizableTable";
 import {connect, useStore} from 'react-redux';
-import {Button} from 'reactstrap'
+import {Button, ListGroupItem,Select,Input} from 'reactstrap'
 import {useGetAxios, useGetAxiosWithParams} from "../../global/useAxios";
 import Loading from "../../global/Loading";
 import {loadLossRateData} from "../../../globalStore";
 
 const header = {
-    companyName: '회사명',
-    insuranceName: '보험명',
+    companyName: '회사',
+    insuranceName: '상품명',
     lossRate: '손해율',
 }
 
 const LossRateManagement= ({lossRateList, load}) => {
-    console.log("LossRateManagement")
+    const [state,setState] = useState({
+        target:3
+    })
+
     useGetAxiosWithParams({
         url: '/contract/loss_rate',
         callback: load,
         necessary: !lossRateList,
-        params: {term: 0}
+        params: {term: state.target}
     })
 
     const renderData = lossRateList ? lossRateList.map((lossRateData) => {
-        console.log("renderData")
 
         const {companyName, insuranceName, lossRate} = lossRateData
         return {
@@ -32,12 +34,22 @@ const LossRateManagement= ({lossRateList, load}) => {
         }
     }) : null
 
+    const handleSelectChange = (event)=> {
+        console.log(event.target.value)
+    event.preventDefault();
+     setState({target:event.target.value})
+    }
 
     return (
         <div className='animated fadeIn'>
 
+            <Input type="select" value={state.target} onChange={handleSelectChange}>
+                <option value={"3"}>최근 3개월</option>
+                <option value={"6"}>최근 6개월</option>
+                <option value={"12"}>최근 1년</option>
+            </Input>
             {renderData ?
-                <CustomizableTable tableTitle='최근 3개월 손해율' tableHeader={header} tableRowData={renderData} />
+                <CustomizableTable tableTitle={'최근 '+state.target+'개월 손해율'} tableHeader={header} tableRowData={renderData} />
                 : <Loading/>
             }
             <hr/>
@@ -52,7 +64,7 @@ const LossRateManagement= ({lossRateList, load}) => {
 }
 
 const mapStateToProps = (state) => {
-    console.log("mapStateToProps")
+    // console.log("mapStateToProps")
 
 
     const {authorizeDoc: {lossRateList} = {}} = state
@@ -60,7 +72,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-    console.log("mapDispatchToProps")
+    // console.log("mapDispatchToProps")
 
 
     return {
