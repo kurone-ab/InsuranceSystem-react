@@ -1,10 +1,11 @@
-import React, {lazy, useState} from "react";
+import React, {lazy, useEffect, useState} from "react";
 import CustomizableTable from "../../global/CustomizableTable";
 import {connect, useStore} from 'react-redux';
-import {Button, ListGroupItem,Select,Input} from 'reactstrap'
+import {Button, ListGroupItem, Select, Input} from 'reactstrap'
 import {useGetAxios, useGetAxiosWithParams} from "../../global/useAxios";
 import Loading from "../../global/Loading";
 import {loadLossRateData} from "../../../globalStore";
+import axios from "axios";
 
 const header = {
     companyName: '회사',
@@ -12,19 +13,38 @@ const header = {
     lossRate: '손해율',
 }
 
-const LossRateManagement= ({lossRateList, load}) => {
-    const [state,setState] = useState({
-        target:3
+const LossRateManagement = ({lossRateList, load}) => {
+    const [state, setState] = useState({
+        target: 0,
+        tableData: [],
+        loading: true
     })
 
-    useGetAxiosWithParams({
-        url: '/contract/loss_rate',
-        callback: load,
-        necessary: !lossRateList,
-        params: {term: state.target}
-    })
 
-    const renderData = lossRateList ? lossRateList.map((lossRateData) => {
+    useEffect(() => {
+        const getAxios = async () => {
+            // if(state.target==null){setState({target:3, loading: state.loading, tableData: state.tableData})}
+            console.log("부름")
+            await axios.get(`/contract/loss_rate?term=${state.target}`)
+                .then(({data}) => {
+                    setState({target: state.target, loading: false, tableData: data})
+                })
+                .catch(e => {
+                    console.error(e);
+                    setState({target: state.target, loading: false, tableData: null})
+                })
+        }
+        getAxios();
+    }, [state.target])
+
+    // useGetAxiosWithParams({
+    //     url: '/contract/loss_rate',
+    //     callback: load,
+    //     necessary: !lossRateList,
+    //     params: {term: state.target}
+    // })
+
+    const renderData = state.tableData ? state.tableData.map((lossRateData) => {
 
         const {companyName, insuranceName, lossRate} = lossRateData
         return {
@@ -34,10 +54,9 @@ const LossRateManagement= ({lossRateList, load}) => {
         }
     }) : null
 
-    const handleSelectChange = (event)=> {
-        console.log(event.target.value)
-    event.preventDefault();
-     setState({target:event.target.value})
+    const handleSelectChange = (event) => {
+        event.preventDefault();
+        setState({target: event.target.value})
     }
 
     return (
@@ -48,9 +67,16 @@ const LossRateManagement= ({lossRateList, load}) => {
                 <option value={"6"}>최근 6개월</option>
                 <option value={"12"}>최근 1년</option>
             </Input>
-            {renderData ?
-                <CustomizableTable tableTitle={'최근 '+state.target+'개월 손해율'} tableHeader={header} tableRowData={renderData} />
-                : <Loading/>
+            <br/>
+            {state.target !== 0 ?
+
+                 renderData ?
+                        <CustomizableTable tableTitle={'최근 ' + state.target + '개월 손해율'} tableHeader={header}
+                                           tableRowData={renderData}/>
+                        : <Loading/>
+
+                : null
+
             }
             <hr/>
             <form>
@@ -63,21 +89,21 @@ const LossRateManagement= ({lossRateList, load}) => {
 
 }
 
-const mapStateToProps = (state) => {
-    const {authorizeDoc: {lossRateList} = {}} = state
-    return lossRateList ? {lossRateList} : {}
-}
+// const mapStateToProps = (state) => {
+//     const {authorizeDoc: {lossRateList} = {}} = state
+//     return lossRateList ? {lossRateList} : {}
+// }
+//
+// const mapDispatchToProps = (dispatch) => {
+//     // console.log("mapDispatchToProps")
+//
+//
+//     return {
+//
+//         load: (content) => dispatch(loadLossRateData(content))
+//     }
+// }
 
-const mapDispatchToProps = (dispatch) => {
-    // console.log("mapDispatchToProps")
 
-
-    return {
-
-        load: (content) => dispatch(loadLossRateData(content))
-    }
-}
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(LossRateManagement)
-// export default LossRateManagement
+// export default connect(mapStateToProps, mapDispatchToProps)(LossRateManagement)
+export default LossRateManagement

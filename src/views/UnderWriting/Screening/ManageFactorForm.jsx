@@ -1,10 +1,11 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import {connect} from 'react-redux'
 import {loadFactorDetail} from "../../../globalStore";
 import axios from "axios";
 import {useGetAxios, useGetAxiosWithParams} from "../../global/useAxios";
 import Loading from "../../global/Loading";
 import {
+    Button,
     Col,
     Dropdown,
     DropdownToggle,
@@ -22,29 +23,23 @@ const ManageFactorForm = ({id}) => {
 
     const [state, setState] = useState({
         loading:true,
-        ItemList:{
-            insuranceName:"",
-            insuranceType:"",
-            physicalSmokeFrequency:"",
-            physicalDrinkingFrequency:"",
-            environmentalJob:"",
-            environmentalDangerousHobby:"",
-            environmentalDangerousArea:"",
-            financialIncome:"",
-            financialProperty:"",
-            financialCreditRating:""
-        }
+        ItemList:[]
     });
 
-
-    axios.get(`/uw/factor_manage/client?contractId=${id}`)
-        .then(({data}) => {
-            setState({loading: false, ItemList: data})
-        })
-        .catch(e => {
-            console.error(e);
-            setState({loading: false, ItemList: null})
-        })
+    useEffect(()=>{
+        const getAxios = async ()=> {
+            console.log("부름")
+            await axios.get(`/uw/factor_manage/client?contractId=${id}`,[])
+                .then(({data}) => {
+                    setState({loading: false, ItemList: data})
+                })
+                .catch(e => {
+                    console.error(e);
+                    setState({loading: false, ItemList: null})
+                })
+        }
+        getAxios();
+    },[])
 
 
         const {
@@ -52,7 +47,6 @@ const ManageFactorForm = ({id}) => {
             physicalDrinkingFrequency, environmentalJob, environmentalDangerousHobby, environmentalDangerousArea,
             financialIncome, financialProperty, financialCreditRating
         } = state.ItemList
-
     return (
         !state.loading ?
             <div className='flex-grow-1'>
@@ -167,22 +161,23 @@ const ManageFactorForm = ({id}) => {
                         </InputGroup>
                     </Col>
                 </FormGroup>
+                <hr/>
             </div>:<Loading/>
     )
 }
 
-// const mapStateToProps = (state) => {
-//     const {detail: {detail} = {}} = state
-//     return detail ? {
-//         detail
-//     } : {}
-// }
-//
-// const mapDispatchToProps = (dispatch) => {
-//     return {
-//         detailDispatcher: (content) => dispatch(loadFactorDetail(content))
-//     }
-// }
+const mapStateToProps = (state) => {
+    const {detail: {detail} = {}} = state
+    return detail ? {
+        detail
+    } : {}
+}
 
-// export default connect(mapStateToProps, mapDispatchToProps)(ManageFactorForm)
-export default ManageFactorForm
+const mapDispatchToProps = (dispatch) => {
+    return {
+        detailDispatcher: (content) => dispatch(loadFactorDetail(content))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ManageFactorForm)
+// export default ManageFactorForm
