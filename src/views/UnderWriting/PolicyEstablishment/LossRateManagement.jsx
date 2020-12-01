@@ -75,15 +75,16 @@ const LossRateManagement = ({lossRateList, load}) => {
                                            tableRowData={renderData}/>
                         : <Loading/>
 
-                : null
+                :  <CustomizableTable tableTitle={'옵션을 먼저 선택해주세요'} tableHeader={header}
+                                     />
 
             }
             <hr/>
-            <form>
-                <Button color='primary'>손해율 데이터 수집</Button>&nbsp;&nbsp;
-                <Button color='primary'>손해율 분석</Button>&nbsp;&nbsp;
-                <Button color='primary'>예상 손해율 시뮬레이션</Button>
-            </form>
+            {/*<form>*/}
+            {/*    <Button color='primary'>손해율 데이터 수집</Button>&nbsp;&nbsp;*/}
+            {/*    <Button color='primary'>손해율 분석</Button>&nbsp;&nbsp;*/}
+            {/*    <Button color='primary'>예상 손해율 시뮬레이션</Button>*/}
+            {/*</form>*/}
         </div>
     )
 

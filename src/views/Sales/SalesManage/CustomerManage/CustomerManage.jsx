@@ -40,7 +40,7 @@ const CustomerManage = () => {
     }, [])
 
     const renderData = state.tableData ? state.tableData.map((unregisteredClient) => {
-        const {id, name, sex, age} = unregisteredClient
+        const {id, name, sex, age, gift} = unregisteredClient
         console.log(id + "/" + name + "/" + sex + "/" + age + "/" + "불러옴")
         return {
             id,
