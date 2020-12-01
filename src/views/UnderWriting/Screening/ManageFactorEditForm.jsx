@@ -14,7 +14,7 @@ import {
     Label,
     UncontrolledTooltip
 } from 'reactstrap'
-import {connect} from 'react-redux'
+import {connect, useStore} from 'react-redux'
 import axios from "axios";
 import Loading from "../../global/Loading";
 
@@ -30,22 +30,28 @@ let targetClient = [''];
 
 const ManageFactorEditForm = ({typeList}) => {
 
+    const [open, setOpen] = useState(false)
+    const [type, setType] = useState('CAR')
+    const [state,setState]=useState({
+        loading:true,ItemList:[]
+    })
 
+    const {user:{id:eid}} = useStore().getState()
 
-    // useEffect(()=>{
-    //     const getAxios = async ()=> {
-    //         console.log("부름")
-    //         await axios.get(`/uw/factor_manage/client/list`,[])
-    //             .then(({data}) => {
-    //                 setState({loading: false, ItemList: data})
-    //             })
-    //             .catch(e => {
-    //                 console.error(e);
-    //                 setState({loading: false, ItemList: null})
-    //             })
-    //     }
-    //     getAxios();
-    // },[])
+    useEffect(()=>{
+        const getAxios = async ()=> {
+            console.log("부름")
+            await axios.get(`/uw_policy/getEmptyFactorCustomers?eid=${eid}`,[])
+                .then(({data}) => {
+                    setState({loading: false, ItemList: data})
+                })
+                .catch(e => {
+                    console.error(e);
+                    setState({loading: false, ItemList: null})
+                })
+        }
+        getAxios();
+    },[])
 
 
     // axios.get(`/uw/factor_manage/client?contractId=5`)
@@ -78,9 +84,22 @@ const ManageFactorEditForm = ({typeList}) => {
                         <Label className='nanum-gothic'>상품 종류</Label>
                     </Col>
                     <Col md={9} sm={12} lg={10}>
-                        <Dropdown disabled>
-                            <DropdownToggle caret className='nanum-gothic'></DropdownToggle>
+                        <Dropdown isOpen={open} toggle={() => setOpen(!open)}
+                                  required={true}>
+                            <DropdownToggle caret className='nanum-gothic'>{"typeList[type]"}</DropdownToggle>
+                            {/*<DropdownMenu>*/}
+                            {/*    {Object.keys(typeList).map((type, idx) =>*/}
+                            {/*        <DropdownItem key={idx}*/}
+                            {/*                      className='border-0 nanum-gothic'*/}
+                            {/*                      value={type}*/}
+                            {/*                      onClick={() => setType(String(type))}*/}
+                            {/*        >{typeList[type]}</DropdownItem>*/}
+                            {/*    )}*/}
+                            {/*</DropdownMenu>*/}
                         </Dropdown>
+                        {/*<Dropdown disabled>*/}
+                        {/*    <DropdownToggle caret className='nanum-gothic'></DropdownToggle>*/}
+                        {/*</Dropdown>*/}
                     </Col>
                 </FormGroup>
                 <FormGroup row>
