@@ -6,6 +6,7 @@ import CustomizableTable from "../../global/CustomizableTable";
 import Loading from "../../global/Loading";
 import ManageFactorForm from "./ManageFactorForm"
 import ManageFactorEditForm from "./ManageFactorEditForm";
+import {uploadAction} from "./ManageFactorEditForm";
 
 
 const header = {
@@ -18,34 +19,6 @@ const header = {
     compensationProvision: '적/부 판단율',
     pass: '적/부 판단 완료여부',
     count: 'U/W 요청 건수',
-}
-
-export const uploadAction = (eid, e, closeModal) => {
-    // e.preventDefault()
-    // const type = document.getElementById('productType').value
-    // const designProductName = document.getElementById('designProductName').value
-    // const guaranteeConditionList = document.getElementsByClassName('guaranteeCondition')
-    // const guaranteeLimitList = document.getElementsByClassName('guaranteeLimit')
-    // const targetClientList = document.getElementsByClassName('guaranteeLimit')
-    // const data = new FormData()
-    // data.append('type', type)
-    // data.append('eid', eid)
-    // data.append('name', designProductName)
-    // console.log(eid)
-    // for (let i = 0; i < targetClientList.length; i++) {
-    //     const targetClientListElement = targetClientList[i]
-    //     data.append('targetClient', targetClientListElement.value)
-    // }
-    //
-    // for (let i = 0; i < guaranteeConditionList.length; i++) {
-    //     const condition = guaranteeConditionList[i]
-    //     const checked = document.getElementById(`special${i}`).checked
-    //     data.append('condition', condition.value)
-    //     data.append('special', checked)
-    //     const limit = guaranteeLimitList[i]
-    //     data.append('limit', `${limit.value}0000`)
-    // }
-    // axios.post('insurance/product/design', data).then(()=>closeModal())
 }
 
 const ManageFactor = ({policyEstablishmentDocList, load}) => {

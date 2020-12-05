@@ -86,6 +86,7 @@ const DesignForm = ({typeList}) => {
                                                   onClick={() => setType(String(type))}
                                     >{typeList[type]}</DropdownItem>
                             )}
+
                         </DropdownMenu>
                     </Dropdown>
                 </Col>
