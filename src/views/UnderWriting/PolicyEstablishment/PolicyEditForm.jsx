@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {
     Button,
     Col,
@@ -16,116 +16,117 @@ import {
 } from 'reactstrap'
 import {connect} from 'react-redux'
 import axios from "axios";
+import Loading from "../../global/Loading";
 
 axios.defaults.withCredentials = true
 axios.defaults.baseURL = 'http://localhost:8080'
 
-let guaranteeCondition = [''];
-let targetClient = [''];
+export const uploadAction = (e, closeModal) => {
+    e.preventDefault()
+    const insuranceId = document.getElementById('insuranceId').value
+    const physicalFactor = document.getElementById('physicalFactor').value
+    const financialFactor = document.getElementById('financialFactor').value
+    const environmentalFactor = document.getElementById('environmentalFactor').value
 
-export const uploadAction = (eid, e, closeModal) => {
-    // e.preventDefault()
-    // const type = document.getElementById('productType').value
-    // const designProductName = document.getElementById('designProductName').value
-    // const guaranteeConditionList = document.getElementsByClassName('guaranteeCondition')
-    // const guaranteeLimitList = document.getElementsByClassName('guaranteeLimit')
-    // const targetClientList = document.getElementsByClassName('guaranteeLimit')
-    // const data = new FormData()
-    // data.append('type', type)
-    // data.append('eid', eid)
-    // data.append('name', designProductName)
-    // console.log(eid)
-    // for (let i = 0; i < targetClientList.length; i++) {
-    //     const targetClientListElement = targetClientList[i]
-    //     data.append('targetClient', targetClientListElement.value)
-    // }
-    //
-    // for (let i = 0; i < guaranteeConditionList.length; i++) {
-    //     const condition = guaranteeConditionList[i]
-    //     const checked = document.getElementById(`special${i}`).checked
-    //     data.append('condition', condition.value)
-    //     data.append('special', checked)
-    //     const limit = guaranteeLimitList[i]
-    //     data.append('limit', `${limit.value}0000`)
-    // }
-    // axios.post('insurance/product/design', data).then(()=>closeModal())
+    const data = new FormData()
+    data.append('insuranceId',insuranceId)
+    data.append('physicalFactor', physicalFactor)
+    data.append('financialFactor', financialFactor)
+    data.append('environmentalFactor', environmentalFactor)
+
+    axios.post('uw/noPolicyInsurance/save', data).then(()=>closeModal())
 }
 
 export const PolicyEditForm = ({typeList}) => {
-    // const [open, setOpen] = useState(false)
-    // const [type, setType] = useState('CAR')
-    // const [assuranceCount, setAssuranceCount] = useState(1)
-    // const [targetCount, setTargetCount] = useState(1)
-    //
-    // if (guaranteeCondition.length > assuranceCount) guaranteeCondition.splice(0, 1)
-    // else if (guaranteeCondition.length < assuranceCount) guaranteeCondition.push('')
-    //
-    // if (targetClient.length > targetCount) targetClient.splice(0, 1)
-    // else if (targetClient.length < targetCount) targetClient.push('')
+    const [open, setOpen] = useState(false)
+    const [target, setTarget] = useState("");
+    const [state, setState] = useState({
+        loading: true, ItemList: []
+    })
+
+    useEffect(() => {
+        const getAxios = async () => {
+            console.log("부름")
+            await axios.get(`/uw/noPolicyInsurance/list`, [])
+                .then(({data}) => {
+                    setState({loading: false, ItemList: data})
+                })
+                .catch(e => {
+                    console.error(e);
+                    setState({loading: false, ItemList: null})
+                })
+        }
+        getAxios();
+    }, [])
 
     return (
-            <div className='flex-grow-1'>
+        !state.loading ?
+        <div className='flex-grow-1'>
+            <FormGroup row>
+                <input type='hidden' id='insuranceId' value={target}/>
+                <Col md={3} lg={2}>
+                    <Label className='nanum-gothic'>상품 번호</Label>
+                </Col>
+                <Col md={9} sm={12} lg={10}>
+                    <Dropdown isOpen={open} toggle={() => setOpen(!open)} required={true}>
+                        <DropdownToggle caret className='nanum-gothic'>{target}</DropdownToggle>
+                        <DropdownMenu>
+                            {Object.keys(state.ItemList).map((key, idx) =>
+                                <DropdownItem key={idx}
+                                              className='border-0 nanum-gothic'
+                                              value={key}
+                                              onClick={() => setTarget(key)}
+                                >{key}</DropdownItem>)}
+                        </DropdownMenu>
+                    </Dropdown>
+                </Col>
+
+                <input type='hidden' id='insuranceInfo'value={state.ItemList[target]}/>
+                <Col md={3} lg={2}>
+                    <Label className='nanum-gothic'>상품 정보</Label>
+                </Col>
+                <Col md={9} sm={12} lg={6}>
+                    <Input type='text' className='nanum-gothic' value={state.ItemList[target]} disabled/>
+                </Col>
+            </FormGroup>
+            <hr/>
 
 
-                <FormGroup row>
-                    <input type='hidden' id='insuranceType' value={"uwPolicyId"}/>
-                    <Col md={3} lg={2}>
-                        <Label className='nanum-gothic'>상품 번호</Label>
-                    </Col>
-                    <Col md={9} sm={12} lg={10}>
-                        <Dropdown >
-                            <DropdownToggle caret className='nanum-gothic'>{"uwPolicyId"}</DropdownToggle>
-                        </Dropdown>
-                    </Col>
-                    <input type='hidden' id='insuranceName' />
-                    <Col md={3} lg={2}>
-                        <Label className='nanum-gothic'>상품 이름</Label>
-                    </Col>
-                    <Col md={9} sm={12} lg={10}>
-                        <Input type='text' className='nanum-gothic'  />
-                    </Col>
-                </FormGroup>
-                <hr/>
+            <FormGroup row>
+                <Col md={3} lg={2}>
+                    <Label className='nanum-gothic'>신체적 인수 조건</Label>
+                </Col>
+                <Col md={9} sm={12} lg={10}>
+                    <Input type='text' id='physicalFactor' className='nanum-gothic'/>
+                </Col>
+            </FormGroup>
 
+            <FormGroup row>
+                <Col md={3} lg={2}>
+                    <Label className='nanum-gothic'>환경적 인수 조건</Label>
+                </Col>
+                <Col md={9} sm={12} lg={10}>
+                    <Input type='text' id='environmentalFactor' className='nanum-gothic'/>
+                </Col>
+            </FormGroup>
 
-                <FormGroup row>
-                    <input type='hidden' id='physicalSmokeFrequency' />
-                    <Col md={3} lg={2}>
-                        <Label className='nanum-gothic'>신체적 인수 조건</Label>
-                    </Col>
-                    <Col md={9} sm={12} lg={10}>
-                        <Input type='text' className='nanum-gothic' />
-                    </Col>
-                </FormGroup>
-
-                <FormGroup row>
-                    <input type='hidden' id='physicalDrinkingFrequency' />
-                    <Col md={3} lg={2}>
-                        <Label className='nanum-gothic'>환경적 인수 조건</Label>
-                    </Col>
-                    <Col md={9} sm={12} lg={10}>
-                        <Input type='text' className='nanum-gothic' />
-                    </Col>
-                </FormGroup>
-                <hr/>
-
-                <FormGroup row>
-                    <input type='hidden' id='environmentalDangerousArea'/>
-                    <Col md={3} lg={2}>
-                        <Label className='nanum-gothic'>금전적 인수 조건</Label>
-                    </Col>
-                    <Col md={9} sm={12} lg={10}>
-                        <Input type='text' className='nanum-gothic' />
-                    </Col>
-                </FormGroup>
-                <hr/>
-            </div>
+            <FormGroup row>
+                <Col md={3} lg={2}>
+                    <Label className='nanum-gothic'>금전적 인수 조건</Label>
+                </Col>
+                <Col md={9} sm={12} lg={10}>
+                    <Input type='text' id='financialFactor' className='nanum-gothic'/>
+                </Col>
+            </FormGroup>
+            <hr/>
+        </div>
+                :<Loading/>
 
     )
 }
 
 const mapStateToProps = (state) => {
-    const {insurance: {infoList:{typeList} = {}} = {}} = state
+    const {insurance: {infoList: {typeList} = {}} = {}} = state
     return typeList ? {
         typeList,
     } : {}

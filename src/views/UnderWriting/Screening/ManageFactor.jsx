@@ -48,6 +48,8 @@ const ManageFactor = ({policyEstablishmentDocList, load}) => {
         }) :
         null
 
+    console.log(renderData)
+
     return (
         <div className='animated fadeIn'>
             {

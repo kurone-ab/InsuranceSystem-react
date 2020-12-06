@@ -221,6 +221,21 @@ const {actions, reducer} = createSlice({
                 ...state
             }
         },
+///////////////////////////////
+        loadPolicyEstablishmentDoc: (state, action) => {
+            const {payload: policyEstablishmentDocList} = action
+            const {policyEstablishmentDoc, ...rest} = state
+            return policyEstablishmentDocList ? {
+                ...rest,
+                authorizeDoc: {
+                    ...policyEstablishmentDoc,
+                    policyEstablishmentDocList
+                }
+            } : {
+                ...state
+            }
+
+        },
 
         loadUWPolicyData: (state, action) => {
             const {payload: uwPolicyList} = action
@@ -236,6 +251,7 @@ const {actions, reducer} = createSlice({
             }
 
         },
+        /////////////////////////
 
         loadAuthorizeDoc: (state, action) => {
             const {payload: authorizeDocList} = action
@@ -251,20 +267,7 @@ const {actions, reducer} = createSlice({
             }
         },
 
-        loadPolicyEstablishmentDoc: (state, action) => {
-            const {payload: policyEstablishmentDocList} = action
-            const {policyEstablishmentDoc, ...rest} = state
-            return policyEstablishmentDocList ? {
-                ...rest,
-                authorizeDoc: {
-                    ...policyEstablishmentDoc,
-                    policyEstablishmentDocList
-                }
-            } : {
-                ...state
-            }
 
-        },
 
         loadLossRateData: (state, action) => {
             const {payload: lossRateList} = action

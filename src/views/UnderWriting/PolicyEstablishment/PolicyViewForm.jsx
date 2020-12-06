@@ -26,8 +26,8 @@ export const PolicyViewForm = (id) => {
     //     const getAxios = async () => {
     //         console.log("부름"+id)
     //         await axios.get(`/uw/uw_policy?id=${id}`, [])
-    //             .then(({data2}) => {
-    //                 setState({target: state.target, ids: data2, loading: true, ItemList: state.ItemList})
+    //             .then(({data}) => {
+    //                 setState({target: state.target, ids: data, loading: false, ItemList: state.ItemList})
     //             })
     //             .catch(e => {
     //                 console.error(e);
@@ -36,20 +36,20 @@ export const PolicyViewForm = (id) => {
     //     getAxios();
     // }, [])
 
-    // useEffect(()=>{
-    //     const getAxios = async ()=> {
-    //         console.log("부름")
-    //         await axios.get(`/uw/uw_policy?pid=${state.target}`,[])
-    //             .then(({data}) => {
-    //                 setState({target:state.target, ids:state.ids, loading: state.loading, ItemList: data})
-    //             })
-    //             .catch(e => {
-    //                 console.error(e);
-    //                 setState({target:state.target, ids:state.ids,loading: state.loading, ItemList: null})
-    //             })
-    //     }
-    //     getAxios();
-    // },state.target)
+    useEffect(()=>{
+        const getAxios = async ()=> {
+            console.log("부름")
+            await axios.get(`/uw/uw_policy?pid=${id}`,[])
+                .then(({data}) => {
+                    setState({target:state.target, ids:state.ids, loading: false, ItemList: data})
+                })
+                .catch(e => {
+                    console.error(e);
+                    setState({target:state.target, ids:state.ids,loading: false, ItemList: null})
+                })
+        }
+        getAxios();
+    },state.target)
 
 
     const handleSelectChange = (event) => {
@@ -57,7 +57,7 @@ export const PolicyViewForm = (id) => {
         setState({target: event.target.value, ids: state.ids, loading: false, ItemList: state.ItemList})
     }
 
-
+    if(!state.ItemList)return <Loading/>
     const {uwPolicyId, name, date, physicalPolicy, environmentalPolicy, financialPolicy} = state.ItemList
     return (
 

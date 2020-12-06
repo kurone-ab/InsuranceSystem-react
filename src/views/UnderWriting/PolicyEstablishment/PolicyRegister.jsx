@@ -5,15 +5,14 @@ import {connect} from "react-redux";
 import {loadUWPolicyData} from "../../../globalStore";
 import axios from "axios";
 import ManageFactorForm from "../Screening/ManageFactorForm";
-import {uploadAction} from "../../Development/Design/DesignForm";
-import ManageFactorEditForm from "../Screening/ManageFactorEditForm";
+import {uploadAction} from "./PolicyEditForm";
 import {PolicyViewForm} from "./PolicyViewForm";
 import {PolicyEditForm} from "./PolicyEditForm";
 
 const Loading = lazy(() => import('../../global/Loading'))
 
 const header = {
-     id: '상품 번호',
+    id: '상품 번호',
     title: {
         title: '상품명',
         className: 'w-50'
@@ -24,12 +23,12 @@ const header = {
 const PolicyRegister = ({detailList, load}) => {
 
     const [state, setState] = useState({
-        loading:true,
-        ItemList:[]
+        loading: true,
+        ItemList: []
     });
 
-    useEffect(()=>{
-        const getAxios = async ()=> {
+    useEffect(() => {
+        const getAxios = async () => {
             await axios.get('/uw/uw_policy/list')
                 .then(({data}) => {
                     setState({loading: false, ItemList: data})
@@ -40,38 +39,40 @@ const PolicyRegister = ({detailList, load}) => {
                 })
         }
         getAxios();
-    },[])
+    }, [])
 
     const renderData = state.ItemList ? state.ItemList.map((detail) => {
         console.log("renderData")
-        const {uwPolicyId, name, date, physicalPolicy, environmentalPolicy, financialPolicy} = detail
+        const {id, name, date} = detail
         return {
-            uwPolicyId,
+            id,
             title: {
                 title: name,
-                aTag: true,
-                uwPolicyId
+                aTag: false,
+                id
             },
             date
         }
     }) : null
 
+    console.log(renderData)
+
     return (
         <div className='animated fadeIn'>
-            { state.loading==false ?
+            {!state.loading ?
 
                 renderData ?
-                <CustomizableTable tableTitle='인수 정책 수립 및 수정' tableHeader={header} tableRowData={renderData}
-                                   activeModal retrieveForm={PolicyViewForm} modalProps={{
-                    modalTitle: '인수 정책 수립하기',
-                    // uploadAction: (e, closeModal) => uploadAction(eid, e, closeModal),
-                    inputForm: <PolicyEditForm/>,
-                    fileUpload: false,
-                    fileElementId: 'designFormFile'
-                }}/>
-                : <Loading/>
+                    <CustomizableTable tableTitle='인수 정책 수립 및 수정' tableHeader={header} tableRowData={renderData}
+                                       activeModal modalProps={{
+                        modalTitle: '인수 정책 수립하기',
+                        uploadAction: (e, closeModal) => uploadAction( e, closeModal),
+                        inputForm: <PolicyEditForm/>,
+                        fileUpload: false,
+                        fileElementId: 'designFormFile'
+                    }}/>
+                    : <Loading/>
 
-                :null
+                : null
             }
         </div>
     )
