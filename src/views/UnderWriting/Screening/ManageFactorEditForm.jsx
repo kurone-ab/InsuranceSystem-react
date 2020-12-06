@@ -37,9 +37,9 @@ export const uploadAction = (eid, e, closeModal) => {
     data.append('environmentalDangerousHobby', document.getElementById('environmentalDangerousHobby').value)
     data.append('environmentalJob', document.getElementById('environmentalJob').value)
 
-    data.append('financialIncome', document.getElementById('financialIncome').value)
+    data.append('financialIncome',  (document.getElementById('financialIncome').value) * 10000)
     data.append('financialCreditRating', document.getElementById('financialCreditRating').value)
-    data.append('financialProperty', ((document.getElementById('financialProperty').value) * 10000))
+    data.append('financialProperty', document.getElementById('financialProperty').value)
 
     axios.post('client/save/Factors', data).then(() => closeModal())
 }
@@ -102,7 +102,7 @@ const ManageFactorEditForm = ({typeList}) => {
                     <FormGroup row>
                         <input type='hidden' id='clientId' value={select.client}/>
                         <Col md={3} lg={2}>
-                            <Label className='nanum-gothic'>흡연빈도</Label>
+                            <Label className='nanum-gothic'>고객</Label>
                         </Col>
                         <Col md={9} sm={12} lg={10}>
                             <Dropdown isOpen={open.client} toggle={() => setOpen({
@@ -112,7 +112,7 @@ const ManageFactorEditForm = ({typeList}) => {
                                 job: open.job
                             })}
                                       required={true}>
-                                <DropdownToggle caret className='nanum-gothic'>{" "}</DropdownToggle>
+                                <DropdownToggle caret className='nanum-gothic'>{client[select.client]}</DropdownToggle>
                                 <DropdownMenu>
                                     {Object.keys(client).map((key, idx) =>
                                         <DropdownItem key={idx}
@@ -145,7 +145,7 @@ const ManageFactorEditForm = ({typeList}) => {
                                 job: open.job
                             })}
                                       required={true}>
-                                <DropdownToggle caret className='nanum-gothic'>{" "}</DropdownToggle>
+                                <DropdownToggle caret className='nanum-gothic'>{smoke[select.smoke]}</DropdownToggle>
                                 <DropdownMenu>
                                     {Object.keys(smoke).map((key, idx) =>
                                         <DropdownItem key={idx}
@@ -176,7 +176,7 @@ const ManageFactorEditForm = ({typeList}) => {
                                 job: open.job
                             })}
                                       required={true}>
-                                <DropdownToggle caret className='nanum-gothic'>{" "}</DropdownToggle>
+                                <DropdownToggle caret className='nanum-gothic'>{drink[select.drink]}</DropdownToggle>
                                 <DropdownMenu>
                                     {Object.keys(drink).map((key, idx) =>
                                         <DropdownItem key={idx}
@@ -225,7 +225,7 @@ const ManageFactorEditForm = ({typeList}) => {
                                 job: !open.job
                             })}
                                       required={true}>
-                                <DropdownToggle caret className='nanum-gothic'>{" "}</DropdownToggle>
+                                <DropdownToggle caret className='nanum-gothic'>{job[select.job]}</DropdownToggle>
                                 <DropdownMenu>
                                     {Object.keys(job).map((key, idx) =>
                                         <DropdownItem key={idx}

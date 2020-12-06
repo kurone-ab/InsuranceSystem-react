@@ -16,8 +16,6 @@ const header = {
         className: 'w-30'
     },
     insuranceType: '보험 종류',
-    compensationProvision: '적/부 판단율',
-    pass: '적/부 판단 완료여부',
     count: 'U/W 요청 건수',
 }
 
@@ -45,8 +43,6 @@ const ManageFactor = ({policyEstablishmentDocList, load}) => {
                     id
                 },
                 insuranceType,
-                comp,
-                pass,
                 count
             }
         }) :
