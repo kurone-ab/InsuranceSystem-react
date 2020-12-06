@@ -1,10 +1,9 @@
 import React, {lazy, useEffect, useState} from "react";
 import CustomizableTable from "../../global/CustomizableTable";
-import {useGetAxios} from "../../global/useAxios";
-import {connect} from "react-redux";
+import {useGetAxios, useGetAxiosWithParams} from "../../global/useAxios";
+import {connect, useStore} from "react-redux";
 import {loadUWPolicyData} from "../../../globalStore";
 import axios from "axios";
-import ManageFactorForm from "../Screening/ManageFactorForm";
 import {uploadAction} from "./PolicyEditForm";
 import {PolicyViewForm} from "./PolicyViewForm";
 import {PolicyEditForm} from "./PolicyEditForm";
@@ -20,13 +19,8 @@ const header = {
     date: '수정 시각'
 }
 
-const PolicyRegister = ({detailList, load}) => {
-
-    const [state, setState] = useState({
-        loading: true,
-        ItemList: []
-    });
-
+const PolicyRegister = ({uwPolicyList, load}) => {
+    const [state, setState] = useState({loading: true, ItemList: []});
     useEffect(() => {
         const getAxios = async () => {
             await axios.get('/uw/uw_policy/list')
@@ -42,13 +36,13 @@ const PolicyRegister = ({detailList, load}) => {
     }, [])
 
     const renderData = state.ItemList ? state.ItemList.map((detail) => {
-        console.log("renderData")
-        const {id, name, date} = detail
+        const {uwPolicyId, name, date} = detail
+        const id=uwPolicyId
         return {
             id,
             title: {
                 title: name,
-                aTag: false,
+                aTag: true,
                 id
             },
             date
@@ -60,35 +54,31 @@ const PolicyRegister = ({detailList, load}) => {
     return (
         <div className='animated fadeIn'>
             {!state.loading ?
-
                 renderData ?
                     <CustomizableTable tableTitle='인수 정책 수립 및 수정' tableHeader={header} tableRowData={renderData}
-                                       activeModal modalProps={{
+                                       activeModal retrieveForm={PolicyViewForm} modalProps={{
                         modalTitle: '인수 정책 수립하기',
-                        uploadAction: (e, closeModal) => uploadAction( e, closeModal),
+                        uploadAction: (e, closeModal) => uploadAction(e, closeModal),
                         inputForm: <PolicyEditForm/>,
                         fileUpload: false,
                         fileElementId: 'designFormFile'
                     }}/>
                     : <Loading/>
-
                 : null
             }
         </div>
     )
 }
-//
-// const mapStateToProps = (state) => {
-//     // console.log("mapStateToProps")
-//     const {uwPolicy: {uwPolicyList} = {}} = state
-//     return uwPolicyList ? {uwPolicyList} : {}
-// }
-//
-// const mapDispatchToProps = (dispatch) => {
-//     console.log("mapDispatchToProps")
-//     return {
-//         load: (detail) => dispatch(loadUWPolicyData(detail))
-//     }
-// }
 
+const mapStateToProps = (state) => {
+    const {uwPolicy: {uwPolicyList} = {}} = state
+    return uwPolicyList ? {uwPolicyList} : {}
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        load: (detail) => dispatch(loadUWPolicyData(detail))
+    }
+}
+// export default connect(mapStateToProps, mapDispatchToProps)(PolicyRegister)
 export default PolicyRegister

@@ -21,14 +21,15 @@ import {
 
 const ManageFactorForm = ({id}) => {
 
+
     const [state, setState] = useState({
         loading:true,
-        ItemList:[]
+        ItemList:{}
     });
 
     useEffect(()=>{
         const getAxios = async ()=> {
-            console.log("부름")
+            console.log(id)
             await axios.get(`/uw/factor_manage/client?contractId=${id}`,[])
                 .then(({data}) => {
                     setState({loading: false, ItemList: data})
@@ -41,15 +42,15 @@ const ManageFactorForm = ({id}) => {
         getAxios();
     },[])
 
-    // const {
-    //     insuranceName, insuranceType, physicalSmokeFrequency,
-    //     physicalDrinkingFrequency, environmentalJob, environmentalDangerousHobby, environmentalDangerousArea,
-    //     financialIncome, financialProperty, financialCreditRating
-    // } = state.ItemList
+    const {
+        insuranceName, insuranceType, physicalSmokeFrequency,
+        physicalDrinkingFrequency, environmentalJob, environmentalDangerousHobby, environmentalDangerousArea,
+        financialIncome, financialProperty, financialCreditRating
+    } = state.ItemList
 
     return (
-        !state.loading ?
-            state.ItemList ?
+        // !state.loading ?
+        //     state.ItemList ?
             <div className='flex-grow-1'>
                 <FormGroup row>
                     <input type='hidden' id='insuranceType' value={state.ItemList.insuranceType}/>
@@ -164,9 +165,9 @@ const ManageFactorForm = ({id}) => {
                 </FormGroup>
                 <hr/>
             </div>
-                :<div> 아직 고객의 Factor가 저장되어 있지 않습니다.</div>
-
-                :<Loading/>
+                // :<div> 아직 고객의 Factor가 저장되어 있지 않습니다.</div>
+                //
+                // :<Loading/>
     )
 }
 

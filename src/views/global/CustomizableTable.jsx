@@ -104,6 +104,7 @@ const BaseTable = ({tableHeader, tableRowData, retrieveForm: RetrieveForm}) => {
                                 const {title, id} = row[key];
                                 contentOpenState[id] = false
                                 return (
+
                                     <td key={idx} className={'nanum-gothic font-lg'}>
                                         {
                                             title ?
@@ -118,7 +119,7 @@ const BaseTable = ({tableHeader, tableRowData, retrieveForm: RetrieveForm}) => {
                                         }
                                         {
                                             //RetrieveForm( 표 내부 a태그 클릭 시 해당 행과 관련된 정보 보여주는 폼 ) 부분.
-                                            title ? <ReadContentModal open={open[id] ? open[id] : false}
+                                            title&&id ? <ReadContentModal open={open[id] ? open[id] : false}
                                                                       toggleFunc={() => {
                                                                           specificOpenState(-1)
                                                                       }} title={title}
