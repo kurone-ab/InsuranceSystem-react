@@ -3,7 +3,7 @@ import axios from "axios";
 import DesignReadForm from "../../../Development/Design/DesignReadForm";
 import CustomerGetViewForm from "./CustomerGetViewForm";
 import CustomerGetEditForm from "./CustomerGetEditForm";
-import {uploadAction} from "../../../Development/Design/DesignForm";
+import {uploadAction} from "./CustomerGetEditForm";
 
 const CustomizableTable = lazy(() => import('../../../global/CustomizableTable'))
 const Loading = lazy(() => import('../../../global/Loading'))
@@ -19,6 +19,7 @@ const header = {
 }
 
 const CustomerGet = () => {
+
     const [state, setState] = useState({
         loading: true,
         tableData: []
@@ -42,7 +43,7 @@ const CustomerGet = () => {
 
     const renderData = state.tableData ? state.tableData.map((unregisteredClient) => {
         const {id, name, sex, age, gift} = unregisteredClient
-        console.log(id + "/" + name + "/" + sex + "/" + age + "/" + "불러옴")
+        // console.log(id + "/" + name + "/" + sex + "/" + age + "/" + "불러옴")
         return {
             id,
             name: {
@@ -63,7 +64,7 @@ const CustomerGet = () => {
                     <CustomizableTable tableTitle='가망 고객 확보하기' tableHeader={header} tableRowData={renderData}
                                        retrieveForm={CustomerGetViewForm} activeModal modalProps={{
                 modalTitle: '가망 고객 신규 등록',
-                // uploadAction: (e, closeModal) => uploadAction(eid, e, closeModal),
+                uploadAction: (e, closeModal) => uploadAction(e, closeModal),
                 inputForm: <CustomerGetEditForm/>,
             }}
 

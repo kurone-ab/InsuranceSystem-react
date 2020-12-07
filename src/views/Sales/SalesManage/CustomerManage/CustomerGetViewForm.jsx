@@ -9,8 +9,7 @@ import {
     Label,
 } from 'reactstrap'
 
-export const CustomerGetViewForm = (id) => {
-console.log("아이디는"+id)
+export const CustomerGetViewForm = ({id}) => {
     const [state, setState] = useState({
         loading: true,
         tableData: []
