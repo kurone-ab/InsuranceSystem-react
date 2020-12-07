@@ -49,9 +49,7 @@ const ManageFactorForm = ({id}) => {
                     <Label className='nanum-gothic'>상품 종류</Label>
                 </Col>
                 <Col md={8} sm={12} lg={9}>
-                    <Dropdown disabled>
-                        <DropdownToggle caret className='nanum-gothic'>{insuranceType}</DropdownToggle>
-                    </Dropdown>
+                    <Input type='text' className='nanum-gothic' value={insuranceType} disabled/>
                 </Col>
             </FormGroup>
             <FormGroup row>

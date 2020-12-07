@@ -259,7 +259,7 @@ const ManageFactorEditForm = () => {
                         </Col>
                         <Col md={8} lg={3} className='mt-1'>
                             <InputGroup>
-                                <Input type='number' className='nanum-gothic' id='financialCreditRating'/>
+                                <Input type='number' className='nanum-gothic' id='financialCreditRating' min='1' max='10'/>
                             </InputGroup>
                         </Col>
                     </FormGroup>
