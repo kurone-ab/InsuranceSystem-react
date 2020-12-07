@@ -38,6 +38,10 @@ const CustomerRelationshipForm = () => {
             await axios.get(`/client/search/nameAndId?name=${target.name}&id=${target.id}`)
                 .then(({data}) => {
                     setState({loading: false, ItemList: data})
+                    if(target.id!==0&&!state.ItemList){
+                        alert("해당 고객은 존재하지 않습니다.")
+                        setTarget({id:0, name:""})
+                    }
                 })
                 .catch(e => {
                     console.error(e);
@@ -53,6 +57,8 @@ const CustomerRelationshipForm = () => {
     return (
         <div className='flex-grow-1'>
             {target.id === 0 && !state.ItemList ?
+
+
                 <FormGroup row>
                     <Col md={3} lg={2}>
                         <Label className='nanum-gothic'>고객 번호/이름</Label>
@@ -96,10 +102,6 @@ const CustomerRelationshipForm = () => {
                                disabled/>
                     </Col>
                 </FormGroup> : null}
-
-            {(target.id !== 0 && !state.ItemList&&!update) ?
-                setTarget({id:0, name:""}) : null}
-
 
             <FormGroup row>
                 <Col md={3} lg={2}>
