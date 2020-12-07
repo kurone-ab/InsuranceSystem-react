@@ -31,14 +31,14 @@ export const uploadAction = (eid, e, closeModal) => {
     data.append('environmentalDangerousHobby', document.getElementById('environmentalDangerousHobby').value)
     data.append('environmentalJob', document.getElementById('environmentalJob').value)
 
-    data.append('financialIncome',  (document.getElementById('financialIncome').value) * 10000)
+    data.append('financialIncome',  document.getElementById('financialIncome').value * 10000)
     data.append('financialCreditRating', document.getElementById('financialCreditRating').value)
-    data.append('financialProperty', document.getElementById('financialProperty').value)
+    data.append('financialProperty', document.getElementById('financialProperty').value * 10000)
 
     axios.post('client/save/Factors', data).then(() => closeModal())
 }
 
-const ManageFactorEditForm = ({typeList}) => {
+const ManageFactorEditForm = () => {
 
     const [select, setSelect] = useState(
         {
@@ -93,10 +93,10 @@ const ManageFactorEditForm = ({typeList}) => {
                 <div className='flex-grow-1'>
                     <FormGroup row>
                         <input type='hidden' id='clientId' value={select.client}/>
-                        <Col md={3} lg={2}>
+                        <Col md={4} lg={3}>
                             <Label className='nanum-gothic'>고객</Label>
                         </Col>
-                        <Col md={9} sm={12} lg={10}>
+                        <Col md={8} sm={12} lg={9}>
                             <Dropdown isOpen={open.client} toggle={() => setOpen({
                                 client: !open.client,
                                 smoke: open.smoke,
@@ -126,10 +126,10 @@ const ManageFactorEditForm = ({typeList}) => {
                     <hr/>
                     <FormGroup row>
                         <input type='hidden' id='physicalSmokeFrequency' value={select.smoke}/>
-                        <Col md={3} lg={2}>
+                        <Col md={4} lg={3}>
                             <Label className='nanum-gothic'>흡연빈도</Label>
                         </Col>
-                        <Col md={9} sm={12} lg={10}>
+                        <Col md={8} sm={12} lg={9}>
                             <Dropdown isOpen={open.smoke} toggle={() => setOpen({
                                 client: open.client,
                                 smoke: !open.smoke,
@@ -157,10 +157,10 @@ const ManageFactorEditForm = ({typeList}) => {
                     </FormGroup>
                     <FormGroup row>
                         <input type='hidden' id='physicalDrinkingFrequency' value={select.drink}/>
-                        <Col md={3} lg={2}>
+                        <Col md={4} lg={3}>
                             <Label className='nanum-gothic'>음주빈도</Label>
                         </Col>
-                        <Col md={9} sm={12} lg={10}>
+                        <Col md={8} sm={12} lg={9}>
                             <Dropdown isOpen={open.drink} toggle={() => setOpen({
                                 client: open.client,
                                 smoke: open.smoke,
@@ -189,27 +189,27 @@ const ManageFactorEditForm = ({typeList}) => {
                     <hr/>
 
                     <FormGroup row>
-                        <Col md={3} lg={2}>
+                        <Col md={4} lg={3}>
                             <Label className='nanum-gothic'>위험한 거주지</Label>
                         </Col>
-                        <Col md={9} sm={12} lg={10}>
+                        <Col md={8} sm={12} lg={9}>
                             <Input type='text' className='nanum-gothic' id='environmentalDangerousArea'/>
                         </Col>
                     </FormGroup>
                     <FormGroup row>
-                        <Col md={3} lg={2}>
+                        <Col md={4} lg={3}>
                             <Label className='nanum-gothic'>위험한 취미 </Label>
                         </Col>
-                        <Col md={9} sm={12} lg={10}>
+                        <Col md={8} sm={12} lg={9}>
                             <Input type='text' className='nanum-gothic' id='environmentalDangerousHobby'/>
                         </Col>
                     </FormGroup>
                     <FormGroup row>
                         <input type='hidden' id='environmentalJob' value={select.job}/>
-                        <Col md={3} lg={2}>
+                        <Col md={4} lg={3}>
                             <Label className='nanum-gothic'>직업</Label>
                         </Col>
-                        <Col md={9} sm={12} lg={10}>
+                        <Col md={8} sm={12} lg={9}>
                             <Dropdown isOpen={open.job} toggle={() => setOpen({
                                 client: open.client,
                                 smoke: open.smoke,
@@ -238,11 +238,14 @@ const ManageFactorEditForm = ({typeList}) => {
                     <hr/>
 
                     <FormGroup row>
-                        <Col md={3} lg={2}>
+                        <Col md={4} lg={3}>
                             <Label className='nanum-gothic'>수입</Label>
                         </Col>
-                        <Col md={10} lg={3} className='mt-1'>
+                        <Col md={8} lg={5} className='mt-1'>
                             <InputGroup>
+                                <InputGroupAddon addonType={"prepend"}>
+                                    <InputGroupText>&#8361;</InputGroupText>
+                                </InputGroupAddon>
                                 <Input type='number' className='nanum-gothic' id='financialIncome'/>
                                 <InputGroupAddon addonType='append'>
                                     <InputGroupText>0,000</InputGroupText>
@@ -251,22 +254,28 @@ const ManageFactorEditForm = ({typeList}) => {
                         </Col>
                     </FormGroup>
                     <FormGroup row>
-                        <Col md={3} lg={2}>
+                        <Col md={4} lg={3}>
                             <Label className='nanum-gothic'>신용등급</Label>
                         </Col>
-                        <Col md={10} lg={3} className='mt-1'>
+                        <Col md={8} lg={3} className='mt-1'>
                             <InputGroup>
                                 <Input type='number' className='nanum-gothic' id='financialCreditRating'/>
                             </InputGroup>
                         </Col>
                     </FormGroup>
                     <FormGroup row>
-                        <Col md={3} lg={2}>
-                            <Label className='nanum-gothic'>property</Label>
+                        <Col md={4} lg={3}>
+                            <Label className='nanum-gothic'>재산</Label>
                         </Col>
-                        <Col md={10} lg={3} className='mt-1'>
+                        <Col md={8} lg={5} className='mt-1'>
                             <InputGroup>
+                                <InputGroupAddon addonType={"prepend"}>
+                                    <InputGroupText>&#8361;</InputGroupText>
+                                </InputGroupAddon>
                                 <Input type='number' className='nanum-gothic' id='financialProperty'/>
+                                <InputGroupAddon addonType={"append"}>
+                                    <InputGroupText>0,000</InputGroupText>
+                                </InputGroupAddon>
                             </InputGroup>
                         </Col>
                     </FormGroup>
