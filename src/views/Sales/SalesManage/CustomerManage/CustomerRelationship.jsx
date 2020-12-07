@@ -3,6 +3,7 @@ import axios from "axios";
 import {useStore} from "react-redux";
 import CustomerRelationshipViewForm from "./CustomerRelationshipViewForm";
 import CustomerRelationshipForm from "./CustomerRelationshipForm";
+import {uploadAction} from "./CustomerRelationshipForm";
 const CustomizableTable = lazy(() => import('../../../global/CustomizableTable'))
 const Loading = lazy(() => import('../../../global/Loading'))
 
@@ -16,15 +17,9 @@ const header = {
 
 }
 
-const CustomerRelationship = () => {
+const CustomerRelationship = ({uwPolicyList, load}) => {
     const {user:{id:eid}} = useStore().getState()
-
-    const [state, setState] = useState({
-        loading: true,
-        tableData: []
-    })
-
-
+    const [state, setState] = useState({loading: true,tableData: [] })
     useEffect(() => {
         const getAxios = async () => {
             console.log("부름")
@@ -44,7 +39,6 @@ const CustomerRelationship = () => {
         const {id, clientName, content, date} = counseling
         return {
             id,
-
             date,
             clientName: {
                 title: clientName,
@@ -62,7 +56,9 @@ const CustomerRelationship = () => {
                     <CustomizableTable tableTitle='고객 관계 형성: 상담 목록' tableHeader={header} tableRowData={renderData}
                                        retrieveForm={CustomerRelationshipViewForm} activeModal modalProps={{
                         modalTitle:'고객 상담 기록하기',
+                        uploadAction: (e, closeModal) => uploadAction(eid, e, closeModal),
                         inputForm:<CustomerRelationshipForm/>,
+                        fileUpload: false,
                     }} />
                     : <Loading/>)
                 : null
@@ -70,5 +66,7 @@ const CustomerRelationship = () => {
         </div>
     )
 }
+
+
 
 export default CustomerRelationship

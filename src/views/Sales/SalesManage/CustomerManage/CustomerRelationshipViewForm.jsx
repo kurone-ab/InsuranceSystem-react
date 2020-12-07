@@ -9,7 +9,7 @@ import {
     Label,
 } from 'reactstrap'
 
-export const CustomerRelationshipViewForm = (id) => {
+export const CustomerRelationshipViewForm = ({id}) => {
 console.log("아이디는"+id)
     const [state, setState] = useState({
         loading: true,
@@ -68,7 +68,7 @@ console.log("아이디는"+id)
             <FormGroup row>
                 <input type='hidden' id='age' value={date}/>
                 <Col md={3} lg={2}>
-                    <Label className='nanum-gothic'>연령</Label>
+                    <Label className='nanum-gothic'>날짜</Label>
                 </Col>
                 <Col md={9} sm={12} lg={10}>
                     <Input type='text' className='nanum-gothic' value={date} disabled/>

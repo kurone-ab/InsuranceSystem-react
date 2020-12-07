@@ -11,7 +11,7 @@ const header = {
     id: '번호',
     clientName:'고객명',
     insuranceType: '보험 종류',
-    compensationProvision: '적/부 판단율',
+    compensationProvision: '보상',
     pass: '적/부 판단 완료여부',
     count: 'U/W 요청 건수',
 }
