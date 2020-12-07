@@ -39,7 +39,6 @@ export const useGetAxios = ({instance = axios, url, callback, necessary}) => {
     })
     useEffect(() => {
         if (necessary) {
-            console.log('is effected in axios')
             instance.get(url).then(({data}) => {
                 callback ? callback(data) :
                     setRes({

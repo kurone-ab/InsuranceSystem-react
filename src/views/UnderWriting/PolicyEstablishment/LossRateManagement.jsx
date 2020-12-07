@@ -1,10 +1,7 @@
-import React, {lazy, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import CustomizableTable from "../../global/CustomizableTable";
-import {connect, useStore} from 'react-redux';
-import {Button, ListGroupItem, Select, Input} from 'reactstrap'
-import {useGetAxios, useGetAxiosWithParams} from "../../global/useAxios";
+import {Input} from 'reactstrap'
 import Loading from "../../global/Loading";
-import {loadLossRateData} from "../../../globalStore";
 import axios from "axios";
 
 const header = {
@@ -13,18 +10,18 @@ const header = {
     lossRate: '손해율',
 }
 
+
 const LossRateManagement = ({lossRateList, load}) => {
     const [state, setState] = useState({
-        target: 0,
+        target: "0",
         tableData: [],
         loading: true
     })
-
+    if(state.target==="0")setState({target:"3",tableData: state.tableData,loading: state.loading})
 
     useEffect(() => {
         const getAxios = async () => {
-            // if(state.target==null){setState({target:3, loading: state.loading, tableData: state.tableData})}
-            console.log("부름")
+            if(state.target!=="0")
             await axios.get(`/contract/loss_rate?term=${state.target}`)
                 .then(({data}) => {
                     setState({target: state.target, loading: false, tableData: data})
@@ -37,12 +34,6 @@ const LossRateManagement = ({lossRateList, load}) => {
         getAxios();
     }, [state.target])
 
-    // useGetAxiosWithParams({
-    //     url: '/contract/loss_rate',
-    //     callback: load,
-    //     necessary: !lossRateList,
-    //     params: {term: state.target}
-    // })
 
     const renderData = state.tableData ? state.tableData.map((lossRateData) => {
 
@@ -54,6 +45,7 @@ const LossRateManagement = ({lossRateList, load}) => {
         }
     }) : null
 
+
     const handleSelectChange = (event) => {
         event.preventDefault();
         setState({target: event.target.value})
@@ -61,50 +53,20 @@ const LossRateManagement = ({lossRateList, load}) => {
 
     return (
         <div className='animated fadeIn'>
-
             <Input type="select" value={state.target} onChange={handleSelectChange}>
                 <option value={"3"}>최근 3개월</option>
                 <option value={"6"}>최근 6개월</option>
                 <option value={"12"}>최근 1년</option>
             </Input>
-            <br/>
-            {state.target !== 0 ?
-
+            {state.target !== "0" ?
                  renderData ?
                         <CustomizableTable tableTitle={'최근 ' + state.target + '개월 손해율'} tableHeader={header}
                                            tableRowData={renderData}/>
                         : <Loading/>
-
-                :  <CustomizableTable tableTitle={'옵션을 먼저 선택해주세요'} tableHeader={header}
-                                     />
-
-            }
+                :  <CustomizableTable tableTitle={'옵션을 먼저 선택해주세요'} tableHeader={header} tableRowData={null}/>}
             <hr/>
-            {/*<form>*/}
-            {/*    <Button color='primary'>손해율 데이터 수집</Button>&nbsp;&nbsp;*/}
-            {/*    <Button color='primary'>손해율 분석</Button>&nbsp;&nbsp;*/}
-            {/*    <Button color='primary'>예상 손해율 시뮬레이션</Button>*/}
-            {/*</form>*/}
         </div>
     )
-
 }
 
-// const mapStateToProps = (state) => {
-//     const {authorizeDoc: {lossRateList} = {}} = state
-//     return lossRateList ? {lossRateList} : {}
-// }
-//
-// const mapDispatchToProps = (dispatch) => {
-//     // console.log("mapDispatchToProps")
-//
-//
-//     return {
-//
-//         load: (content) => dispatch(loadLossRateData(content))
-//     }
-// }
-
-
-// export default connect(mapStateToProps, mapDispatchToProps)(LossRateManagement)
 export default LossRateManagement

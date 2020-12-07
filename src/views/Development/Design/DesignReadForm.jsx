@@ -24,7 +24,6 @@ const DesignReadForm = ({id, detail, detailDispatcher}) => {
     useGetAxios({url: `${BASE_URL}?id=${id}`, necessary: !insuranceDetail, callback: detailDispatcher})
     if (!insuranceDetail) return <Loading/>
     const {type, name, guaranteeInfoList, salesTargetList} = insuranceDetail
-    console.log(insuranceDetail)
 
     return(
         <div className='flex-grow-1'>

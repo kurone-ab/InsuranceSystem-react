@@ -6,16 +6,15 @@ import ReadContentModal from "../../global/ReadContentModal";
 
 const openTarget = {}
 
-//요거 만들다 만 것.
-const AuthorizeReportReadForm = ({evalList}) => {
-    const evalKeys = Object.keys(evalList)
+const AuthorizeReportReadForm = ({id,authorizeDocList}) => {
+    const evalKeys = Object.keys(authorizeDocList)
     const [open, setOpen] = useState(false)
     if (!open) {
         evalKeys.forEach(item => openTarget[item] = false)
         setOpen({...openTarget})
     }
 
-    return (evalList ?
+    return (authorizeDocList ?
             <ListGroup flush>
                 {evalKeys.length === 0 ?
                     <div className='nanum-gothic m-1'>업로드 된 평가 보고서가 없습니다!</div> : null}
@@ -28,7 +27,7 @@ const AuthorizeReportReadForm = ({evalList}) => {
                                                    openTarget[evaluation] = true
                                                    setOpen({...openTarget})
                                                }}>
-                                    <div className='my-auto nanum-gothic'>{evalList[evaluation]}</div>
+                                    <div className='my-auto nanum-gothic'>{authorizeDocList[evaluation]}</div>
                                 </ListGroupItem>
                                 {
                                     openTarget[evaluation] ?
@@ -38,9 +37,9 @@ const AuthorizeReportReadForm = ({evalList}) => {
                                         }} title='파일을 다운로드 하시겠습니까?' addCancel confirmAction={() => fileDownload({
                                             url: 'insurance/evaluation',
                                             id: evaluation,
-                                            filename: evalList[evaluation]
+                                            filename: authorizeDocList[evaluation]
                                         })}
-                                                          content={`${evalList[evaluation]} 파일을 다운로드 하시겠습니까?`}
+                                                          content={`${authorizeDocList[evaluation]} 파일을 다운로드 하시겠습니까?`}
                                                           size='md'/> : null
                                 }
                             </Fragment>

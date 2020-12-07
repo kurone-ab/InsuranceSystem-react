@@ -34,7 +34,6 @@ export const uploadAction = (eid, e, closeModal) => {
     data.append('type', type)
     data.append('eid', eid)
     data.append('name', designProductName)
-    console.log(eid)
     for (let i = 0; i < targetClientList.length; i++) {
         const targetClientListElement = targetClientList[i]
         data.append('targetClient', targetClientListElement.value)

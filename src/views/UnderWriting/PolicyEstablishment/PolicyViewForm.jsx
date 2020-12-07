@@ -3,7 +3,7 @@ import axios from "axios";
 import Loading from "../../global/Loading";
 import {
     Col,
-    Dropdown, DropdownItem, DropdownMenu,
+    Dropdown,
     DropdownToggle,
     FormGroup,
     Input,
@@ -21,24 +21,9 @@ export const PolicyViewForm = ({id}) => {
         ItemList: []
     });
 
-    //목록용
-    // useEffect(() => {
-    //     const getAxios = async () => {
-    //         console.log("부름"+id)
-    //         await axios.get(`/uw/uw_policy?id=${id}`, [])
-    //             .then(({data}) => {
-    //                 setState({target: state.target, ids: data, loading: false, ItemList: state.ItemList})
-    //             })
-    //             .catch(e => {
-    //                 console.error(e);
-    //             })
-    //     }
-    //     getAxios();
-    // }, [])
 
     useEffect(()=>{
         const getAxios = async ()=> {
-            console.log("부름")
             await axios.get(`/uw/uw_policy?pid=${id}`,[])
                 .then(({data}) => {
                     setState({target:state.target, ids:state.ids, loading: false, ItemList: data})
@@ -127,7 +112,6 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-    console.log("mapDispatchToProps")
     return {
         load: (detail) => dispatch(loadUWPolicyData(detail))
     }

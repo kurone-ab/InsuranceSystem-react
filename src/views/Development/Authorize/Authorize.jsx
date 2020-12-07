@@ -4,6 +4,7 @@ import {useGetAxios} from "../../global/useAxios";
 import axios from 'axios'
 import {connect, useStore} from "react-redux";
 import {loadAuthorizeDoc} from "../../../globalStore";
+import AuthorizeReportReadForm from "./AuthorizeReportReadForm";
 
 axios.defaults.withCredentials = true
 axios.defaults.baseURL = 'http://localhost:8080'
@@ -11,10 +12,7 @@ const Loading = lazy(() => import('../../global/Loading'))
 
 const header = {
     id: '번호',
-    fileName: {
-        title: '파일',
-        className: 'w-50'
-    },
+    fileName:  '파일',
     authorName: '작성자',
     date: '수정 시각'
 }
@@ -27,18 +25,13 @@ const Authorize = ({load, authorizeDocList}) => {
         const {id, fileName, authorName, date} = authorizeDoc
         return {
             id,
-            fileName: {
-                title: fileName,
-                aTag: true,
-                id
-            },
+   fileName,
             authorName,
             date
         }
     }) : null
 
     const fileupload = (e, closeModal) => {
-        console.log("파일업로드")
         e.preventDefault()
         const file = document.getElementById('approvalDoc').files[0]
         const formData = new FormData()
@@ -53,6 +46,7 @@ const Authorize = ({load, authorizeDocList}) => {
         <div className='animated fadeIn'>
             {renderData ?
                 <CustomizableTable tableTitle='인가 품의서' tableHeader={header} tableRowData={renderData} activeModal
+                                   retrieveForm={AuthorizeReportReadForm}
                                    modalProps={{
                                        modalTitle: '인가 품의서 업로드하기',
                                        uploadAction: fileupload,

@@ -2,8 +2,6 @@ import React, {useState, useEffect, lazy} from "react";
 import axios from "axios";
 import {
     Col,
-    Dropdown, DropdownItem, DropdownMenu,
-    DropdownToggle,
     FormGroup,
     Input,
     Label,
@@ -17,7 +15,6 @@ export const CustomerGetViewForm = ({id}) => {
 
     useEffect(() => {
         const getAxios = async () => {
-            console.log("부름")
             await axios.get(`/client/unregistered/search?id=${id}`)
                 .then(({data}) => {
                     setState({loading: false, tableData: data})
@@ -37,7 +34,6 @@ export const CustomerGetViewForm = ({id}) => {
     }
 
     const {age, name, sex,email, contact} = state.tableData
-    console.log(age+name+sex+email+contact)
 
     return (
 
@@ -97,18 +93,5 @@ export const CustomerGetViewForm = ({id}) => {
         </div>
     )
 }
-// const mapStateToProps = (state) => {
-//     // console.log("mapStateToProps")
-//     const {uwPolicy: {uwPolicyList} = {}} = state
-//     return uwPolicyList ? {uwPolicyList} : {}
-// }
-//
-// const mapDispatchToProps = (dispatch) => {
-//     console.log("mapDispatchToProps")
-//     return {
-//         load: (detail) => dispatch(loadUWPolicyData(detail))
-//     }
-// }
 
 export default CustomerGetViewForm
-// export default CustomerGetViewForm

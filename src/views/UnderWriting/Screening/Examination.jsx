@@ -23,14 +23,12 @@ const data= new FormData()
 const save=(target,close)=>{
     data.append('status',"PASSED")
     data.append('contractId',target)
-    console.log("승인!")
 
     axios.post('/uw/contractStatus/save', data).then(() => close(-1))
 }
 const refuse=(target,close)=>{
     data.append('status',"REJECTED")
     data.append('contractId',target)
-    console.log("거절!")
 
     axios.post('/uw/contractStatus/save', data).then(() => close(-1))
 }
@@ -45,11 +43,6 @@ const Examination = ({list, loadList}) => {
             await axios.get(`/client/onProgress/list?eid=${eid}`, [])
                 .then(({data}) => {
                     setState({loading: false, ItemList: data})
-                    // Object.keys(state.ItemList).map((key, idx) => {
-                    //     console.log(idx+state.ItemList[key])
-                    //     openTarget[key] = false
-                    //     setOpen({...openTarget})
-                    // })
                 })
                 .catch(e => {
                     console.error(e);
@@ -246,8 +239,6 @@ const Examination = ({list, loadList}) => {
                         </Collapse>
                     </Fragment>
                 )}
-
-
         </ListGroup>
     )
 }

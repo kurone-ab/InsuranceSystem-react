@@ -2,7 +2,6 @@ import React, {useState} from "react";
 import {Col, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, FormGroup, Input, Label} from 'reactstrap'
 import {connect} from 'react-redux'
 import Loading from "../../global/Loading";
-import {usePostAxios} from "../../global/useAxios";
 import axios from "axios";
 axios.defaults.withCredentials = true
 axios.defaults.baseURL = 'http://localhost:8080'

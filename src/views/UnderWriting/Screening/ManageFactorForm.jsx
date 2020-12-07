@@ -2,25 +2,19 @@ import React, {useState, useEffect} from "react";
 import {connect} from 'react-redux'
 import {loadFactorDetail} from "../../../globalStore";
 import axios from "axios";
-import {useGetAxios, useGetAxiosWithParams} from "../../global/useAxios";
-import Loading from "../../global/Loading";
 import {
-    Button,
     Col,
     Dropdown,
     DropdownToggle,
-    Form,
     FormGroup,
     Input,
     InputGroup,
     InputGroupAddon,
     InputGroupText,
     Label,
-    UncontrolledTooltip
 } from 'reactstrap'
 
 const ManageFactorForm = ({id}) => {
-
 
     const [state, setState] = useState({
         loading:true,
@@ -29,7 +23,6 @@ const ManageFactorForm = ({id}) => {
 
     useEffect(()=>{
         const getAxios = async ()=> {
-            console.log(id)
             await axios.get(`/uw/factor_manage/client?contractId=${id}`,[])
                 .then(({data}) => {
                     setState({loading: false, ItemList: data})
@@ -49,8 +42,6 @@ const ManageFactorForm = ({id}) => {
     } = state.ItemList
 
     return (
-        // !state.loading ?
-        //     state.ItemList ?
             <div className='flex-grow-1'>
                 <FormGroup row>
                     <input type='hidden' id='insuranceType' value={state.ItemList.insuranceType}/>
@@ -165,9 +156,6 @@ const ManageFactorForm = ({id}) => {
                 </FormGroup>
                 <hr/>
             </div>
-                // :<div> 아직 고객의 Factor가 저장되어 있지 않습니다.</div>
-                //
-                // :<Loading/>
     )
 }
 
@@ -185,4 +173,3 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ManageFactorForm)
-// export default ManageFactorForm

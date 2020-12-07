@@ -22,7 +22,6 @@ const CustomerRelationship = ({uwPolicyList, load}) => {
     const [state, setState] = useState({loading: true,tableData: [] })
     useEffect(() => {
         const getAxios = async () => {
-            console.log("부름")
             await axios.get(`/counseling/record/get?eid=${eid}`)
                 .then(({data}) => {
                     setState({loading: false, tableData: data})

@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import {
-    Button,
     Col,
     Dropdown,
     DropdownItem,
@@ -8,11 +7,7 @@ import {
     DropdownToggle,
     FormGroup,
     Input,
-    InputGroup,
-    InputGroupAddon,
-    InputGroupText,
     Label,
-    UncontrolledTooltip
 } from 'reactstrap'
 import {connect} from 'react-redux'
 import axios from "axios";
@@ -27,8 +22,6 @@ export const uploadAction = ( e, closeModal) => {
     const age = document.getElementById('age').value
     const email = document.getElementById('email').value
     const sex = document.getElementById('sex').value
-
-    console.log(customerName+contact+email+sex)
 
     const data = new FormData()
     data.append('customerName', customerName)

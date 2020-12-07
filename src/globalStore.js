@@ -163,7 +163,6 @@ const {actions, reducer} = createSlice({
         },
         loadStrategyInvestigationList: (state, action) => {
             const {payload: list} = action
-            console.log(list)
             const {strategy, ...rest} = state
             return list ? {
                 ...rest,
@@ -194,7 +193,6 @@ const {actions, reducer} = createSlice({
         loadMarketInvestigationList: (state, action) => {
             const {payload: list} = action
             const {market, ...rest} = state
-            console.log(list)
             return list ? {
                 ...rest,
                 market: {

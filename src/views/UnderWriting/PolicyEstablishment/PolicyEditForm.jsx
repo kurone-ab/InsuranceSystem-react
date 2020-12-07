@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import {
-    Button,
     Col,
     Dropdown,
     DropdownItem,
@@ -8,11 +7,7 @@ import {
     DropdownToggle,
     FormGroup,
     Input,
-    InputGroup,
-    InputGroupAddon,
-    InputGroupText,
     Label,
-    UncontrolledTooltip
 } from 'reactstrap'
 import {connect} from 'react-redux'
 import axios from "axios";
@@ -46,7 +41,6 @@ export const PolicyEditForm = ({typeList}) => {
 
     useEffect(() => {
         const getAxios = async () => {
-            console.log("부름")
             await axios.get(`/uw/noPolicyInsurance/list`, [])
                 .then(({data}) => {
                     setState({loading: false, ItemList: data})
@@ -131,7 +125,5 @@ const mapStateToProps = (state) => {
         typeList,
     } : {}
 }
-
-
 
 export default connect(mapStateToProps)(PolicyEditForm)

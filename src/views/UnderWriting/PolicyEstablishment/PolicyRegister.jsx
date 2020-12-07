@@ -1,7 +1,5 @@
 import React, {lazy, useEffect, useState} from "react";
 import CustomizableTable from "../../global/CustomizableTable";
-import {useGetAxios, useGetAxiosWithParams} from "../../global/useAxios";
-import {connect, useStore} from "react-redux";
 import {loadUWPolicyData} from "../../../globalStore";
 import axios from "axios";
 import {uploadAction} from "./PolicyEditForm";
@@ -49,8 +47,6 @@ const PolicyRegister = ({uwPolicyList, load}) => {
         }
     }) : null
 
-    console.log(renderData)
-
     return (
         <div className='animated fadeIn'>
             {!state.loading ?
@@ -70,15 +66,4 @@ const PolicyRegister = ({uwPolicyList, load}) => {
     )
 }
 
-const mapStateToProps = (state) => {
-    const {uwPolicy: {uwPolicyList} = {}} = state
-    return uwPolicyList ? {uwPolicyList} : {}
-}
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        load: (detail) => dispatch(loadUWPolicyData(detail))
-    }
-}
-// export default connect(mapStateToProps, mapDispatchToProps)(PolicyRegister)
 export default PolicyRegister

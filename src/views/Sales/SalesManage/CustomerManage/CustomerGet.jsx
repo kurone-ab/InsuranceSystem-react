@@ -1,6 +1,5 @@
 import React, {lazy, useEffect, useState} from "react";
 import axios from "axios";
-import DesignReadForm from "../../../Development/Design/DesignReadForm";
 import CustomerGetViewForm from "./CustomerGetViewForm";
 import CustomerGetEditForm from "./CustomerGetEditForm";
 import {uploadAction} from "./CustomerGetEditForm";
@@ -20,15 +19,11 @@ const header = {
 
 const CustomerGet = () => {
 
-    const [state, setState] = useState({
-        loading: true,
-        tableData: []
-    })
+    const [state, setState] = useState({loading: true,tableData: []})
 
 
     useEffect(() => {
         const getAxios = async () => {
-            console.log("부름")
             await axios.get('/client/unregistered/list')
                 .then(({data}) => {
                     setState({loading: false, tableData: data})
@@ -43,7 +38,6 @@ const CustomerGet = () => {
 
     const renderData = state.tableData ? state.tableData.map((unregisteredClient) => {
         const {id, name, sex, age, gift} = unregisteredClient
-        // console.log(id + "/" + name + "/" + sex + "/" + age + "/" + "불러옴")
         return {
             id,
             name: {

@@ -22,7 +22,6 @@ const Planning = ({companyList, load, mList, sList, loadStrategyInvestigationLis
     useGetAxios({url: '/investigation/market/list', callback: loadMarketInvestigationList, necessary: !mList})
     useGetAxios({url: '/investigation/strategy/list', callback: loadStrategyInvestigationList, necessary: !sList})
     const {user: {id: eid}} = useStore().getState()
-    console.log(mList, sList)
     if (!mList || !sList) return <Loading/>
     const renderMarket = []
     const renderStrategy = []
@@ -87,7 +86,6 @@ const Planning = ({companyList, load, mList, sList, loadStrategyInvestigationLis
 
 const mapStateToProps = (state) => {
     const {insurance: {infoList: {companyList} = {}} = {}, market: {list: mList} = {}, strategy: {list: sList} = {}} = state
-    console.log(state)
     return companyList ? {
         companyList,
         mList,

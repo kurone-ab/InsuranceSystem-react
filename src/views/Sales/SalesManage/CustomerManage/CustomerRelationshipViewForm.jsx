@@ -2,15 +2,12 @@ import React, {useState, useEffect, lazy} from "react";
 import axios from "axios";
 import {
     Col,
-    Dropdown, DropdownItem, DropdownMenu,
-    DropdownToggle,
     FormGroup,
     Input,
     Label,
 } from 'reactstrap'
 
 export const CustomerRelationshipViewForm = ({id}) => {
-console.log("아이디는"+id)
     const [state, setState] = useState({
         loading: true,
         tableData: [],
@@ -19,7 +16,6 @@ console.log("아이디는"+id)
 
     useEffect(() => {
         const getAxios = async () => {
-            console.log("부름")
             await axios.get(`/counseling/record/search?id=${id}`)
                 .then(({data}) => {
                     setState({loading: false, tableData: data})
@@ -32,11 +28,6 @@ console.log("아이디는"+id)
         getAxios();
     }, [])
 
-
-    const handleSelectChange = (event) => {
-        event.preventDefault();
-        setState({target: event.target.value, ids: state.ids, loading: false, ItemList: state.ItemList})
-    }
 
     const { clientName, content, date} =  state.tableData
 
@@ -79,18 +70,6 @@ console.log("아이디는"+id)
         </div>
     )
 }
-// const mapStateToProps = (state) => {
-//     // console.log("mapStateToProps")
-//     const {uwPolicy: {uwPolicyList} = {}} = state
-//     return uwPolicyList ? {uwPolicyList} : {}
-// }
-//
-// const mapDispatchToProps = (dispatch) => {
-//     console.log("mapDispatchToProps")
-//     return {
-//         load: (detail) => dispatch(loadUWPolicyData(detail))
-//     }
-// }
+
 
 export default CustomerRelationshipViewForm
-// export default CustomerGetViewForm

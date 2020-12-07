@@ -11,10 +11,7 @@ const SalesInstructionForm = lazy(() => import('./SalesInstructionForm'))
 
 const header = {
     id: '번호',
-    title: {
-        title: '제목',
-        className: 'w-50'
-    },
+    title:  '제목',
     author: '작성자',
     date: '수정 시각'
 }
@@ -27,10 +24,9 @@ const SalesInstruction = ({instructionList, load}) => {
     if (instructionList)
         instructionList.forEach((item) => {
             const {id, title, date, author} = item
-            renderData.push({id, title: {title, aTag: true, id}, author, date})
+            renderData.push({id, title, author, date})
         })
 
-    console.log(instructionList)
     const {user:{id}} = useStore().getState()
 
     return (instructionList ?

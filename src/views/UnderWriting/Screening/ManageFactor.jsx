@@ -29,7 +29,6 @@ const ManageFactor = ({policyEstablishmentDocList, load}) => {
         params: {eid: eid}
     })
 
-
     const renderData = policyEstablishmentDocList ? policyEstablishmentDocList.map((policyEstablishmentDoc) => {
             const {id, insuranceType, compensationProvision, count, clientName, underWritingPassed} = policyEstablishmentDoc
             const comp = compensationProvision + ""
@@ -47,8 +46,6 @@ const ManageFactor = ({policyEstablishmentDocList, load}) => {
             }
         }) :
         null
-
-    console.log(renderData)
 
     return (
         <div className='animated fadeIn'>
@@ -82,7 +79,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-
 export default connect(mapStateToProps, mapDispatchToProps)(ManageFactor)
-
-// export default ManageFactor

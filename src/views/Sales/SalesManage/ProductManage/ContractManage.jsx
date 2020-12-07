@@ -2,7 +2,7 @@ import React, {Fragment, useState} from "react";
 import {connect, useStore} from 'react-redux'
 import {loadContractList} from "../../../../globalStore";
 import {useGetAxios} from "../../../global/useAxios";
-import {Card, Col, Collapse, FormGroup, Input, Label, ListGroup, ListGroupItem, Table} from 'reactstrap'
+import {Card, Collapse, ListGroup, ListGroupItem, Table} from 'reactstrap'
 import Loading from "../../../global/Loading";
 
 const BASE_URL = 'contract/list/responsibility'
@@ -92,18 +92,8 @@ const ContractManage = ({list, loadList}) => {
                                     </Table>
                                 </Card>
 
-
-
-
-
-
-
-
-
-
                             </Collapse>
                         </Fragment>
-
                     )
                 })
             }

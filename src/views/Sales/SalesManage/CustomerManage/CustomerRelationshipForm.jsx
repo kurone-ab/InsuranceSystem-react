@@ -2,19 +2,10 @@ import React, {useEffect, useState} from "react";
 import {
     Button,
     Col,
-    Dropdown,
-    DropdownItem,
-    DropdownMenu,
-    DropdownToggle,
     FormGroup,
     Input,
-    InputGroup,
-    InputGroupAddon,
-    InputGroupText,
     Label,
-    UncontrolledTooltip
 } from 'reactstrap'
-import {connect} from 'react-redux'
 import axios from "axios";
 
 axios.defaults.withCredentials = true
@@ -30,8 +21,6 @@ export const uploadAction = (eid, e, closeModal) => {
     data.append('cid',customerId)
     data.append('content', content)
     data.append('eid',eid)
-
-    console.log(`저장누름:${customerId} | ${eid} | ${content}`)
     axios.post('/counseling/record/registerById', data).then(()=>closeModal())
 }
 
@@ -78,7 +67,6 @@ const CustomerRelationshipForm = () => {
                         <Button color='primary' onClick={() => {
                             let id = document.getElementById('number').value
                             let name = document.getElementById('name').value
-                            console.log("id:" + id + " name:" + name + " 하하하")
                             setTarget({id: id, name: name})
                             setUpdate(true)
                         }
@@ -110,7 +98,6 @@ const CustomerRelationshipForm = () => {
                 </FormGroup> : null}
 
             {(target.id !== 0 && !state.ItemList&&!update) ?
-                // alert('해당 고객이 존재하지 않습니다.')
                 setTarget({id:0, name:""}) : null}
 
 

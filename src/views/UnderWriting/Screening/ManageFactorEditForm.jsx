@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import {
-    Button,
     Col,
     Dropdown,
     DropdownItem,
@@ -12,18 +11,13 @@ import {
     InputGroupAddon,
     InputGroupText,
     Label,
-    UncontrolledTooltip
 } from 'reactstrap'
 import {connect, useStore} from 'react-redux'
 import axios from "axios";
 import Loading from "../../global/Loading";
 
-
 axios.defaults.withCredentials = true
 axios.defaults.baseURL = 'http://localhost:8080'
-
-let guaranteeCondition = [''];
-let targetClient = [''];
 
 export const uploadAction = (eid, e, closeModal) => {
     e.preventDefault()
@@ -64,7 +58,6 @@ const ManageFactorEditForm = ({typeList}) => {
             job: false,
         }
     )
-    // const [type, setType] = useState('CAR')
     const [state, setState] = useState({
         loading: true, ItemList: []
     })
@@ -77,7 +70,6 @@ const ManageFactorEditForm = ({typeList}) => {
 
     useEffect(() => {
         const getAxios = async () => {
-            console.log("부름")
             await axios.get(`/uw/factor/info?eid=${eid}`, [])
                 .then(({data}) => {
                     const {clientList, smokeList, drinkList, jobList} = data
@@ -286,20 +278,6 @@ const ManageFactorEditForm = ({typeList}) => {
     )
 }
 
-//redux state
-// const mapStateToProps=(state)=>{
-//     return{
-//         factor:state.factor
-//     }
-// }
-//
-// const mapDispatchToProps= dispatch => {
-//     return {
-//         factor: (()=> dispatch(buyCake))
-//     }
-// }
-
-
 const mapStateToProps = (state) => {
     const {insurance: {infoList: {typeList} = {}} = {}} = state
     return typeList ? {
@@ -309,4 +287,3 @@ const mapStateToProps = (state) => {
 
 //connect가 함수를 리턴   //괄호에 넣어서 함수를 실행하게 하기
 export default connect(mapStateToProps)(ManageFactorEditForm)
-// export default ManageFactorEditForm

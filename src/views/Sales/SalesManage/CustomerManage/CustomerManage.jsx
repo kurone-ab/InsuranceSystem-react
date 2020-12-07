@@ -1,6 +1,4 @@
 import React, {lazy, useEffect, useState} from "react";
-import DesignReadForm from "../../../Development/Design/DesignReadForm";
-import {uploadAction} from "../../../Development/Design/DesignForm";
 import axios from "axios";
 import CustomerGetViewForm from "./CustomerGetViewForm";
 import CustomerGetEditForm from "./CustomerGetEditForm";
@@ -26,7 +24,6 @@ const CustomerManage = () => {
 
     useEffect(() => {
         const getAxios = async () => {
-            console.log("부름")
             await axios.get('/client/unregistered/list')
                 .then(({data}) => {
                     setState({loading: false, tableData: data})
@@ -41,7 +38,6 @@ const CustomerManage = () => {
 
     const renderData = state.tableData ? state.tableData.map((unregisteredClient) => {
         const {id, name, sex, age, gift} = unregisteredClient
-        console.log(id + "/" + name + "/" + sex + "/" + age + "/" + "불러옴")
         return {
             id,
             name: {
@@ -62,7 +58,6 @@ const CustomerManage = () => {
                     <CustomizableTable tableTitle='가망 고객 관리하기' tableHeader={header} tableRowData={renderData}
                                        retrieveForm={CustomerGetViewForm} activeModal modalProps={{
                         modalTitle: '가망 고객 신규 등록',
-                        // uploadAction: (e, closeModal) => uploadAction(eid, e, closeModal),
                         inputForm: <CustomerGetEditForm/>,
                     }}
 
