@@ -1,4 +1,4 @@
-import React, {Fragment, useEffect, useState} from "react";
+import React, {Fragment, Suspense, useEffect, useState} from "react";
 import axios from "axios";
 import {
     Button,
@@ -9,15 +9,25 @@ import {
     DropdownToggle,
     FormGroup,
     Input,
-    InputGroup, Collapse, Card, Table, ListGroupItem
+    InputGroup, Collapse, Card, Table, ListGroupItem, Modal, Form, ModalBody, ModalFooter
 } from 'reactstrap'
+import {PolicyEditForm, uploadAction} from "./AccidentRegisterForm";
+import GenerateDocumentModal from "../../global/GenerateDocumentModal";
+import AccidentRegisterForm from "./AccidentRegisterForm";
+import CustomizableModalHeader from "../../global/CustomiableModalHeader";
+import Loading from "../../global/Loading";
+import FileUploadButton from "../../global/FileUploadButton";
 
 const openTarget=[]
 const AccidentCounseling = () => {
     const [state, setState] = useState({loading: true, ItemList: {name:"", insurances:[]}})
     const [update, setUpdate] = useState(false)
     const [open, setOpen] = useState(false)
+    const [modalOpen, setModalOpen] = useState(false)
 
+    const modalControl = () => {
+        setModalOpen(!modalOpen)
+    }
     const [target, setTarget] = useState({contact: "", name: ""})
     useEffect(() => {
         const getAxios = async () => {
@@ -42,7 +52,7 @@ const AccidentCounseling = () => {
         getAxios()
     }, [update])
 
-    const {name, insurances} = state.ItemList
+    const {id, insurances} = state.ItemList
 
     //
     return (
@@ -132,7 +142,25 @@ const AccidentCounseling = () => {
                                         </tbody>
                                     </Table>
                                 </Card>
-                                {/*{showEvaluation ? <EvaluationReportReadForm evalList={evaluationReportList}/>:null*/}
+
+                                <Button color="primary" onClick={modalControl} className="ml-auto" size='sm'><i
+                                    className='fa fa-upload mr-1'/>{'사고접수하기'}</Button>
+                                <Modal isOpen={modalOpen} toggle={modalControl}
+                                       className={'modal-lg ' } backdrop={'static'}>
+                                    <Form onSubmit={(e) => uploadAction(e, modalControl)}>
+                                        <CustomizableModalHeader title={'사고 접수하기'}/>
+                                        <ModalBody>
+                                            <Suspense fallback={Loading()}>
+                                                {<AccidentRegisterForm iid={insurances[key].id} cid={id} />}
+                                            </Suspense>
+                                        </ModalBody>
+                                        <ModalFooter>
+                                            <Button type='submit' color="primary">등록</Button>{' '}
+                                            <Button color="secondary" onClick={modalControl}>취소</Button>
+                                        </ModalFooter>
+                                    </Form>
+                                </Modal>
+
                             </Collapse>
                         </Fragment>
                     )

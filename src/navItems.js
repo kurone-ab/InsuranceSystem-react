@@ -173,14 +173,14 @@ export default {
                     name: '사고 접수 상담',
                     url: '/new_accident/accident_counseling'
                 },
-                {
-                    name: '보험 가입 확인',
-                    url: '/new_accident/insurance_subscription_check'
-                },
-                {
-                    name: '사고 접수 진행',
-                    url: '/new_accident/accident_register'
-                },
+                // {
+                //     name: '보험 가입 확인',
+                //     url: '/new_accident/insurance_subscription_check'
+                // },
+                // {
+                //     name: '사고 접수 진행',
+                //     url: '/new_accident/accident_register'
+                // },
                 {
                     title: true,
                     name: '사고 현장 처리'
