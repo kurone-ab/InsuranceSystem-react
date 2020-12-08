@@ -60,11 +60,6 @@ export default {
                     icon: 'fa fa-angle-right',
                     children: [
                         {
-                            name: '인수 정책 수립',
-                            url: '/policy_establishment',
-                            icon: 'fa fa-angle-right',
-                        },
-                        {
                             name: '손해율 관리',
                             url: '/policy_establishment/loss_rate_management',
                             icon: 'fa fa-angle-right',
@@ -83,11 +78,6 @@ export default {
                 {
                     name: '인수 심사',
                     children: [
-                        {
-                            name: '인수 심사',
-                            url: '/screening',
-                            icon: 'fa fa-angle-right'
-                        },
                         {
                             name: 'U/W Factor 관리',
                             url: '/screening/manage_factor',
@@ -183,14 +173,14 @@ export default {
                     name: '사고 접수 상담',
                     url: '/new_accident/accident_counseling'
                 },
-                {
-                    name: '보험 가입 확인',
-                    url: '/new_accident/insurance_subscription_check'
-                },
-                {
-                    name: '사고 접수 진행',
-                    url: '/new_accident/accident_register'
-                },
+                // {
+                //     name: '보험 가입 확인',
+                //     url: '/new_accident/insurance_subscription_check'
+                // },
+                // {
+                //     name: '사고 접수 진행',
+                //     url: '/new_accident/accident_register'
+                // },
                 {
                     title: true,
                     name: '사고 현장 처리'
@@ -214,36 +204,6 @@ export default {
                 {
                     name: '손해 사정',
                     url: '/manage_damage/damage_assessment'
-                }
-            ]
-        },
-        {
-            divider: true,
-            class: 'm-2'
-        },
-        {
-            title: true,
-            name: '마이 페이지'
-        },
-        {
-            name: '계정 관리',
-            icon: 'fa fa-address-card',
-            children: [
-                {
-                    title: true,
-                    name: '직원 정보'
-                },
-                {
-                    name: '내 정보 확인',
-                    url: '/profile'
-                },
-                {
-                    name: '내 정보 수정',
-                    url: '/profile_edit'
-                },
-                {
-                    name: '비밀번호 재설정',
-                    url: '/password'
                 }
             ]
         }

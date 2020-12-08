@@ -55,7 +55,6 @@ const Login = (props) => {
         e.preventDefault()
         const uid = document.getElementById("uid").value
         const upw = document.getElementById("upw").value
-        console.log('login try')
         axios.post("/user/login", {id: uid, password: upw}).then(r => {
             loginComplete(r.data)
         })

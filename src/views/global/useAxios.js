@@ -39,8 +39,37 @@ export const useGetAxios = ({instance = axios, url, callback, necessary}) => {
     })
     useEffect(() => {
         if (necessary) {
-            console.log('is effected in axios')
             instance.get(url).then(({data}) => {
+                callback ? callback(data) :
+                    setRes({
+                        load: true,
+                        error: null,
+                        data: data
+                    })
+            }).catch(({error})=>{
+                setRes({
+                    load: false,
+                    error: error,
+                    data: null
+                })
+            })
+        }
+        // eslint-disable-next-line
+    }, [])
+
+    return res
+}
+
+export const useGetAxiosWithParams = ({instance = axios, url, callback, necessary, params}) => {
+    const [res, setRes] = useState({
+        load: false,
+        error: null,
+        data: null
+    })
+    useEffect(() => {
+        if (necessary) {
+            console.log('is effected in axios')
+            instance.get(url,{params}).then(({data}) => {
                 callback ? callback(data) :
                     setRes({
                         load: true,

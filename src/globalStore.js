@@ -23,7 +23,7 @@ const {actions, reducer} = createSlice({
             }
         },
         loadAnnouncement: ((state, action) => {
-            const {payload:list} = action
+            const {payload: list} = action
             const important = list instanceof Array ? list.find(({priority}) => priority) : list
             return list ? {
                 ...state,
@@ -56,6 +56,7 @@ const {actions, reducer} = createSlice({
                 ...state
             }
         },
+
         loadDevelopingInsuranceList: (state, action) => {
             const {payload: developingList} = action
             const {insurance, ...rest} = state
@@ -87,7 +88,7 @@ const {actions, reducer} = createSlice({
         },
         loadInsuranceDetail: (state, action) => {
             const {payload: {id, ...pRest}} = action
-            const {insurance:{detail, ...iRest}, ...rest} = state
+            const {insurance: {detail, ...iRest}, ...rest} = state
             return {
                 ...rest,
                 insurance: {
@@ -111,7 +112,7 @@ const {actions, reducer} = createSlice({
             }
         },
         loadContractList: (state, action) => {
-            const {contract ={}, ...rest} = state
+            const {contract = {}, ...rest} = state
             const {list} = contract
             const {user: {id}} = state
             const {payload} = action
@@ -162,7 +163,6 @@ const {actions, reducer} = createSlice({
         },
         loadStrategyInvestigationList: (state, action) => {
             const {payload: list} = action
-            console.log(list)
             const {strategy, ...rest} = state
             return list ? {
                 ...rest,
@@ -193,7 +193,6 @@ const {actions, reducer} = createSlice({
         loadMarketInvestigationList: (state, action) => {
             const {payload: list} = action
             const {market, ...rest} = state
-            console.log(list)
             return list ? {
                 ...rest,
                 market: {
@@ -220,10 +219,89 @@ const {actions, reducer} = createSlice({
                 ...state
             }
         },
+///////////////////////////////
+        loadPolicyEstablishmentDoc: (state, action) => {
+            const {payload: policyEstablishmentDocList} = action
+            const {policyEstablishmentDoc, ...rest} = state
+            return policyEstablishmentDocList ? {
+                ...rest,
+                authorizeDoc: {
+                    ...policyEstablishmentDoc,
+                    policyEstablishmentDocList
+                }
+            } : {
+                ...state
+            }
+
+        },
+
+        loadUWPolicyData: (state, action) => {
+            const {payload: uwPolicyList} = action
+            const {uwPolicy, ...rest} = state
+            return uwPolicyList ? {
+                ...rest,
+                authorizeDoc: {
+                    ...uwPolicy,
+                    uwPolicyList
+                }
+            } : {
+                ...state
+            }
+
+        },
+        /////////////////////////
+
+        loadAuthorizeDoc: (state, action) => {
+            const {payload: authorizeDocList} = action
+            const {authorizeDoc, ...rest} = state
+            return authorizeDocList ? {
+                ...rest,
+                authorizeDoc: {
+                    ...authorizeDoc,
+                    authorizeDocList
+                }
+            } : {
+                ...state
+            }
+        },
+
+
+
+        loadLossRateData: (state, action) => {
+            const {payload: lossRateList} = action
+            const {lossRateData, ...rest} = state
+            return lossRateList ? {
+                ...rest,
+                authorizeDoc: {
+                    ...lossRateData,
+                    lossRateList
+                }
+            } : {
+                ...state
+            }
+
+        },
+
+        loadFactorDetail: (state, action) => {
+            const {payload: uwPolicyList} = action
+            const {detail, ...rest} = state
+            return uwPolicyList ? {
+                ...rest,
+                uwPolicy: {
+                    ...detail,
+                    uwPolicyList
+                }
+            } : {
+                ...state
+            }
+        },
+
+
     }
 })
 
-export const {login,
+export const {
+    login,
     logout,
     loadAnnouncement,
     loadInsuranceInfoList,
@@ -237,7 +315,12 @@ export const {login,
     loadMarketInvestigationDetail,
     loadMarketInvestigationList,
     loadStrategyInvestigationDetail,
-    loadStrategyInvestigationList
+    loadStrategyInvestigationList,
+    loadAuthorizeDoc,
+    loadPolicyEstablishmentDoc,
+    loadLossRateData,
+    loadUWPolicyData,
+    loadFactorDetail,
 } = actions;
 
 export default configureStore({reducer})

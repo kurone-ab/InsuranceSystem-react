@@ -102,15 +102,11 @@ const Home = ({load, list}) => {
 
 const mapStateToProps = (state) => {
     const {announcement: {list} = {}} = state
-    return list ? {
-        list,
-    } : {}
+    return list ? {list,} : {}
 }
 
 const mapDispatchToProps = (dispatch) => {
-    return {
-        load: (announcement) => dispatch(loadAnnouncement(announcement)),
-    }
+    return {load: (announcement) => dispatch(loadAnnouncement(announcement)),}
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home)

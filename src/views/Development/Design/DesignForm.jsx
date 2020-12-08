@@ -34,7 +34,6 @@ export const uploadAction = (eid, e, closeModal) => {
     data.append('type', type)
     data.append('eid', eid)
     data.append('name', designProductName)
-    console.log(eid)
     for (let i = 0; i < targetClientList.length; i++) {
         const targetClientListElement = targetClientList[i]
         data.append('targetClient', targetClientListElement.value)
@@ -63,8 +62,12 @@ const DesignForm = ({typeList}) => {
     if (targetClient.length > targetCount) targetClient.splice(0, 1)
     else if (targetClient.length < targetCount) targetClient.push('')
 
+
+
     return (
         <>
+
+
             <FormGroup row>
                 <input type='hidden' id='productType' value={type}/>
                 <Col md={3} lg={2}>
@@ -82,6 +85,7 @@ const DesignForm = ({typeList}) => {
                                                   onClick={() => setType(String(type))}
                                     >{typeList[type]}</DropdownItem>
                             )}
+
                         </DropdownMenu>
                     </Dropdown>
                 </Col>

@@ -1,5 +1,11 @@
 import React, {Suspense, useState} from "react";
-import {Button, Form, Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap'
+import {
+    Button,
+    Form,
+    Modal,
+    ModalBody,
+    ModalFooter
+} from 'reactstrap'
 import Loading from "./Loading";
 import FileUploadButton from "./FileUploadButton";
 import CustomizableModalHeader from "./CustomiableModalHeader";
@@ -9,6 +15,14 @@ const GenerateDocumentModal = ({modalTitle, buttonTitle = '보고서 작성하�
 
     const modalControl = () => {
         setModalOpen(!modalOpen)
+    }
+
+    const action = () =>{
+        return(
+            <div><h3>잘 확인하셨나요?</h3>
+            </div>
+
+        )
     }
 
     return (
@@ -25,7 +39,8 @@ const GenerateDocumentModal = ({modalTitle, buttonTitle = '보고서 작성하�
                         </Suspense>
                     </ModalBody>
                     <ModalFooter>
-                        {fileUpload ? <FileUploadButton fileElementId={fileElementId} size='md' className='mr-auto'/> : null}
+                        {fileUpload ? <FileUploadButton fileElementId={fileElementId} selectedAction={()=>action()}
+                                                        size='md' className='mr-auto'/> : null}
                         <Button type='submit' color="primary">등록</Button>{' '}
                         <Button color="secondary" onClick={modalControl}>취소</Button>
                     </ModalFooter>
