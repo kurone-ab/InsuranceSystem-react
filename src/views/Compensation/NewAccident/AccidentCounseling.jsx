@@ -4,19 +4,14 @@ import {
     Button,
     Col,
     Label,
-    DropdownItem,
-    DropdownMenu,
-    DropdownToggle,
     FormGroup,
     Input,
-    InputGroup, Collapse, Card, Table, ListGroupItem, Modal, Form, ModalBody, ModalFooter
+ Collapse, Card, Table, ListGroupItem, Modal, Form, ModalBody, ModalFooter
 } from 'reactstrap'
-import {PolicyEditForm, uploadAction} from "./AccidentRegisterForm";
-import GenerateDocumentModal from "../../global/GenerateDocumentModal";
+import { uploadAction} from "./AccidentRegisterForm";
 import AccidentRegisterForm from "./AccidentRegisterForm";
 import CustomizableModalHeader from "../../global/CustomiableModalHeader";
 import Loading from "../../global/Loading";
-import FileUploadButton from "../../global/FileUploadButton";
 
 const openTarget=[]
 const AccidentCounseling = () => {

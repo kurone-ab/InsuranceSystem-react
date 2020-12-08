@@ -11,7 +11,6 @@ import {
 } from 'reactstrap'
 import {connect} from 'react-redux'
 import axios from "axios";
-import Loading from "../../global/Loading";
 
 axios.defaults.withCredentials = true
 axios.defaults.baseURL = 'http://localhost:8080'
@@ -20,9 +19,9 @@ export const uploadAction = (e, closeModal) => {
     e.preventDefault()
     const insuranceId = document.getElementById('insuranceId').value
     const clientId = document.getElementById('clientId').value
-    const accidentArea = document.getElementById('accidentArea').value
-    const accidentType = document.getElementById('accidentType').value
-    const dateTime = document.getElementById('dateTime').value
+    const accidentArea = document.querySelector('#accidentArea').value
+    const accidentType = document.querySelector('#accidentType').value
+    const dateTime = document.querySelector('#dateTime').value
 
     console.log(insuranceId+"|"+clientId+"|"+accidentArea+"|"+accidentType+"|"+dateTime)
 
@@ -34,7 +33,8 @@ export const uploadAction = (e, closeModal) => {
     data.append('accidentType', accidentType)
     data.append('dateTime', dateTime)
 
-    closeModal()
+    console.log(data)
+    // closeModal()
     // axios.post('accident/new_accident/accident_register', data).then(()=>closeModal())
 }
 
@@ -67,7 +67,6 @@ export const PolicyEditForm = ({iid,cid,typeList}) => {
 
             <FormGroup row>
                 <input type='hidden' id='accidentType' value={target}/>
-
                 <Col md={3} lg={2}>
                     <Label className='nanum-gothic'>사고종류</Label>
                 </Col>
@@ -80,33 +79,32 @@ export const PolicyEditForm = ({iid,cid,typeList}) => {
                                               className='border-0 nanum-gothic'
                                               value={key}
                                               onClick={() => {
-                                                  setTarget(String(key))
-                                                  console.log(target)}}
+                                                  setTarget(key)
+                                                  console.log(key)}}
                                 >{state.ItemList[key]}</DropdownItem>)}
                         </DropdownMenu>
                     </Dropdown>
                 </Col>
             </FormGroup>
-            <FormGroup row>
 
+
+            <FormGroup row>
                 <Col md={3} lg={2}>
-                    <Label  className='nanum-gothic'>사고장소</Label>
+                    <Label className='nanum-gothic'>사고장소</Label>
                 </Col>
                 <Col md={9} sm={12} lg={6}>
-                    <Input type='text' id='accidentArea' className='nanum-gothic'/>
+                    <Input type='text' className='nanum-gothic' id='accidentArea'/>
                 </Col>
             </FormGroup>
 
                 <FormGroup row>
                 <Col md={3} lg={2}>
-                    <Label  className='nanum-gothic'>사고 시간</Label>
+                    <Label className='nanum-gothic'>사고 시간</Label>
                 </Col>
                 <Col md={9} sm={12} lg={6}>
-                    <Input type='datetime-local' id='dateTime' className='nanum-gothic'/>
+                    <Input type='datetime-local' className='nanum-gothic' id='dateTime'/>
                 </Col>
-
                     </FormGroup>
-
 
         </div>
 
